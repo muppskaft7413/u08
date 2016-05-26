@@ -8,5 +8,8 @@ namespace Uppgift08
 {
     class traningsgrupp
     {
+        public int grupp_id { get; set; }
+        public string namn { get; set; }
+        public string beskrivning { get; set; }
     }
 }
