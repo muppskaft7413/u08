@@ -27,5 +27,49 @@ namespace Uppgift08
             _tabell = new DataTable();
         }
 
+        /// <summary>
+        /// Metod för att ställa fråga mot sql.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        private DataTable sqlfråga(string sql)
+        {
+            try
+            {
+                _cmd = new NpgsqlCommand(sql, _conn);
+                _dr = _cmd.ExecuteReader();
+                _tabell.Load(_dr);
+                return _tabell;
+            }
+            catch (NpgsqlException ex)
+            {
+                //System.Windows.Forms.MessageBox.Show(ex.Message);
+                DataColumn c1 = new DataColumn("error");
+                DataColumn c2 = new DataColumn("errorMessage");
+
+
+                c1.DataType = System.Type.GetType("System.Boolean");
+                c2.DataType = System.Type.GetType("System.String");
+
+                _tabell.Columns.Add(c1);
+                _tabell.Columns.Add(c2);
+
+                //skapa rad
+                DataRow rad = _tabell.NewRow();
+                rad[c1] = true;
+                rad[c2] = ex.Message;
+                _tabell.Rows.Add(rad);
+
+                return _tabell;
+            }
+
+            // Måste det itne gå att stänga?
+            //finally
+            //{
+            //    _conn.Close();
+            //}
+        }
+
+
     }
 }
