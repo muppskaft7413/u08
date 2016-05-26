@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ansvarsomrade.cs" />
+    <Compile Include="felhantering.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -52,7 +53,9 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="inbetalning.cs" />
+    <Compile Include="intressent.cs" />
     <Compile Include="medlem.cs" />
+    <Compile Include="plats.cs" />
     <Compile Include="narvarorapport.cs" />
     <Compile Include="postgres.cs" />
     <Compile Include="Program.cs" />
