@@ -8,6 +8,7 @@ namespace Uppgift08
 {
     class medlem
     {
-        // skapat av martin och Joel, kingarna i bingarna
+        // skapat av martin och Joel, kingarna i bingen
+
     }
 }
