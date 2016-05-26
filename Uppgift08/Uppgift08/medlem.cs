@@ -9,6 +9,11 @@ namespace Uppgift08
     class medlem
     {
         // skapat av martin och Joel, kingarna i bingen
+        
+        private void testametoden()
+        {
+            //Skapad av Joel
+        }
 
     }
 }
