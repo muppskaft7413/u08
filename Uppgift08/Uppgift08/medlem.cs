@@ -10,8 +10,13 @@ namespace Uppgift08
     {
         // skapat av martin och Joel, kingarna i bingen
         
+
         private void testametoden()
         {
+            for (int i = 0; i < apa; i++)
+            {
+                
+            }
             //Skapad av Joel
             string apa = "test";
         }
