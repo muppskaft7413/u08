@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Uppgift08
 {
-    class traningstyp
+    class medlemstyp
     {
     }
 }
