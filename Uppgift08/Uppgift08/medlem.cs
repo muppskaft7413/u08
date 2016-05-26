@@ -10,5 +10,10 @@ namespace Uppgift08
     {
         // skapat av martin och Joel, kingarna i bingen
 
+
+        void martinsmetod()
+        {
+            string martin = "hej";
+        }
     }
 }
