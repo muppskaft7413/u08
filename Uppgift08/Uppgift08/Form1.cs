@@ -16,5 +16,20 @@ namespace Uppgift08
         {
             InitializeComponent();
         }
+
+
+        // ############### EVENT HANDLERS  ############### 
+
+        /// <summary>
+        /// Öppnar upp ett nytt fönster för att ta fram närvarorapport
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button1_Click(object sender, EventArgs e)
+        {
+            hamtarapport newWin = new hamtarapport();   
+            newWin.Owner = this;
+            newWin.ShowDialog();
+        }
     }
 }
