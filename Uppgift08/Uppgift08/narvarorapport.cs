@@ -8,5 +8,6 @@ namespace Uppgift08
 {
     class narvarorapport
     {
+        public int narvarolista_id { get; set; }
     }
 }
