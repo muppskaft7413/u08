@@ -41,6 +41,8 @@
             this.gbSokSlutdatum = new System.Windows.Forms.GroupBox();
             this.cbAktivSlutDatum = new System.Windows.Forms.CheckBox();
             this.tbFeedback = new System.Windows.Forms.TextBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRapport)).BeginInit();
             this.gbSokDatum.SuspendLayout();
             this.gbSokSlutdatum.SuspendLayout();
@@ -95,7 +97,7 @@
             this.gbSokDatum.Controls.Add(this.dtpStartDatum);
             this.gbSokDatum.Location = new System.Drawing.Point(38, 80);
             this.gbSokDatum.Name = "gbSokDatum";
-            this.gbSokDatum.Size = new System.Drawing.Size(289, 65);
+            this.gbSokDatum.Size = new System.Drawing.Size(289, 135);
             this.gbSokDatum.TabIndex = 8;
             this.gbSokDatum.TabStop = false;
             this.gbSokDatum.Text = "Sök datum";
@@ -106,6 +108,7 @@
             this.dtpStartDatum.Name = "dtpStartDatum";
             this.dtpStartDatum.Size = new System.Drawing.Size(200, 20);
             this.dtpStartDatum.TabIndex = 10;
+            this.dtpStartDatum.ValueChanged += new System.EventHandler(this.dtpStartDatum_ValueChanged);
             // 
             // dtpSlutDatum
             // 
@@ -167,11 +170,29 @@
             this.tbFeedback.Size = new System.Drawing.Size(454, 20);
             this.tbFeedback.TabIndex = 15;
             // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(411, 110);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(120, 95);
+            this.listBox1.TabIndex = 16;
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(631, 110);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(120, 95);
+            this.listBox2.TabIndex = 17;
+            // 
             // hamtarapport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(922, 625);
+            this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.tbFeedback);
             this.Controls.Add(this.gbSokSlutdatum);
             this.Controls.Add(this.btnSok);
@@ -208,5 +229,7 @@
         private System.Windows.Forms.GroupBox gbSokSlutdatum;
         private System.Windows.Forms.CheckBox cbAktivSlutDatum;
         private System.Windows.Forms.TextBox tbFeedback;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBox2;
     }
 }
