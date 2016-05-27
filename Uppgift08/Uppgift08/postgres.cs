@@ -31,8 +31,8 @@ namespace Uppgift08
         /// Metod för att ställa fråga mot sql.
         /// </summary>
         /// <param name="sql"></param>
-        /// <returns></returns>
-        private DataTable sqlfråga(string sql)
+        /// <returns>tabell där svaren lagras</returns>
+        public DataTable sqlfråga(string sql)
         {
             try
             {
@@ -43,10 +43,8 @@ namespace Uppgift08
             }
             catch (NpgsqlException ex)
             {
-                //System.Windows.Forms.MessageBox.Show(ex.Message);
                 DataColumn c1 = new DataColumn("error");
                 DataColumn c2 = new DataColumn("errorMessage");
-
 
                 c1.DataType = System.Type.GetType("System.Boolean");
                 c2.DataType = System.Type.GetType("System.String");
@@ -54,7 +52,6 @@ namespace Uppgift08
                 _tabell.Columns.Add(c1);
                 _tabell.Columns.Add(c2);
 
-                //skapa rad
                 DataRow rad = _tabell.NewRow();
                 rad[c1] = true;
                 rad[c2] = ex.Message;
@@ -63,7 +60,7 @@ namespace Uppgift08
                 return _tabell;
             }
 
-            // Måste det itne gå att stänga?
+            // Måste det inte gå att stänga?
             //finally
             //{
             //    _conn.Close();
