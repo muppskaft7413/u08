@@ -12,8 +12,8 @@ namespace Uppgift08
 {
     public partial class hamtarapport : Form
     {
-        private DateTime startDatum;
-        private DateTime slutDatum;
+        public DateTime startDatum;
+        public DateTime slutDatum;
         private bool sokDatIntervall = false;
         
         public hamtarapport()
@@ -27,7 +27,7 @@ namespace Uppgift08
         /// Kontrollerar ifall man vill söka med datumintervall och hämtar upp värden
         /// sokDatIntervall sätts till true om så är fallet.
         /// </summary>
-        private void checkIntervallSok()
+        public void checkIntervallSok()
         {
             if (cbAktivSlutDatum.Checked)
             {
