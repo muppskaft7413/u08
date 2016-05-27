@@ -41,7 +41,7 @@
             this.gbSokSlutdatum = new System.Windows.Forms.GroupBox();
             this.cbAktivSlutDatum = new System.Windows.Forms.CheckBox();
             this.tbFeedback = new System.Windows.Forms.TextBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lbxGrupper = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRapport)).BeginInit();
             this.gbSokDatum.SuspendLayout();
@@ -170,13 +170,13 @@
             this.tbFeedback.Size = new System.Drawing.Size(454, 20);
             this.tbFeedback.TabIndex = 15;
             // 
-            // listBox1
+            // lbxGrupper
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(411, 110);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 95);
-            this.listBox1.TabIndex = 16;
+            this.lbxGrupper.FormattingEnabled = true;
+            this.lbxGrupper.Location = new System.Drawing.Point(411, 110);
+            this.lbxGrupper.Name = "lbxGrupper";
+            this.lbxGrupper.Size = new System.Drawing.Size(120, 95);
+            this.lbxGrupper.TabIndex = 16;
             // 
             // listBox2
             // 
@@ -192,7 +192,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(922, 625);
             this.Controls.Add(this.listBox2);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.lbxGrupper);
             this.Controls.Add(this.tbFeedback);
             this.Controls.Add(this.gbSokSlutdatum);
             this.Controls.Add(this.btnSok);
@@ -229,7 +229,7 @@
         private System.Windows.Forms.GroupBox gbSokSlutdatum;
         private System.Windows.Forms.CheckBox cbAktivSlutDatum;
         private System.Windows.Forms.TextBox tbFeedback;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox lbxGrupper;
         private System.Windows.Forms.ListBox listBox2;
     }
 }

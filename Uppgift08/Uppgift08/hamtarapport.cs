@@ -12,9 +12,8 @@ namespace Uppgift08
 {
     public partial class hamtarapport : Form
     {
-        public DateTime startDatum;
-        public DateTime slutDatum;
-        private bool sokDatIntervall = false;
+        private DateTime startDatum;
+        private DateTime slutDatum;
         
         public hamtarapport()
         {
@@ -27,13 +26,52 @@ namespace Uppgift08
         /// Kontrollerar ifall man vill söka med datumintervall och hämtar upp värden
         /// sokDatIntervall sätts till true om så är fallet.
         /// </summary>
-        public void checkIntervallSok()
+        private void checkIntervallSok()
         {
             if (cbAktivSlutDatum.Checked)
             {
-                sokDatIntervall = true;
                 slutDatum = dtpSlutDatum.Value;
-            }   
+            }  
+        }
+
+        /// <summary>
+        /// Reder ut vilken SQL-sats som skall skickas till servern
+        /// </summary>
+        /// <param name="soktyp"></param>
+        /// <returns>string datatyp med SQL-sats</returns>
+        private string vilkenSqlFraga(string soktyp)
+        {
+            string sql = "";
+
+            switch (soktyp)
+            {
+                case "sokInGrp":
+                    sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' group by traningsgrupp.grupp_id, namn, datum;";
+                    break;
+                case "sokGrp":
+                    sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '" + startDatum + "' group by traningsgrupp.grupp_id, namn, datum;";
+                    break;
+                case "sokNarv":
+                    sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + datum + "' and traningsgrupp.namn = 'Enhjuling';
+                    break;
+            }
+
+            return sql;
+        }
+
+        /// <summary>
+        /// Skickar SQL-frågan till databasen med hjälp av postgres-klassen
+        /// </summary>
+        /// <param name="sokTyp"></param>
+        /// <returns>DataTable datatyp</returns>
+        private DataTable getSome(string sokTyp)
+        {
+            DataTable _tabellSvar;
+            postgres nyPostGres = new postgres();
+
+            _tabellSvar = nyPostGres.sqlfråga(vilkenSqlFraga(sokTyp));
+
+            return _tabellSvar;
         }
         
 // ############# EVENT HANDLERS ##############
@@ -50,25 +88,30 @@ namespace Uppgift08
         {
             startDatum = dtpStartDatum.Value;           // Hämtar startdatumet för sök
             checkIntervallSok();                        // Kontrollerar för att söka i datumintervall
-            
+            bool fel = false;
+            string felmeddelande = "";
+            DataTable svarGrupp;
+            DataTable svarNarvaro;
+            DataTable svarNarvarolista;
 
-            postgres db = new postgres();
+            string sokInGrp = "sokInGrp";
+            string sokGrp = "sokGrp";
+            string sokNarv = "sokNarv";
 
-            
-            //List<language> lang = new List<language>();
+            // outputen blir bara massa gibberish nu för att det är tabellens header som spottas ut och inte innehållet i kolumnerna. TO-DO!!!
+            svarGrupp = getSome(sokInGrp);          // hämtar sökning efter träningsgrupper
+            svarNarvaro = getSome(sokNarv);         // hämtar sökning efter närvaro
+            lbxGrupper.DataSource = svarGrupp;      // ska ersättas med ett objekt av traningsgrupper-klassen, kod ej klart för att hacka upp tabell =(
+            dgvRapport.DataSource = svarNarvaro;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
 
-            //bool fel = false;
-            //string felmeddelande = "";
-            //lang = db.HämtaSpråk(ref fel, ref felmeddelande);
-            //dgvRapport.DataSource = lang;
-            //dgvRapport.Columns.Add("apa", "header");
-
-            //if (fel)
-            //{
-            //    tbFeedback.Text = felmeddelande;
-            //}
+            if (fel)
+            {
+                MessageBox.Show(felmeddelande);
+            }
             
         }
+
+
 
         // Aktivererar/deaktiverar datetimepicker för slutdatum
         private void cbAktivSlutDatum_CheckedChanged(object sender, EventArgs e)
