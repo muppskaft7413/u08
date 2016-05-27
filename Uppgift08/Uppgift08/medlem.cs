@@ -13,12 +13,13 @@ namespace Uppgift08
 
         private void testametoden()
         {
+            int apa = 5;
             for (int i = 0; i < apa; i++)
             {
                 
             }
             //Skapad av Joel
-            string apa = "test";
+            //string apa = "test";
         }
 
 

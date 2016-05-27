@@ -19,7 +19,7 @@ namespace Uppgift08
         /// <returns>intressent med nya uppgifter.</returns>
         public void uppdatera()
         {
-            return null;
+            //return null;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Uppgift08
         /// <returns>ny intressent</returns>
         public void laggTill()
         {
-            return null;
+            //return null;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Uppgift08
         /// <returns>Färre intressenter</returns>
         public void taBort()
         {
-            return null;
+            //return null;
         }
     }
 }
