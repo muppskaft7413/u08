@@ -12,11 +12,16 @@ namespace Uppgift08
         public string fnamn { get; set; }
         public string enamn { get; set; }
         public string pnr { get; set; }
-        public string adress { get; set; }
-        public string epost { get; set; }
-        public string telefon { get; set; }
-        public char kön { get; set; }
-        public int medlem_id { get; set; }
+        public bool deltagit { get; set; }
+        //public string adress { get; set; }
+        //public string epost { get; set; }
+        //public string telefon { get; set; }
+        //public char kön { get; set; }
+        //public int medlem_id { get; set; }
+
+        private DataTable _tabellMedlem;
+        postgres nyPostGress = new postgres();
+
 
 
 

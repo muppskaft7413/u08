@@ -68,6 +68,7 @@
     <Compile Include="inbetalning.cs" />
     <Compile Include="intressent.cs" />
     <Compile Include="medlem.cs" />
+    <Compile Include="narvarolista.cs" />
     <Compile Include="plats.cs" />
     <Compile Include="postgres.cs" />
     <Compile Include="Program.cs" />

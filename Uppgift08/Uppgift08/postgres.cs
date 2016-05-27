@@ -59,12 +59,10 @@ namespace Uppgift08
 
                 return _tabell;
             }
-
-            // Måste det inte gå att stänga?
-            //finally
-            //{
-            //    _conn.Close();
-            //}
+            finally
+            {
+                _conn.Close();
+            }
         }
 
 

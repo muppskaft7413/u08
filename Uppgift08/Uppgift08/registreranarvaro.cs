@@ -19,21 +19,24 @@ namespace Uppgift08
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //string theDate = dtpFran.Value.ToString("yyyy-MM-dd");
+            string theDate = dtpFran.Value.ToString("yyyy-MM-dd");
+            string namn = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
 
-            //traningsgrupp nyTraningsgrupp = new traningsgrupp();
-            //List<traningsgrupp> traningsgrupp = new List<traningsgrupp>();
-            //bool fel = false;
-            //string felmeddelande = "";
-            //traningsgrupp = nyTraningsgrupp.getTraningsgrupp(ref fel, ref felmeddelande, theDate);
-            //lbxGrupper.DataSource = traningsgrupp;
+            narvarolista nyNarvarolista = new narvarolista();
+            List<narvarolista> narvarolista = new List<narvarolista>();
+            bool fel = false;
+            string felmeddelande = "";
+            narvarolista = nyNarvarolista.getNarvarolista(ref fel, ref felmeddelande, theDate, namn);
+            dgvRegistreraNarvaro.DataSource = narvarolista;
+            //lbxGrupper.DataSource = medlem;
             //lbxGrupper.DisplayMember = "traningsgrupps";
             
-            
-            //if (fel)
-            //{
-            //    MessageBox.Show(felmeddelande);
-            //}
+
+
+            if (fel)
+            {
+                MessageBox.Show(felmeddelande);
+            }
 
         }
 
