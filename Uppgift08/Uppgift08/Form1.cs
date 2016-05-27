@@ -27,9 +27,15 @@ namespace Uppgift08
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            hamtarapport newWin = new hamtarapport();   
-            newWin.Owner = this;
-            newWin.ShowDialog();
+            hamtarapport nyRapport = new hamtarapport();   
+            //newWin.Owner = this;
+            nyRapport.ShowDialog();
+        }
+
+        private void btn_narvaro_Click(object sender, EventArgs e)
+        {
+            registreranarvaro nyNarvaro = new registreranarvaro();
+            nyNarvaro.ShowDialog();
         }
     }
 }

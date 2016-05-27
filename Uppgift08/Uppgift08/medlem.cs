@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,24 +9,17 @@ namespace Uppgift08
 {
     class medlem
     {
-        // skapat av martin och Joel, kingarna i bingen
-        
-
-        private void testametoden()
-        {
-            int apa = 5;
-            for (int i = 0; i < apa; i++)
-            {
-                
-            }
-            //Skapad av Joel
-            //string apa = "test";
-        }
+        public string fnamn { get; set; }
+        public string enamn { get; set; }
+        public string pnr { get; set; }
+        public string adress { get; set; }
+        public string epost { get; set; }
+        public string telefon { get; set; }
+        public char kön { get; set; }
+        public int medlem_id { get; set; }
 
 
-        void martinsmetod()
-        {
-            string martin = "hej";
-        }
+
+
     }
 }

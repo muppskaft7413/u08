@@ -50,6 +50,7 @@
             this.btn_narvaro.TabIndex = 1;
             this.btn_narvaro.Text = "Registrera närvaro";
             this.btn_narvaro.UseVisualStyleBackColor = true;
+            this.btn_narvaro.Click += new System.EventHandler(this.btn_narvaro_Click);
             // 
             // Form1
             // 
