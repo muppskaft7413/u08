@@ -41,7 +41,6 @@ namespace Uppgift08
             DataTable _resultatTillTabell;
 
             _resultatTillTabell = sqlfråga(vilkenSqlFraga(sokTyp));
-
             return _resultatTillTabell;
         }
 

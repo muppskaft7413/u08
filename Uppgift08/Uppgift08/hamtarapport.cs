@@ -87,12 +87,12 @@ namespace Uppgift08
             postgres sokning = new postgres();
             sokning.startDatum = dtpStartDatum.Value;
             sokning.slutDatum = dtpSlutDatum.Value;
-            svarGrupp = sokning.getSome(sokGrp);        // hämtar sökning efter träningsgrupper
+            //svarGrupp = sokning.getSome(sokGrp);        // hämtar sökning efter träningsgrupper
             svarNarvaro = sokning.getSome(sokNarv);     // hämtar sökning efter träningsgrupper
         
             // här får man lägga in kod för att reda ut vilken typ av objekt o lista man vill lägga resultatet i och var datan sedan spottas ut
 
-            lbxGrupper.DataSource = svarGrupp;      // ska ersättas med ett objekt av traningsgrupper-klassen, kod ej klart för att hacka upp tabell =(
+            //lbxGrupper.DataSource = svarGrupp;      // ska ersättas med ett objekt av traningsgrupper-klassen, kod ej klart för att hacka upp tabell =(
             dgvRapport.DataSource = svarNarvaro;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
 
 
