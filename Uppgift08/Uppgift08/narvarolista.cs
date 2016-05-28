@@ -21,7 +21,7 @@ namespace Uppgift08
         public List<narvarolista> getNarvarolista(ref bool fel, ref string felmeddelande, string datum, string namn)
         {
             string sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + datum + "' and traningsgrupp.namn = '" + namn + "'";
-            _tabellNarvaro = narvaroPost.sqlfråga(sql);
+            _tabellNarvaro = narvaroPost.sqlFråga(sql);
 
             List<narvarolista> narvarolistan = new List<narvarolista>();
             if (_tabellNarvaro.Columns[0].ColumnName.Equals("error"))

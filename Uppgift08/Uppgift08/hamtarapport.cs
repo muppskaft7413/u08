@@ -12,6 +12,9 @@ namespace Uppgift08
 {
     public partial class hamtarapport : Form
     {
+         string felSlutDatum = "Slutdatumet måste vara minst en dag mer än startdatumet.";
+        
+        // konstruktor
         public hamtarapport()
         {
             InitializeComponent();
@@ -19,62 +22,18 @@ namespace Uppgift08
             dtpSlutDatum.Value = dtpStartDatum.Value.AddDays(1);
         }
 
-        ///// <summary>
-        ///// Reder ut vilken SQL-sats som skall skickas till servern
-        ///// </summary>
-        ///// <param name="soktyp"></param>
-        ///// <returns>string datatyp med SQL-sats</returns>
-        //private string vilkenSqlFraga(string soktyp)
-        //{
-        //    string sql = "";
-
-        //    switch (soktyp)
-        //    {
-        //        case "sokInGrp":
-        //            sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' group by traningsgrupp.grupp_id, namn, datum;";
-        //            break;
-        //        case "sokGrp":
-        //            sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "' group by traningsgrupp.grupp_id, namn, datum;";
-        //            break;
-        //        case "sokNarv":
-        //            //sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + datum + "' and traningsgrupp.namn = 'Enhjuling'";
-        //            sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = 'Enhjuling'";
-        //            break;
-        //    }
-
-        //    return sql;
-        //}
-
-        ///// <summary>
-        ///// Skickar SQL-frågan till databasen med hjälp av postgres-klassen
-        ///// </summary>
-        ///// <param name="sokTyp"></param>
-        ///// <returns>DataTable datatyp</returns>
-        //private DataTable getSome(string sokTyp)
-        //{
-        //    DataTable _tabellSvar;
-        //    postgres nyPostGres = new postgres();
-
-        //    _tabellSvar = nyPostGres.sqlfråga(vilkenSqlFraga(sokTyp));
-
-        //    return _tabellSvar;
-        //}
-        
-// ############# EVENT HANDLERS ##############
-
-        //Stänger närvarorapporteringsfönstret
-        private void btn_klar_Click(object sender, EventArgs e)
+        private void vilkenSokning()
         {
-            this.Close();                                               // stänger detta fönster
+
         }
-
-
-        // Startar en sökning baserad på valda sökkriterier
-        private void btnSok_Click(object sender, EventArgs e)
+        
+        /// <summary>
+        /// Denna metod kör igång en sökning i databasen utefter
+        /// de sökparametrar som är aktuella.
+        /// </summary>
+        private void sok()
         {
-           
-            bool fel = false;
-            string felmeddelande = "";
+            
             DataTable svarGrupp;
             DataTable svarNarvaro;
             DataTable svarNarvarolista;
@@ -83,34 +42,46 @@ namespace Uppgift08
             string sokGrp = "sokGrp";
             string sokNarv = "sokNarv";
 
-            // outputen blir bara massa gibberish nu för att det är tabellens header som spottas ut och inte innehållet i kolumnerna. TO-DO!!!
             postgres sokning = new postgres();
             sokning.startDatum = dtpStartDatum.Value;
             sokning.slutDatum = dtpSlutDatum.Value;
             //svarGrupp = sokning.getSome(sokGrp);        // hämtar sökning efter träningsgrupper
-            svarNarvaro = sokning.getSome(sokNarv);     // hämtar sökning efter träningsgrupper
-        
-            // här får man lägga in kod för att reda ut vilken typ av objekt o lista man vill lägga resultatet i och var datan sedan spottas ut
+            svarNarvaro = sokning.sqlFråga(sokNarv);     // hämtar sökning efter träningsgrupper
 
-            //lbxGrupper.DataSource = svarGrupp;      // ska ersättas med ett objekt av traningsgrupper-klassen, kod ej klart för att hacka upp tabell =(
-            dgvRapport.DataSource = svarNarvaro;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
-
-
-            if (fel)
+            if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
             {
-                MessageBox.Show(felmeddelande);
+                tbFeedback.Text = svarNarvaro.Rows[0][1].ToString();
             }
-            
+            else
+            {
+                // här får man lägga in kod för att reda ut vilken typ av objekt o lista man vill lägga resultatet i och var datan sedan spottas ut
+
+                //lbxGrupper.DataSource = svarGrupp;      // ska ersättas med ett objekt av traningsgrupper-klassen, kod ej klart för att hacka upp tabell =(
+                dgvRapport.DataSource = svarNarvaro;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
+            }
         }
 
+        #region ############# EVENT HANDLERS ##############
 
+        //Stänger närvarorapporteringsfönstret
+        private void btn_klar_Click(object sender, EventArgs e)
+        {
+            this.Close();                                               // stänger detta fönster
+        }
 
-        // Aktivererar/deaktiverar datetimepicker för slutdatum
+        /// <summary>
+        /// 1. Aktivererar/deaktiverar datetimepicker för slutdatum.
+        /// 2. Om en aktivering sker så görs en sökning i databasen utefter
+        ///    de sökparametrar som är aktuella.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbAktivSlutDatum_CheckedChanged(object sender, EventArgs e)
         {
             if(dtpSlutDatum.Enabled == false)
             {
                 dtpSlutDatum.Enabled = true;
+                sok();
             }
             else
             {
@@ -119,9 +90,11 @@ namespace Uppgift08
         }
 
         /// <summary>
-        /// Kontrollerar så att funktionen som väljer slutdatum 
-        /// om man vill göra sökintervall ej är mindre än startdatumet.
-        /// Är den mindre returneras ett meddelande i feedbackfältet.
+        /// 1. Kontrollerar så att dtpSlutDatum ej är mindre eller samma 
+        ///    som dtpStartDatum. Är den det sätts dtpSlutDatum automatiskt
+        ///    till en dag senare än dtpStartDatum. Felmeddelande genereras
+        ///    till feedbackfältet!
+        /// 2. Om allt är OK så görs istället en sökning i databasen.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -130,22 +103,30 @@ namespace Uppgift08
             if(dtpSlutDatum.Value <= dtpStartDatum.Value)
             {
                 dtpSlutDatum.Value = dtpStartDatum.Value.AddHours(24);
-                tbFeedback.Text = "Slutdatumet måste vara minst en dag mer än startdatumet.";
+                tbFeedback.Text = felSlutDatum;
             }
             else
             {
                 tbFeedback.Clear();   // rensar feedbackfältet
+                sok();
             }
         }
 
-        // ändrar man startdatum till högre än slutdatum så ändras slutdatum till en dag mer än startdatum
+        /// <summary>
+        /// 1. Ändrar man startdatum till högre än slutdatum 
+        ///    så ändras slutdatum till en dag mer än startdatum.
+        /// 2. Sökning görs i databasen på aktuella sökparametrar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dtpStartDatum_ValueChanged(object sender, EventArgs e)
         {
             if(dtpStartDatum.Value >= dtpSlutDatum.Value)
             {
                 dtpSlutDatum.Value = dtpStartDatum.Value.AddDays(1);
             }
-
+            sok();
         }
+        #endregion
     }
 }
