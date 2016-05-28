@@ -37,7 +37,6 @@
             this.dtpStartDatum = new System.Windows.Forms.DateTimePicker();
             this.dtpSlutDatum = new System.Windows.Forms.DateTimePicker();
             this.btn_klar = new System.Windows.Forms.Button();
-            this.btnSok = new System.Windows.Forms.Button();
             this.gbSokSlutdatum = new System.Windows.Forms.GroupBox();
             this.cbAktivSlutDatum = new System.Windows.Forms.CheckBox();
             this.tbFeedback = new System.Windows.Forms.TextBox();
@@ -129,16 +128,6 @@
             this.btn_klar.UseVisualStyleBackColor = true;
             this.btn_klar.Click += new System.EventHandler(this.btn_klar_Click);
             // 
-            // btnSok
-            // 
-            this.btnSok.Location = new System.Drawing.Point(822, 238);
-            this.btnSok.Name = "btnSok";
-            this.btnSok.Size = new System.Drawing.Size(75, 23);
-            this.btnSok.TabIndex = 10;
-            this.btnSok.Text = "Sök";
-            this.btnSok.UseVisualStyleBackColor = true;
-            this.btnSok.Click += new System.EventHandler(this.btnSok_Click);
-            // 
             // gbSokSlutdatum
             // 
             this.gbSokSlutdatum.Controls.Add(this.cbAktivSlutDatum);
@@ -195,7 +184,6 @@
             this.Controls.Add(this.lbxGrupper);
             this.Controls.Add(this.tbFeedback);
             this.Controls.Add(this.gbSokSlutdatum);
-            this.Controls.Add(this.btnSok);
             this.Controls.Add(this.btn_klar);
             this.Controls.Add(this.gbSokDatum);
             this.Controls.Add(this.label4);
@@ -225,7 +213,6 @@
         private System.Windows.Forms.DateTimePicker dtpStartDatum;
         private System.Windows.Forms.DateTimePicker dtpSlutDatum;
         private System.Windows.Forms.Button btn_klar;
-        private System.Windows.Forms.Button btnSok;
         private System.Windows.Forms.GroupBox gbSokSlutdatum;
         private System.Windows.Forms.CheckBox cbAktivSlutDatum;
         private System.Windows.Forms.TextBox tbFeedback;

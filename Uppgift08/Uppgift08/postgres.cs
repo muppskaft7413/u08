@@ -15,43 +15,41 @@ namespace Uppgift08
         private NpgsqlCommand _cmd;
         private NpgsqlDataReader _dr;
         private DataTable _tabell;
-        public DateTime slutDatum { get; set; }
-        public DateTime startDatum { get; set; }
 
-        /// <summary>
-        /// konstruktor som öppnar en connection mot databasen så fort en instans skapas av klassen.
-        /// </summary>
-        public postgres()
-        {
-            _conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["db_g12"].ConnectionString);
-            _conn.Open();
-            _tabell = new DataTable();
-        }
+        public DateTime slutDatum { get; set; }          // Gör man datumintervallsökning behöver båda dessa DateTime-properties
+        public DateTime startDatum { get; set; }         // få ett värde då objekt skapas av klassen. slutDatum måste alltid
+                                                    // få ett värde.
 
+        ///// <summary>
+        ///// konstruktor som öppnar en connection mot databasen så fort en instans skapas av klassen.
+        ///// </summary>
+        //public postgres()
+        //{
+        //    _conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["db_g12"].ConnectionString);
+        //    _conn.Open();
+        //    _tabell = new DataTable();
+        //}
 
-
-        /// <summary>
-        /// Kombinerar metoden sqlfråga() som skickar fråga till databasen
-        /// ihop med metoden vilkenSqlFråga() som reder ut vilken sql-sats som ska skickas
-        /// </summary>
-        /// <param name="sokTyp"></param>
-        /// <returns>datatypen DataTable</returns>
-        public DataTable getSome(string sokTyp)
-        {
-            DataTable _resultatTillTabell;
-
-            _resultatTillTabell = sqlfråga(vilkenSqlFraga(sokTyp));
-
-            return _resultatTillTabell;
-        }
 
         /// <summary>
         /// Metod för att ställa fråga mot sql.
+        /// Input till metoden är ett textsträngskommando som
+        /// metoden vilkenSqlFråga() behöver för att kunna avgöra vilket
+        /// värde den skall ge till variabeln sql, som i sin tur blir den
+        /// SQL-fråga som skickas till databasen.
         /// </summary>
         /// <param name="sql"></param>
         /// <returns>tabell där svaren lagras</returns>
-        public DataTable sqlfråga(string sql)
+        public DataTable sqlFråga(string sokTyp)
         {
+            string sql;
+            sql = vilkenSqlFraga(sokTyp);
+
+            // Öppnar anslutning mot databasen.  
+            _conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["db_g12"].ConnectionString);
+            _conn.Open();
+            _tabell = new DataTable();
+
             try
             {
                 _cmd = new NpgsqlCommand(sql, _conn);
