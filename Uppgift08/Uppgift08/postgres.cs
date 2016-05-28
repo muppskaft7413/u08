@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Uppgift08 
 {
@@ -20,21 +21,59 @@ namespace Uppgift08
         public DateTime startDatum { get; set; }         // få ett värde då objekt skapas av klassen. slutDatum måste alltid
                                                     // få ett värde.
 
-        ///// <summary>
-        ///// konstruktor som öppnar en connection mot databasen så fort en instans skapas av klassen.
-        ///// </summary>
-        //public postgres()
-        //{
-        //    _conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["db_g12"].ConnectionString);
-        //    _conn.Open();
-        //    _tabell = new DataTable();
-        //}
+        /// <summary>
+        /// Reder ut vilka sökparametrar som skall användas och returnerar
+        /// ett unikt "kodord" som motsvarar detta.
+        /// </summary>
+        /// <param name="sokDatInterv"></param>
+        /// <param name="sokGrupp"></param>
+        /// <param name="sokLedare"></param>
+        /// <returns>Datatyp String</returns>
+        public string vilkenSokning(bool sokDatInterv, bool sokGrupp, bool sokLedare)
+        {
+            string resultat = "sokNarv";
+
+            if (!sokDatInterv && !sokGrupp && !sokLedare)                            // enbart söka enkeldatum
+            {
+                MessageBox.Show("sök enbart enkeldatum");
+            }
+            else if (sokDatInterv && !sokGrupp && !sokLedare)                       // enbart söka datumintervall
+            {
+                MessageBox.Show("sök enbart datumintervall");
+            }
+            else if (!sokDatInterv && sokGrupp && !sokLedare)                        // söka enkeldatum och grupp
+            {
+                MessageBox.Show("sök enbart enkeldatum och grupp");
+            }
+            else if (sokDatInterv && sokGrupp && !sokLedare)                        // söka datumintervall och grupp
+            {
+                MessageBox.Show("sök datumintervall och grupp");
+            }
+            else if (!sokDatInterv && sokGrupp && sokLedare)                        // sök enkeldatum, grupp och ledare
+            {
+                MessageBox.Show("sök enkeldatum, grupp och ledare");
+            }
+            else if (sokDatInterv && sokGrupp && sokLedare)                        // sök datumintervall, grupp och ledare
+            {
+                MessageBox.Show("sök datumintervall, grupp och ledare");
+            }
+            else if (!sokDatInterv && !sokGrupp && sokLedare)                        // sök enkeldatum och ledare
+            {
+                MessageBox.Show("sök enkeldatum och ledare");
+            }
+            else if (sokDatInterv && !sokGrupp && sokLedare)                        // sök datumintervall och ledare
+            {
+                MessageBox.Show("sök datumintervall och ledare");
+            }
+
+            return resultat;
+        }
 
 
         /// <summary>
         /// Metod för att ställa fråga mot sql.
-        /// Input till metoden är ett textsträngskommando som
-        /// metoden vilkenSqlFråga() behöver för att kunna avgöra vilket
+        /// Input till metoden är ett "kodord" som
+        /// metoden vilkenSqlFraga() behöver för att kunna avgöra vilket
         /// värde den skall ge till variabeln sql, som i sin tur blir den
         /// SQL-fråga som skickas till databasen.
         /// </summary>
@@ -92,11 +131,11 @@ namespace Uppgift08
 
             switch (soktyp)
             {
-                case "sokInGrp":
-                    sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' group by traningsgrupp.grupp_id, namn, datum;";
+                case "sokInGrp": // Datumintervallsökning som återger vilka träningsgrupper som tränar inom ett datumintervall
+                    sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "';";
                     break;
-                case "sokGrp":
-                    sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "' group by traningsgrupp.grupp_id, namn, datum;";
+                case "sokGrp": // Enkel datumsökning som återger vilka träningsgrupper som tränar ett visst datum
+                    sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "';";
                     break;
                 case "sokNarv":
                     //sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + datum + "' and traningsgrupp.namn = 'Enhjuling'";
