@@ -12,6 +12,7 @@ namespace Uppgift08
         public int grupp_id { get; set; }
         public string namn { get; set; }
         public string beskrivning { get; set; }
+        public object tid { get; set; }
 
         public string traningsgrupps
         {
@@ -29,7 +30,7 @@ namespace Uppgift08
         {
             //string sql = "select fnamn, enamn, pnr, namn, datum, starttid, sluttid, deltagit, trantillf.narvarolista_id from trantillf JOIN deltagare ON trantillf.narvarolista_id = deltagare.narvarolista_id JOIN medlem ON deltagare.medlem_id = medlem.medlem_id JOIN traningsgrupp ON deltagare.grupp_id = traningsgrupp.grupp_id WHERE trantillf.datum >= '2016-02-26' and trantillf.datum <= '2016-05-30';";
 
-            string sql = "select traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '"+datum+"' group by traningsgrupp.grupp_id, namn, datum;";
+            string sql = "select traningsgrupp.grupp_id, starttid, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '"+datum+"' group by traningsgrupp.grupp_id, namn, datum, starttid;";
             _tabellGrupp = nyPostGress.sqlfråga(sql);
 
             List<traningsgrupp> traningsgrupp = new List<traningsgrupp>();
@@ -49,9 +50,8 @@ namespace Uppgift08
                 {
                     traningsgruppRatt = new traningsgrupp()
                     {
-                        namn = _tabellGrupp.Rows[i]["namn"].ToString(),
-                        //enamn = _tabellMedlem.Rows[i]["enamn"].ToString(),
-                        //pnr = _tabellMedlem.Rows[i]["pnr"].ToString()
+                        namn = (string)_tabellGrupp.Rows[i]["namn"],
+                        tid = _tabellGrupp.Rows[i]["starttid"]
                     };
                     traningsgrupp.Add(traningsgruppRatt);
                 }
