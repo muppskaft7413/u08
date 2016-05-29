@@ -140,13 +140,7 @@ namespace Uppgift08
                 case "sokGrp": // Enkel datumsökning som återger vilka träningsgrupper som tränar ett visst datum
                     sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "';";
                     break;
-                case "sokNarv":
-                    //sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + datum + "' and traningsgrupp.namn = 'Enhjuling'";
-                    sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = 'Enhjuling'";
-                    break;
-                case "sokNarvAdv":
-                    sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
-                    break;
+                
             }
             }
             else if (soktyp == "ledare")
@@ -155,6 +149,15 @@ namespace Uppgift08
             }
             else if (soktyp == "narvaro")
             {
+                switch (sokparameter)
+                {
+                    case "sokNarv":
+                        sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = 'Enhjuling'";
+                        break;
+                    case "sokNarvAdv":
+                        sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
+                        break;
+                }
 
             }
 
