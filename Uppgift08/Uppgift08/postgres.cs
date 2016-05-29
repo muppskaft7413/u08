@@ -35,35 +35,35 @@ namespace Uppgift08
 
             if (!sokDatInterv && !sokGrupp && !sokLedare)                            // enbart söka enkeldatum
             {
-                MessageBox.Show("sök enbart enkeldatum");
+                resultat = "datEnk";
             }
             else if (sokDatInterv && !sokGrupp && !sokLedare)                       // enbart söka datumintervall
             {
-                MessageBox.Show("sök enbart datumintervall");
+                resultat = "datInt";
             }
             else if (!sokDatInterv && sokGrupp && !sokLedare)                        // söka enkeldatum och grupp
             {
-                MessageBox.Show("sök enbart enkeldatum och grupp");
+                resultat = "datEnkGrp";
             }
             else if (sokDatInterv && sokGrupp && !sokLedare)                        // söka datumintervall och grupp
             {
-                MessageBox.Show("sök datumintervall och grupp");
+                resultat = "datIntGrp";
             }
             else if (!sokDatInterv && sokGrupp && sokLedare)                        // sök enkeldatum, grupp och ledare
             {
-                MessageBox.Show("sök enkeldatum, grupp och ledare");
+                resultat = "datEnkGrpLed";
             }
             else if (sokDatInterv && sokGrupp && sokLedare)                        // sök datumintervall, grupp och ledare
             {
-                MessageBox.Show("sök datumintervall, grupp och ledare");
+                resultat = "datIntGrpLed";
             }
             else if (!sokDatInterv && !sokGrupp && sokLedare)                        // sök enkeldatum och ledare
             {
-                MessageBox.Show("sök enkeldatum och ledare");
+                resultat = "datEnkLed";
             }
             else if (sokDatInterv && !sokGrupp && sokLedare)                        // sök datumintervall och ledare
             {
-                MessageBox.Show("sök datumintervall och ledare");
+                resultat = "datIntLed";
             }
 
             return resultat;
@@ -79,10 +79,10 @@ namespace Uppgift08
         /// </summary>
         /// <param name="sql"></param>
         /// <returns>tabell där svaren lagras</returns>
-        public DataTable sqlFråga(string sokTyp)
+        public DataTable sqlFråga(string sokparameter, string soktyp)
         {
             string sql;
-            sql = vilkenSqlFraga(sokTyp);
+            sql = vilkenSqlFraga(sokparameter, soktyp);
 
             // Öppnar anslutning mot databasen.  
             _conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["db_g12"].ConnectionString);
@@ -123,25 +123,37 @@ namespace Uppgift08
         /// <summary>
         /// Reder ut vilken SQL-sats som metoden sqlfråga() skall skicka till servern
         /// </summary>
-        /// <param name="soktyp"></param>
+        /// <param name="sokparameter"></param>
         /// <returns>string datatyp med SQL-sats</returns>
-        private string vilkenSqlFraga(string soktyp)
+        private string vilkenSqlFraga(string sokparameter, string soktyp)
         {
             string sql = "";
 
-            switch (soktyp)
+            if (soktyp == "grupp")
             {
-                case "sokInGrp": // Datumintervallsökning som återger vilka träningsgrupper som tränar inom ett datumintervall
-                    sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "';";
-                    break;
-                case "sokGrp": // Enkel datumsökning som återger vilka träningsgrupper som tränar ett visst datum
-                    sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "';";
-                    break;
-                case "sokNarv":
-                    //sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + datum + "' and traningsgrupp.namn = 'Enhjuling'";
-                    sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = 'Enhjuling'";
-                    break;
+                switch (sokparameter)
+                {
+                    case "sokInGrp": // Datumintervallsökning som återger vilka träningsgrupper som tränar inom ett datumintervall
+                        sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "';";
+                        break;
+                    case "sokGrp": // Enkel datumsökning som återger vilka träningsgrupper som tränar ett visst datum
+                        sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "';";
+                        break;
+                    case "sokNarv":
+                        //sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + datum + "' and traningsgrupp.namn = 'Enhjuling'";
+                        sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = 'Enhjuling'";
+                        break;
+                }
             }
+            else if (soktyp == "ledare")
+            {
+
+            }
+            else if (soktyp == "narvaro")
+            {
+
+            }
+            
 
             return sql;
         }

@@ -36,12 +36,14 @@ namespace Uppgift08
             bool sokGrupp = !(lbxGrupper.SelectedItems.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
             bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
 
+            string soktyp = "";
+
             postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
             s.startDatum = dtpStartDatum.Value;
             s.slutDatum = dtpSlutDatum.Value;
 
             //sökning
-            sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare));   //case finns för "sokInGrp", "sokGrp" eller "sokNarv" i postrges
+            sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);   //case finns för "sokInGrp", "sokGrp" eller "sokNarv" i postrges
 
             if (sokningResultat.Columns[0].ColumnName.Equals("error"))
             {
