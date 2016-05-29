@@ -19,8 +19,6 @@ namespace Uppgift08
         //public char kön { get; set; }
         //public int medlem_id { get; set; }
 
-        private DataTable _tabellMedlem;
-        postgres nyPostGress = new postgres();
 
 
 
