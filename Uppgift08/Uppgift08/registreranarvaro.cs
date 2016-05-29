@@ -39,7 +39,7 @@ namespace Uppgift08
             sokning.startDatum = dtpFran.Value;
             sokning.slutDatum = dtpSlutDatum.Value;
             sokning.grupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
-            svarNarvaro = sokning.sqlFråga(sokGrp);     // hämtar sökning efter träningsgrupper
+            svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(false, false, false), sokGrp);     // hämtar sökning efter träningsgrupper
 
             if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
             {
@@ -81,7 +81,7 @@ namespace Uppgift08
             postgres sokning = new postgres();
             sokning.startDatum = dtpFran.Value;
             sokning.slutDatum = dtpSlutDatum.Value;
-            svarNarvaro = sokning.sqlFråga(sokGrp);     // hämtar sökning efter träningsgrupper
+            svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(false, false, false), sokGrp);     // hämtar sökning efter träningsgrupper
 
             if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
             {
@@ -121,7 +121,7 @@ namespace Uppgift08
             sokning.grupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
             sokning.startDatum = dtpFran.Value;
             sokning.slutDatum = dtpSlutDatum.Value;
-            svarNarvaro = sokning.sqlFråga(sokNarv);     // hämtar sökning efter träningsgrupper
+            svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(false,false,false), sokNarv);     // hämtar sökning efter träningsgrupper
 
             if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
             {

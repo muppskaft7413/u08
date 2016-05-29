@@ -54,7 +54,7 @@ namespace Uppgift08
         public List<intressent> getIntressenter(ref bool fel, ref string felmeddelande)
         {
             string sql = "select language_id as \"la.language_id\", name as \"la.name\" from language la";
-            _tabellIntressent = nyPostGress.sqlFråga(sql);
+            _tabellIntressent = nyPostGress.sqlFråga(nyPostGress.vilkenSokning(false, false, false), sql);
 
             List<intressent> intressenter = new List<intressent>();
             if (_tabellIntressent.Columns[0].ColumnName.Equals("error"))
