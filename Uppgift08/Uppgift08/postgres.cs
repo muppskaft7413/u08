@@ -16,6 +16,7 @@ namespace Uppgift08
         private NpgsqlDataReader _dr;
         private DataTable _tabell;
 
+        public string grupp { get; set; }
         public DateTime slutDatum { get; set; }          // Gör man datumintervallsökning behöver båda dessa DateTime-properties
         public DateTime startDatum { get; set; }         // få ett värde då objekt skapas av klassen. slutDatum måste alltid
                                                     // få ett värde.
@@ -23,12 +24,12 @@ namespace Uppgift08
         ///// <summary>
         ///// konstruktor som öppnar en connection mot databasen så fort en instans skapas av klassen.
         ///// </summary>
-        //public postgres()
-        //{
-        //    _conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["db_g12"].ConnectionString);
-        //    _conn.Open();
-        //    _tabell = new DataTable();
-        //}
+        public postgres()
+        {
+            _conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["db_g12"].ConnectionString);
+            _conn.Open();
+            _tabell = new DataTable();
+        }
 
 
         /// <summary>
@@ -102,10 +103,12 @@ namespace Uppgift08
                     //sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + datum + "' and traningsgrupp.namn = 'Enhjuling'";
                     sql = "select fnamn, enamn, pnr, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = 'Enhjuling'";
                     break;
+                case "sokNarvAdv":
+                    sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
+                    break;
             }
 
             return sql;
         }
-
     }
 }

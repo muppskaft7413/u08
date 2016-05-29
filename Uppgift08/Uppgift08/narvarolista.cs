@@ -12,6 +12,8 @@ namespace Uppgift08
         public string fornamn { get; set; }
         public string efternamn { get; set; }
         public string personnummer { get; set; }
+        public string narvaro { get; set; }
+
         public bool deltagit { get; set; }
         private DataTable _tabellNarvaro;
         postgres narvaroPost = new postgres();
