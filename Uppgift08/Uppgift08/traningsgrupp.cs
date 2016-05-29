@@ -22,54 +22,5 @@ namespace Uppgift08
         }
 
 
-        postgres nyPostGress = new postgres();
-
-
-        //public List<traningsgrupp> hamtaTraningsgrupp()
-        //{
-        //    List<traningsgrupp> nyTraningsgrupp = new List<traningsgrupp>();
-        //    DataTable traningsGrupp;
-        //    string fråga = "sokGrp";
-        //    traningsGrupp = nyPostGress.sqlFråga(fråga);
-        //    nyTraningsgrupp.Add(traningsGrupp);
-        //}
-
-        //public List<traningsgrupp> getTraningsgrupp(ref bool fel, ref string felmeddelande, string datum)
-
-        //public List<traningsgrupp> getTraningsgrupp(ref bool fel, ref string felmeddelande, string datum)
-        //{
-        //    //string sql = "select fnamn, enamn, pnr, namn, datum, starttid, sluttid, deltagit, trantillf.narvarolista_id from trantillf JOIN deltagare ON trantillf.narvarolista_id = deltagare.narvarolista_id JOIN medlem ON deltagare.medlem_id = medlem.medlem_id JOIN traningsgrupp ON deltagare.grupp_id = traningsgrupp.grupp_id WHERE trantillf.datum >= '2016-02-26' and trantillf.datum <= '2016-05-30';";
-
-        //    string sql = "select traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '"+datum+"' group by traningsgrupp.grupp_id, namn, datum;";
-        //    _tabellGrupp = nyPostGress.sqlFråga(sql);
-
-        //    List<traningsgrupp> traningsgrupp = new List<traningsgrupp>();
-        //    if (_tabellGrupp.Columns[0].ColumnName.Equals("error"))
-        //    {
-
-        //        traningsgrupp traningFel = new traningsgrupp();
-        //        traningsgrupp.Add(traningFel);
-        //        fel = true;
-        //        felmeddelande = _tabellGrupp.Rows[0][1].ToString();
-
-        //    }
-        //    else
-        //    {
-        //        traningsgrupp traningsgruppRatt;
-                //for (int i = 0; i < _tabellGrupp.Rows.Count; i++)
-                //{
-                //    traningsgruppRatt = new traningsgrupp()
-                //    {
-                //        namn = _tabellGrupp.Rows[i]["namn"].ToString(),
-                //        //enamn = _tabellMedlem.Rows[i]["enamn"].ToString(),
-                //        //pnr = _tabellMedlem.Rows[i]["pnr"].ToString()
-                //    };
-                //    traningsgrupp.Add(traningsgruppRatt);
-                //}
-
-        //    }
-        //    return traningsgrupp;
-        //}
-
     }
 }
