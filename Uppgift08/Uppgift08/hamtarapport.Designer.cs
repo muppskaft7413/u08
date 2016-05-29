@@ -41,7 +41,7 @@
             this.cbAktivSlutDatum = new System.Windows.Forms.CheckBox();
             this.tbFeedback = new System.Windows.Forms.TextBox();
             this.lbxGrupper = new System.Windows.Forms.ListBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.lbxLedare = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRapport)).BeginInit();
             this.gbSokDatum.SuspendLayout();
             this.gbSokSlutdatum.SuspendLayout();
@@ -167,20 +167,20 @@
             this.lbxGrupper.Size = new System.Drawing.Size(120, 95);
             this.lbxGrupper.TabIndex = 16;
             // 
-            // listBox2
+            // lbxLedare
             // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(631, 110);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(120, 95);
-            this.listBox2.TabIndex = 17;
+            this.lbxLedare.FormattingEnabled = true;
+            this.lbxLedare.Location = new System.Drawing.Point(631, 110);
+            this.lbxLedare.Name = "lbxLedare";
+            this.lbxLedare.Size = new System.Drawing.Size(120, 95);
+            this.lbxLedare.TabIndex = 17;
             // 
             // hamtarapport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(922, 625);
-            this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.lbxLedare);
             this.Controls.Add(this.lbxGrupper);
             this.Controls.Add(this.tbFeedback);
             this.Controls.Add(this.gbSokSlutdatum);
@@ -217,6 +217,6 @@
         private System.Windows.Forms.CheckBox cbAktivSlutDatum;
         private System.Windows.Forms.TextBox tbFeedback;
         private System.Windows.Forms.ListBox lbxGrupper;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox lbxLedare;
     }
 }
