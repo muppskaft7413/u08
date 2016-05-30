@@ -23,9 +23,6 @@ namespace Uppgift08
         private NpgsqlDataAdapter _da;
         private DataTable _dt;
         private NpgsqlCommandBuilder builder;
-        string id2;
-        string id3;
-        string id4;
         string grupp;
 
 
@@ -194,9 +191,9 @@ namespace Uppgift08
                 int selectedrowindex = dgvRegistreraNarvaro.SelectedCells[0].RowIndex;
 
                 DataGridViewRow selectedRow = dgvRegistreraNarvaro.Rows[selectedrowindex];
-                 id2 = Convert.ToString(selectedRow.Cells["personnummer"].Value.ToString());
-                 id3 = Convert.ToString(selectedRow.Cells["deltagit"].Value.ToString());
-                 id4 = Convert.ToString(selectedRow.Cells["narvaro"].Value.ToString());
+                string id2 = Convert.ToString(selectedRow.Cells["personnummer"].Value.ToString());
+                string id3 = Convert.ToString(selectedRow.Cells["deltagit"].Value.ToString());
+                string id4 = Convert.ToString(selectedRow.Cells["narvaro"].Value.ToString());
 
                 if (id3 == "False")
                 {
