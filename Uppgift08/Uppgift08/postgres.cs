@@ -22,6 +22,7 @@ namespace Uppgift08
         public DateTime startDatum { get; set; }         // få ett värde då objekt skapas av klassen. slutDatum måste alltid
                                                     // få ett värde.
         string nyaGrupper;                          //variabel där frågeställningssträng lagras.
+                
 
         /// <summary>
         /// Metod som omvandlar hämtade grupper till sträng med rätt frågeställning.
@@ -174,16 +175,16 @@ namespace Uppgift08
                         
                 }
             }
-            else if (soktyp == "ledare")
+            else if (soktyp == "ledare")  // söker ledare baserat på vilken grupp som är markerad i grupplistan.
             {
+                string sokGrupper = antalGrupper(grupp); //omvandlar Listboxobjekt av markerad(e) grupp(er) och returnerar en SQL-anpassad textsträng med dessa
                 switch (sokparameter)
                 {
                     case "datEnkGrp":
-                        sql = "select fnamn, enamn from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
+                        sql = "select fnamn, enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp WHERE " + sokGrupper;
                         break;
-
                     case "datIntGrp":
-                        //sql = ""
+                        sql = "select fnamn, enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp WHERE " + sokGrupper;
                         break;
                 }
                 

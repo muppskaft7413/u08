@@ -11,6 +11,9 @@ namespace Uppgift08
         public string förnamn { get; set; }
         public string efternamn { get; set; }
 
+        public string a;
+        public string b;
+
         public string helaGruppledaren
         {
             get
@@ -18,5 +21,14 @@ namespace Uppgift08
                 return "ledare " + förnamn + " " + efternamn;
             }
         }
+
+        public string forOchEftNamn
+        {
+            get
+            {
+                return förnamn + " " + efternamn;
+            }
+        }
+
     }
 }
