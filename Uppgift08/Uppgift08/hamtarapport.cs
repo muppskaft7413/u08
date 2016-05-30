@@ -25,6 +25,74 @@ namespace Uppgift08
 
 
 
+        private void sokgrupper()
+        {
+            DataTable sokningResultat;
+            bool sokDatInterv = cbAktivSlutDatum.Checked;                                       // kollar om datumintervallsökning skall göras
+            bool sokGrupp = !(lbxGrupper.SelectedItems.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
+            bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
+            string soktyp = "grupp";
+
+            postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
+            s.startDatum = dtpStartDatum.Value;
+            s.slutDatum = dtpSlutDatum.Value;
+
+            sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
+
+            //if (sokningResultat.Columns[0].ColumnName.Equals("error"))
+            //{
+            //    tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
+            //}
+            //else if( sokningResultat.Columns[0].ColumnName.Equals(null))
+            //{
+            List<traningsgrupp> grupplista = new List<traningsgrupp>();
+
+            for (int y = 0; y < sokningResultat.Rows.Count; y++)
+            {
+                traningsgrupp grupp = new traningsgrupp();
+                grupp.namn = sokningResultat.Rows[y]["namn"].ToString();
+                grupplista.Add(grupp);
+            }
+
+            lbxGrupper.DataSource = grupplista;
+            lbxGrupper.DisplayMember = "namn";
+        }
+
+        private void sokledare()
+        {
+            DataTable sokningResultat;
+            bool sokDatInterv = cbAktivSlutDatum.Checked;                                       // kollar om datumintervallsökning skall göras
+            bool sokGrupp = !(lbxGrupper.Items.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
+            bool sokLedare = !(lbxLedare.Items.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
+
+            string soktyp = "ledare";
+
+            postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
+            s.startDatum = dtpStartDatum.Value;
+            s.slutDatum = dtpSlutDatum.Value;
+            //if (sokGrupp) { s.grupp = lbxGrupper.SelectedItem.ToString(); };
+            if (sokGrupp) 
+            {
+                s.grupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
+            };
+
+
+            // sökning i db görs här, svaret skickas tillbaka in i tabellen sokningResultat som har datatypen DataTable
+            sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
+
+            List<gruppledare> ledarlista = new List<gruppledare>();
+
+            for (int x = 0; x < sokningResultat.Rows.Count; x++)
+            {
+                gruppledare ledare = new gruppledare();
+                ledare.förnamn = sokningResultat.Rows[x]["fnamn"].ToString();
+                ledare.efternamn = sokningResultat.Rows[x]["enamn"].ToString();
+                ledarlista.Add(ledare);
+            }
+
+            lbxLedare.DataSource = ledarlista;
+        }
+
         /// <summary>
         /// Denna metod kör igång en sökning i databasen utefter
         /// de sökparametrar som är aktuella.
@@ -41,9 +109,11 @@ namespace Uppgift08
             postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
             s.startDatum = dtpStartDatum.Value;
             s.slutDatum = dtpSlutDatum.Value;
+            if (sokGrupp) { s.grupp = lbxGrupper.SelectedItem.ToString(); };
+            
 
             //for (int i = 0; i < 3; i++)
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 1; i++)
             {
 
                 // ovan iteration körs 3ggr, vilket nedan kommer generar 3 olika sökningar (dvs efter grupp, ledare eller narvaro).
@@ -64,7 +134,8 @@ namespace Uppgift08
                 sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
 
                 // variabeln sokningResultat behandlas. Först kollas om den är felaktig, annars portioneras infon ut till de olika listboxarna och datagridviewen.
-                if (sokningResultat.Columns[0].ColumnName.Equals("error"))
+                //if (sokningResultat.Columns[0].ColumnName.Equals("error"))
+                if (2<1)
                 {
                     tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
                 }
@@ -83,21 +154,26 @@ namespace Uppgift08
 
                         lbxGrupper.DataSource = grupplista;
                         lbxGrupper.DisplayMember = "namn";
+                        
 
                     }
                     else if (soktyp == "ledare")
                     {
-                        List<gruppledare> ledarlista = new List<gruppledare>();
-
-                        for (int x = 0; x < sokningResultat.Rows.Count; x++)
+                        if(lbxGrupper.Items.Count > 0)
                         {
-                            gruppledare ledare = new gruppledare();
-                            ledare.förnamn = sokningResultat.Rows[x]["fnamn"].ToString();
-                            ledare.efternamn = sokningResultat.Rows[x]["enamn"].ToString();
-                            ledarlista.Add(ledare);
-                        }
+                            List<gruppledare> ledarlista = new List<gruppledare>();
 
-                        lbxLedare.DataSource = ledarlista;
+                            for (int x = 0; x < sokningResultat.Rows.Count; x++)
+                            {
+                                gruppledare ledare = new gruppledare();
+                                ledare.förnamn = sokningResultat.Rows[x]["fnamn"].ToString();
+                                ledare.efternamn = sokningResultat.Rows[x]["enamn"].ToString();
+                                ledarlista.Add(ledare);
+                            }
+
+                            lbxLedare.DataSource = ledarlista;
+                        }
+                        
                     }
                     else
                     {
@@ -140,13 +216,15 @@ namespace Uppgift08
             if(dtpSlutDatum.Enabled == false)
             {
                 dtpSlutDatum.Enabled = true;
-                sok();
+                sokgrupper();
             }
             else
             {
                 dtpSlutDatum.Enabled = false;
             }
         }
+
+     
 
         /// <summary>
         /// 1. Kontrollerar så att dtpSlutDatum ej är mindre eller samma 
@@ -167,7 +245,7 @@ namespace Uppgift08
             else
             {
                 tbFeedback.Clear();   // rensar feedbackfältet
-                sok();
+                sokgrupper();
             }
         }
 
@@ -184,14 +262,16 @@ namespace Uppgift08
             {
                 dtpSlutDatum.Value = dtpStartDatum.Value.AddDays(1);
             }
-            sok();
+            sokgrupper();
         }
        
 
         private void lbxGrupper_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            sokledare();
         }
+
+
         #endregion
     }
 }
