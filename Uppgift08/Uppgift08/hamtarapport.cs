@@ -34,9 +34,17 @@ namespace Uppgift08
             bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
             string soktyp = "grupp";
 
+            List<string> ledarLista = new List<string>();
+            //foreach (object selectedItem in lbxLedare.SelectedItems)
+            foreach (gruppledare selectedItem in lbxLedare.SelectedItems)
+            {
+                ledarLista.Add(selectedItem.medlemId.ToString());
+            }
+
             postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
             s.startDatum = dtpStartDatum.Value;
             s.slutDatum = dtpSlutDatum.Value;
+            s.ledare = ledarLista;
 
             sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
 
@@ -62,7 +70,8 @@ namespace Uppgift08
         }
 
         /// <summary>
-        /// Sökning görs efter ledare för en grupp.
+        /// Sökning görs efter de ledare som har 
+        /// inbokade pass inom den valda tiden.
         /// </summary>
         private void sokledare()
         {
@@ -72,19 +81,10 @@ namespace Uppgift08
             bool sokLedare = !(lbxLedare.Items.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
 
             string soktyp = "ledare";
-            
-            List<string> gruppLista = new List<string>();
-            foreach (object selectedItem in lbxGrupper.SelectedItems)
-            {
-                gruppLista.Add(lbxGrupper.GetItemText(selectedItem));
-            }
-
-
 
             postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
             s.startDatum = dtpStartDatum.Value;
             s.slutDatum = dtpSlutDatum.Value;
-            s.grupp = gruppLista;
 
             // sökning i db görs här, svaret skickas tillbaka in i tabellen sokningResultat som har datatypen DataTable
             sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
@@ -102,6 +102,7 @@ namespace Uppgift08
                 {
                     ledare = new gruppledare()
                     {
+                        medlemId = sokningResultat.Rows[i]["ledare"].ToString(),
                         förnamn = sokningResultat.Rows[i]["fnamn"].ToString(),
                         efternamn = sokningResultat.Rows[i]["enamn"].ToString()
                     };
@@ -238,8 +239,10 @@ namespace Uppgift08
             if(dtpSlutDatum.Enabled == false)
             {
                 dtpSlutDatum.Enabled = true;
-                lbxGrupper.DataSource = null;
-                sokgrupper();
+                lbxLedare.DataSource = null;
+                lbxGrupper.ClearSelected();
+                
+                sokledare();
             }
             else
             {
@@ -268,8 +271,8 @@ namespace Uppgift08
             else
             {
                 tbFeedback.Clear();   // rensar feedbackfältet
-                lbxGrupper.DataSource = null;
-                sokgrupper();
+                lbxLedare.DataSource = null;
+                sokledare();
             }
         }
 
@@ -286,19 +289,25 @@ namespace Uppgift08
             {
                 dtpSlutDatum.Value = dtpStartDatum.Value.AddDays(1);
             }
-            lbxGrupper.DataSource = null;
-            sokgrupper();
-
+            lbxLedare.DataSource = null;
+            sokledare();
+            
+            
         }
        
 
         private void lbxGrupper_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lbxLedare.DataSource = null;
-            sokledare();
+
         }
 
-
+        private void lbxLedare_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lbxGrupper.DataSource = null;
+            sokgrupper();
+        }
         #endregion
+
+
     }
 }

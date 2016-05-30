@@ -8,11 +8,9 @@ namespace Uppgift08
 {
     class gruppledare
     {
+        public string medlemId { get; set; }
         public string förnamn { get; set; }
         public string efternamn { get; set; }
-
-        public string a;
-        public string b;
 
         public string helaGruppledaren
         {
