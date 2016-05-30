@@ -11,7 +11,7 @@ namespace Uppgift08
         public string förnamn { get; set; }
         public string efternamn { get; set; }
 
-        public string gruppledaren
+        public string helaGruppledaren
         {
             get
             {

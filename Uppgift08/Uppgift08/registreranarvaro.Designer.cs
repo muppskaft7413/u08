@@ -32,7 +32,7 @@
             this.lbxGrupper = new System.Windows.Forms.ListBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.gbSokSlutdatum = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.cbAktivSlutDatum = new System.Windows.Forms.CheckBox();
             this.dtpSlutDatum = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dtpFran = new System.Windows.Forms.DateTimePicker();
@@ -43,6 +43,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.gpGrupp = new System.Windows.Forms.GroupBox();
             this.lbxInfo = new System.Windows.Forms.ListBox();
+            this.lbxLedare = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegistreraNarvaro)).BeginInit();
             this.gbSokSlutdatum.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -78,7 +79,7 @@
             // 
             // gbSokSlutdatum
             // 
-            this.gbSokSlutdatum.Controls.Add(this.checkBox1);
+            this.gbSokSlutdatum.Controls.Add(this.cbAktivSlutDatum);
             this.gbSokSlutdatum.Controls.Add(this.dtpSlutDatum);
             this.gbSokSlutdatum.Location = new System.Drawing.Point(39, 137);
             this.gbSokSlutdatum.Name = "gbSokSlutdatum";
@@ -87,15 +88,15 @@
             this.gbSokSlutdatum.TabStop = false;
             this.gbSokSlutdatum.Text = "Sök slutdatum (valfritt)";
             // 
-            // checkBox1
+            // cbAktivSlutDatum
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(12, 31);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(65, 17);
-            this.checkBox1.TabIndex = 15;
-            this.checkBox1.Text = "Aktivera";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbAktivSlutDatum.AutoSize = true;
+            this.cbAktivSlutDatum.Location = new System.Drawing.Point(12, 31);
+            this.cbAktivSlutDatum.Name = "cbAktivSlutDatum";
+            this.cbAktivSlutDatum.Size = new System.Drawing.Size(65, 17);
+            this.cbAktivSlutDatum.TabIndex = 15;
+            this.cbAktivSlutDatum.Text = "Aktivera";
+            this.cbAktivSlutDatum.UseVisualStyleBackColor = true;
             // 
             // dtpSlutDatum
             // 
@@ -187,11 +188,21 @@
             this.lbxInfo.Size = new System.Drawing.Size(168, 108);
             this.lbxInfo.TabIndex = 16;
             // 
+            // lbxLedare
+            // 
+            this.lbxLedare.FormattingEnabled = true;
+            this.lbxLedare.Location = new System.Drawing.Point(646, 77);
+            this.lbxLedare.Name = "lbxLedare";
+            this.lbxLedare.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.lbxLedare.Size = new System.Drawing.Size(168, 108);
+            this.lbxLedare.TabIndex = 17;
+            // 
             // registreranarvaro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(940, 598);
+            this.Controls.Add(this.lbxLedare);
             this.Controls.Add(this.gpGrupp);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label4);
@@ -226,7 +237,7 @@
         private System.Windows.Forms.ListBox lbxGrupper;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox gbSokSlutdatum;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox cbAktivSlutDatum;
         private System.Windows.Forms.DateTimePicker dtpSlutDatum;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DateTimePicker dtpFran;
@@ -237,5 +248,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gpGrupp;
         private System.Windows.Forms.ListBox lbxInfo;
+        private System.Windows.Forms.ListBox lbxLedare;
     }
 }
