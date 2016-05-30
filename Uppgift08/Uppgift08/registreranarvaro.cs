@@ -36,7 +36,7 @@ namespace Uppgift08
             postgres sokning = new postgres();
             sokning.startDatum = dtpFran.Value;
             sokning.slutDatum = dtpSlutDatum.Value;
-            sokning.grupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
+            //sokning.grupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
             svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(false, false, false), sokGrp);     // hämtar sökning efter träningsgrupper
 
             if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
@@ -73,7 +73,6 @@ namespace Uppgift08
         private void sokGrp()
         {
             DataTable svarNarvaro;
-            //string sokGrp = "sokGrp";
             bool sokDatInterv = cbAktivSlutDatum.Checked;                                       // kollar om datumintervallsökning skall göras
             bool sokGrupp = !(lbxGrupper.SelectedItems.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
             //bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
@@ -112,13 +111,23 @@ namespace Uppgift08
         /// </summary>
         private void sokNarvaro()
         {
+            List<string> gruppLista = new List<string>();
+            //for (int i = 0; i < lbxGrupper.SelectedItems.Count; i++)
+            //{
+            //    gruppLista.Add(lbxGrupper.SelectedItem);
 
+            //}
+            foreach (object selectedItem in lbxGrupper.SelectedItems)
+            {
+                gruppLista.Add(lbxGrupper.GetItemText(selectedItem));
+            }
             DataTable svarNarvaro;
             bool sokDatInterv = cbAktivSlutDatum.Checked;                                       // kollar om datumintervallsökning skall göras
             bool sokGrupp = !(lbxGrupper.SelectedItems.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
             //bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
             postgres sokning = new postgres();
-            sokning.grupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
+            //sokning.grupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
+            sokning.grupp = gruppLista;
             sokning.startDatum = dtpFran.Value;
             sokning.slutDatum = dtpSlutDatum.Value;
             svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "narvaro");     // hämtar sökning efter träningsgrupper
@@ -161,7 +170,6 @@ namespace Uppgift08
         /// </summary>
         private void lbxGrupper_SelectedIndexChanged(object sender, EventArgs e)
         {
-        //    sokLedare(); //Metod som ska hämta ledare
             sokNarvaro(); //Metod som hämtar närvarolistan.
 
             for (int i = 0; i < dgvRegistreraNarvaro.Columns.Count; i++)
@@ -177,6 +185,7 @@ namespace Uppgift08
             }
             grupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
             dgvRegistreraNarvaro.ClearSelection();
+
         }
         /// <summary>
         /// När en rad blir markerad hämtas värden från personnummer, deltagit och närvarolistan från raden.
@@ -194,6 +203,7 @@ namespace Uppgift08
                 string id2 = Convert.ToString(selectedRow.Cells["personnummer"].Value.ToString());
                 string id3 = Convert.ToString(selectedRow.Cells["deltagit"].Value.ToString());
                 string id4 = Convert.ToString(selectedRow.Cells["narvaro"].Value.ToString());
+
 
                 if (id3 == "False")
                 {
@@ -217,12 +227,47 @@ namespace Uppgift08
                 {
                     MessageBox.Show("Error" + ex.Message);
                 }
+
             }
         }
 
         private void registreranarvaro_Load(object sender, EventArgs e)
         {
-            MessageBox.Show("Problem just nu: Gruppledaren och tid för aktuell grupp vill inte visas. Antagligen dålig query. Buggar: Man kan registrera närvaro oavsett var man klickar i tabellen. Dubbelklickar man på gruppnamnet så registreras närvaro på personen högst upp. KOM IHÅG: fixa listboxnamnet.");
+          //  MessageBox.Show("Problem just nu: Gruppledaren och tid för aktuell grupp vill inte visas. Antagligen dålig query. Buggar: Man kan registrera närvaro oavsett var man klickar i tabellen. Dubbelklickar man på gruppnamnet så registreras närvaro på personen högst upp. KOM IHÅG: fixa listboxnamnet.");
+        }
+
+        private void cbAktivSlutDatum_CheckedChanged(object sender, EventArgs e)
+        {
+            if (dtpSlutDatum.Enabled == false)
+            {
+                dtpSlutDatum.Enabled = true;
+                sokGrp();
+            }
+            else
+            {
+                dtpSlutDatum.Enabled = false;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //    sokLedare(); //Metod som ska hämta ledare
+
+                sokNarvaro(); //Metod som hämtar närvarolistan.
+
+            for (int i = 0; i < dgvRegistreraNarvaro.Columns.Count; i++)
+            {
+                if (dgvRegistreraNarvaro.Columns[i].DataPropertyName == "deltagit")
+                {
+                    dgvRegistreraNarvaro.Columns[i].ReadOnly = false;
+                }
+                else
+                {
+                    dgvRegistreraNarvaro.Columns[i].ReadOnly = true;
+                }
+            }
+            grupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
+            dgvRegistreraNarvaro.ClearSelection();
         }
     }
 }

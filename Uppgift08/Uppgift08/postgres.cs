@@ -17,10 +17,41 @@ namespace Uppgift08
         private NpgsqlDataReader _dr;
         private DataTable _tabell;
 
-        public string grupp { get; set; }
+        public List<string> grupp { get; set; }
         public DateTime slutDatum { get; set; }          // Gör man datumintervallsökning behöver båda dessa DateTime-properties
         public DateTime startDatum { get; set; }         // få ett värde då objekt skapas av klassen. slutDatum måste alltid
                                                     // få ett värde.
+        string nyaGrupper;                          //variabel där frågeställningssträng lagras.
+
+        /// <summary>
+        /// Metod som omvandlar hämtade grupper till sträng med rätt frågeställning.
+        /// </summary>
+        /// <param name="hamtadLista"></param>
+        /// <returns>string med sqlfrågetillägg</returns>
+        private string antalGrupper(List<string> hamtadLista)
+        {
+
+            List<string> gruppLista = new List<string>();
+            foreach (string item in hamtadLista)
+            {
+
+                gruppLista.Add("traningsgrupp.namn = '" + item + "'");                
+            }
+
+            for (int i = 0; i < gruppLista.Count; i++)
+            {
+                if (i == 0)
+                {
+                    nyaGrupper = gruppLista[i];
+                }
+                else
+                {
+                    nyaGrupper = nyaGrupper + " OR " + gruppLista[i];
+                }
+            }
+            //gruppas = "traningsgrupp.namn = 'Enhjuling'";
+            return nyaGrupper;
+        }
 
         /// <summary>
         /// Reder ut vilka sökparametrar som skall användas och returnerar
@@ -149,13 +180,17 @@ namespace Uppgift08
             }
             else if (soktyp == "narvaro")
             {
+                string sokGrupper = antalGrupper(grupp); //Kallar på metoden antalgrupper
                 switch (sokparameter)
                 {
                     case "datEnkGrp":
-                        sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
+                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
+                        sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and " + sokGrupper;
+   
                         break;
                     case "datIntGrp":
-                        sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
+                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
+                        sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' AND " + sokGrupper;
                         break;
                 }
 

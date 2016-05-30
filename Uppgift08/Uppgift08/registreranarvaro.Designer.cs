@@ -44,6 +44,7 @@
             this.gpGrupp = new System.Windows.Forms.GroupBox();
             this.lbxInfo = new System.Windows.Forms.ListBox();
             this.lbxLedare = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegistreraNarvaro)).BeginInit();
             this.gbSokSlutdatum.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -66,6 +67,7 @@
             this.lbxGrupper.FormattingEnabled = true;
             this.lbxGrupper.Location = new System.Drawing.Point(6, 21);
             this.lbxGrupper.Name = "lbxGrupper";
+            this.lbxGrupper.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbxGrupper.Size = new System.Drawing.Size(120, 108);
             this.lbxGrupper.TabIndex = 15;
             this.lbxGrupper.SelectedIndexChanged += new System.EventHandler(this.lbxGrupper_SelectedIndexChanged);
@@ -97,6 +99,7 @@
             this.cbAktivSlutDatum.TabIndex = 15;
             this.cbAktivSlutDatum.Text = "Aktivera";
             this.cbAktivSlutDatum.UseVisualStyleBackColor = true;
+            this.cbAktivSlutDatum.CheckedChanged += new System.EventHandler(this.cbAktivSlutDatum_CheckedChanged);
             // 
             // dtpSlutDatum
             // 
@@ -197,11 +200,22 @@
             this.lbxLedare.Size = new System.Drawing.Size(168, 108);
             this.lbxLedare.TabIndex = 17;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(492, 18);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 29;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // registreranarvaro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(940, 598);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.lbxLedare);
             this.Controls.Add(this.gpGrupp);
             this.Controls.Add(this.label1);
@@ -249,5 +263,6 @@
         private System.Windows.Forms.GroupBox gpGrupp;
         private System.Windows.Forms.ListBox lbxInfo;
         private System.Windows.Forms.ListBox lbxLedare;
+        private System.Windows.Forms.Button button1;
     }
 }
