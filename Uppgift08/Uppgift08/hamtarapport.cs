@@ -23,8 +23,8 @@ namespace Uppgift08
             dtpSlutDatum.Value = dtpStartDatum.Value.AddDays(1);
         }
 
-        
-        
+
+
         /// <summary>
         /// Denna metod kör igång en sökning i databasen utefter
         /// de sökparametrar som är aktuella.
@@ -42,37 +42,82 @@ namespace Uppgift08
             s.startDatum = dtpStartDatum.Value;
             s.slutDatum = dtpSlutDatum.Value;
 
-            for (int i = 0; i < 3; i++)
+            //for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 2; i++)
             {
+
+                // ovan iteration körs 3ggr, vilket nedan kommer generar 3 olika sökningar (dvs efter grupp, ledare eller narvaro).
                 if (i == 0)
-                {
-                    soktyp = "narvaro";
-                }
-                else if (i == 1)
                 {
                     soktyp = "grupp";
                 }
-                else
+                else if (i == 1)
                 {
                     soktyp = "ledare";
                 }
-                
-                //sökning i db görs här
-                sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);   
+                else
+                {
+                    soktyp = "narvaro";
+                }
 
+                // sökning i db görs här, svaret skickas tillbaka in i tabellen sokningResultat som har datatypen DataTable
+                sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
+
+                // variabeln sokningResultat behandlas. Först kollas om den är felaktig, annars portioneras infon ut till de olika listboxarna och datagridviewen.
                 if (sokningResultat.Columns[0].ColumnName.Equals("error"))
-                {   
-                    tbFeedback.Text = tbFeedback.Text + " " + sokningResultat.Rows[0][1].ToString();
+                {
+                    tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
                 }
                 else
                 {
-                    // här får man lägga in kod för att reda ut vilken typ av objekt o lista man vill lägga resultatet i och var datan sedan spottas ut
-                    //lbxGrupper.DataSource = svarGrupp;        // ska ersättas med ett objekt av traningsgrupper-klassen, kod ej klart för att hacka upp tabell =(
-                    dgvRapport.DataSource = sokningResultat;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
-                    dgvRapport.ReadOnly = true;
+                    if (soktyp == "grupp")
+                    {
+                        List<traningsgrupp> grupplista = new List<traningsgrupp>(); 
+                        
+                        for (int y = 0; y < sokningResultat.Rows.Count; y++)
+                        {
+                            traningsgrupp grupp = new traningsgrupp();
+                            grupp.namn = sokningResultat.Rows[y]["namn"].ToString();
+                            grupplista.Add(grupp);
+                        }
+
+                        lbxGrupper.DataSource = grupplista;
+                        lbxGrupper.DisplayMember = "namn";
+
+                    }
+                    else if (soktyp == "ledare")
+                    {
+                        List<gruppledare> ledarlista = new List<gruppledare>();
+
+                        for (int x = 0; x < sokningResultat.Rows.Count; x++)
+                        {
+                            gruppledare ledare = new gruppledare();
+                            ledare.förnamn = sokningResultat.Rows[x]["fnamn"].ToString();
+                            ledare.efternamn = sokningResultat.Rows[x]["enamn"].ToString();
+                            ledarlista.Add(ledare);
+                        }
+
+                        lbxLedare.DataSource = ledarlista;
+                    }
+                    else
+                    {
+                        List<narvarolista> narvarolista = new List<narvarolista>();
+
+                        for (int a = 0; a < sokningResultat.Rows.Count; a++)
+                        {
+                            narvarolista narvaro = new narvarolista();
+                            narvaro.fornamn = sokningResultat.Rows[a]["fnamn"].ToString();
+                            narvaro.efternamn = sokningResultat.Rows[a]["enamn"].ToString();
+                            narvaro.personnummer = sokningResultat.Rows[a]["pnr"].ToString();
+                            narvarolista.Add(narvaro);
+                        }
+                        dgvRapport.DataSource = narvarolista;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
+                        dgvRapport.ReadOnly = true;
+                    }
+
+
                 }
             }
-            
         }
 
         #region ############# EVENT HANDLERS ##############
@@ -141,11 +186,12 @@ namespace Uppgift08
             }
             sok();
         }
-        #endregion
+       
 
         private void lbxGrupper_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
+        #endregion
     }
 }
