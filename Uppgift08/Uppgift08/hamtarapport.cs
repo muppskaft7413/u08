@@ -36,29 +36,43 @@ namespace Uppgift08
             bool sokGrupp = !(lbxGrupper.SelectedItems.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
             bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
 
-            string soktyp = "narvaro";
+            string soktyp = "";
 
             postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
             s.startDatum = dtpStartDatum.Value;
             s.slutDatum = dtpSlutDatum.Value;
 
-            //sökning
-            //sokningResultat = s.sqlFråga("sokNarv", soktyp);   
-            sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);   //case finns för "sokInGrp", "sokGrp" eller "sokNarv" i postrges
+            for (int i = 0; i < 3; i++)
+            {
+                if (i == 0)
+                {
+                    soktyp = "narvaro";
+                }
+                else if (i == 1)
+                {
+                    soktyp = "grupp";
+                }
+                else
+                {
+                    soktyp = "ledare";
+                }
+                
+                //sökning i db görs här
+                sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);   
+
+                if (sokningResultat.Columns[0].ColumnName.Equals("error"))
+                {   
+                    tbFeedback.Text = tbFeedback.Text + " " + sokningResultat.Rows[0][1].ToString();
+                }
+                else
+                {
+                    // här får man lägga in kod för att reda ut vilken typ av objekt o lista man vill lägga resultatet i och var datan sedan spottas ut
+                    //lbxGrupper.DataSource = svarGrupp;        // ska ersättas med ett objekt av traningsgrupper-klassen, kod ej klart för att hacka upp tabell =(
+                    dgvRapport.DataSource = sokningResultat;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
+                    dgvRapport.ReadOnly = true;
+                }
+            }
             
-
-            if (sokningResultat.Columns[0].ColumnName.Equals("error"))
-            {
-                tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
-            }
-            else
-            {
-                // här får man lägga in kod för att reda ut vilken typ av objekt o lista man vill lägga resultatet i och var datan sedan spottas ut
-
-                //lbxGrupper.DataSource = svarGrupp;      // ska ersättas med ett objekt av traningsgrupper-klassen, kod ej klart för att hacka upp tabell =(
-                dgvRapport.DataSource = sokningResultat;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
-                dgvRapport.ReadOnly = true;
-            }
         }
 
         #region ############# EVENT HANDLERS ##############
@@ -128,5 +142,10 @@ namespace Uppgift08
             sok();
         }
         #endregion
+
+        private void lbxGrupper_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
