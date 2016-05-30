@@ -166,6 +166,7 @@
             this.lbxGrupper.Name = "lbxGrupper";
             this.lbxGrupper.Size = new System.Drawing.Size(120, 95);
             this.lbxGrupper.TabIndex = 16;
+            this.lbxGrupper.SelectedIndexChanged += new System.EventHandler(this.lbxGrupper_SelectedIndexChanged);
             // 
             // lbxLedare
             // 
