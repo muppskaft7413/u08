@@ -164,6 +164,7 @@
             this.lbxGrupper.FormattingEnabled = true;
             this.lbxGrupper.Location = new System.Drawing.Point(411, 110);
             this.lbxGrupper.Name = "lbxGrupper";
+            this.lbxGrupper.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbxGrupper.Size = new System.Drawing.Size(120, 95);
             this.lbxGrupper.TabIndex = 16;
             this.lbxGrupper.SelectedIndexChanged += new System.EventHandler(this.lbxGrupper_SelectedIndexChanged);
