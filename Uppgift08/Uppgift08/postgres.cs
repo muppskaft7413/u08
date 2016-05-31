@@ -17,6 +17,10 @@ namespace Uppgift08
         private NpgsqlDataReader _dr;
         private DataTable _tabell;
 
+        public string enkelGrupp { get; set; }
+        public string deltagit { get; set; }
+        public string pnr { get; set; }
+        public string narvaro { get; set; }
         public List<string> grupp { get; set; }
         public DateTime slutDatum { get; set; }          // Gör man datumintervallsökning behöver båda dessa DateTime-properties
         public DateTime startDatum { get; set; }         // få ett värde då objekt skapas av klassen. slutDatum måste alltid
@@ -202,6 +206,20 @@ namespace Uppgift08
                         //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
                         sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' AND " + sokGrupper;
                         break;
+                }
+
+            }
+            else if (soktyp == "bajs")
+            {
+                //string sokGrupper = antalGrupper(grupp);
+                switch (sokparameter)
+                {
+                    case "datEnkGrp":
+                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
+                        sql = "update deltagare set deltagit = '" + deltagit + "' where deltagare.grupp_id = (select grupp_id from traningsgrupp where namn = '"+enkelGrupp+"') and deltagare.medlem_id = (select medlem_id from medlem where pnr = '" + pnr + "') and deltagare.narvarolista_id = '" + narvaro + "'";
+
+                        break;
+
                 }
 
             }

@@ -19,11 +19,14 @@ namespace Uppgift08
             InitializeComponent();
         }
 
-        private NpgsqlConnection _conn;
-        private NpgsqlDataAdapter _da;
-        private DataTable _dt;
-        private NpgsqlCommandBuilder builder;
+        //private NpgsqlConnection _conn;
+        //private NpgsqlDataAdapter _da;
+        //private DataTable _dt;
+        //private NpgsqlCommandBuilder builder;
         string grupp;
+        string id4;
+        string id2;
+        string id3;
 
 
         
@@ -41,7 +44,7 @@ namespace Uppgift08
 
             if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
             {
-                textBox1.Text = svarNarvaro.Rows[0][1].ToString();
+                tbFel.Text = svarNarvaro.Rows[0][1].ToString();
             }
             else
             {
@@ -67,6 +70,48 @@ namespace Uppgift08
         }
 
 
+ private void andraNarvaro()
+ {
+     DataTable svarNarvaro;
+     bool sokDatInterv = cbAktivSlutDatum.Checked;                                       // kollar om datumintervallsökning skall göras
+     bool sokGrupp = !(lbxGrupper.SelectedItems.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
+     //bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
+     postgres sokning = new postgres();
+     sokning.startDatum = dtpFran.Value;
+     sokning.slutDatum = dtpSlutDatum.Value;
+     sokning.narvaro = id4;
+     sokning.pnr = id2;
+     sokning.deltagit = id3;
+     sokning.enkelGrupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
+
+     svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "bajs");     // hämtar sökning efter träningsgrupper
+
+     //if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
+     //{
+     //    textBox1.Text = svarNarvaro.Rows[0][1].ToString();
+     //}
+     //else
+     //{
+     ////     här får man lägga in kod för att reda ut vilken typ av objekt o lista man vill lägga resultatet i och var datan sedan spottas ut
+     //    List<traningsgrupp> nyTraningsgruppLista = new List<traningsgrupp>();
+     //    traningsgrupp traningsgruppRatt;
+     //    for (int i = 0; i < svarNarvaro.Rows.Count; i++)
+     //    {
+     //        traningsgruppRatt = new traningsgrupp()
+     //        {
+     //            namn = svarNarvaro.Rows[i]["namn"].ToString(),
+     //        };
+     //        nyTraningsgruppLista.Add(traningsgruppRatt);
+     //    }
+
+     //    lbxGrupper.DataSource = null;
+     //    lbxGrupper.DataSource = nyTraningsgruppLista;
+     //    lbxGrupper.DisplayMember = "traningsgrupps";
+
+
+     //}
+ }
+
         /// <summary>
         /// Metod som kallar på sökmetoden från postgres-klassen. Söker efter träningsgrupper.
         /// </summary>
@@ -83,7 +128,7 @@ namespace Uppgift08
 
             if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
             {
-                textBox1.Text = svarNarvaro.Rows[0][1].ToString();
+                tbFel.Text = svarNarvaro.Rows[0][1].ToString();
             }
             else
             {
@@ -99,7 +144,9 @@ namespace Uppgift08
                     nyTraningsgruppLista.Add(traningsgruppRatt);
                 }
 
+                //lbxGrupper.DataSource = null;
                 lbxGrupper.DataSource = null;
+                //lbxLedare.DataSource = null;
                 lbxGrupper.DataSource = nyTraningsgruppLista;
                 lbxGrupper.DisplayMember = "traningsgrupps";
 
@@ -112,11 +159,6 @@ namespace Uppgift08
         private void sokNarvaro()
         {
             List<string> gruppLista = new List<string>();
-            //for (int i = 0; i < lbxGrupper.SelectedItems.Count; i++)
-            //{
-            //    gruppLista.Add(lbxGrupper.SelectedItem);
-
-            //}
             foreach (object selectedItem in lbxGrupper.SelectedItems)
             {
                 gruppLista.Add(lbxGrupper.GetItemText(selectedItem));
@@ -134,7 +176,7 @@ namespace Uppgift08
 
             if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
             {
-                textBox1.Text = svarNarvaro.Rows[0][1].ToString();
+                tbFel.Text = svarNarvaro.Rows[0][1].ToString();
             }
             else
             {
@@ -154,6 +196,7 @@ namespace Uppgift08
                     };
                     nyNarvarolista.Add(narvarolistaRatt);
                 }
+                dgvRegistreraNarvaro.DataSource = null;
                 dgvRegistreraNarvaro.DataSource = nyNarvarolista;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
             }
         }
@@ -162,7 +205,11 @@ namespace Uppgift08
         /// </summary>
         private void dtpFran_ValueChanged(object sender, EventArgs e)
         {
+            dgvRegistreraNarvaro.DataSource = null;
+            lbxGrupper.DataSource = null;
+            lbxLedare = null;
             sokGrp();
+
             //lbxGrupper.ClearSelected();
         }
         /// <summary>
@@ -170,6 +217,7 @@ namespace Uppgift08
         /// </summary>
         private void lbxGrupper_SelectedIndexChanged(object sender, EventArgs e)
         {
+            dgvRegistreraNarvaro.DataSource = null;
             sokNarvaro(); //Metod som hämtar närvarolistan.
 
             for (int i = 0; i < dgvRegistreraNarvaro.Columns.Count; i++)
@@ -200,9 +248,9 @@ namespace Uppgift08
                 int selectedrowindex = dgvRegistreraNarvaro.SelectedCells[0].RowIndex;
 
                 DataGridViewRow selectedRow = dgvRegistreraNarvaro.Rows[selectedrowindex];
-                string id2 = Convert.ToString(selectedRow.Cells["personnummer"].Value.ToString());
-                string id3 = Convert.ToString(selectedRow.Cells["deltagit"].Value.ToString());
-                string id4 = Convert.ToString(selectedRow.Cells["narvaro"].Value.ToString());
+                id2 = Convert.ToString(selectedRow.Cells["personnummer"].Value.ToString());
+                 id3 = Convert.ToString(selectedRow.Cells["deltagit"].Value.ToString());
+                 id4 = Convert.ToString(selectedRow.Cells["narvaro"].Value.ToString());
 
 
                 if (id3 == "False")
@@ -213,27 +261,28 @@ namespace Uppgift08
                 {
                     id3 = "0";
                 }
-                _conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["db_g12"].ConnectionString);
-                _da = new NpgsqlDataAdapter("update deltagare set deltagit = '" + id3 + "' where deltagare.grupp_id = (select grupp_id from traningsgrupp where namn = '" + grupp + "') and deltagare.medlem_id = (select medlem_id from medlem where pnr = '" + id2 + "') and deltagare.narvarolista_id = '" + id4 + "'", _conn);
-                _dt = new DataTable();
-                _da.Fill(_dt);
+                //andraNarvaro();
+                //_conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["db_g12"].ConnectionString);
+                //_da = new NpgsqlDataAdapter("update deltagare set deltagit = '" + id3 + "' where deltagare.grupp_id = (select grupp_id from traningsgrupp where namn = '" + grupp + "') and deltagare.medlem_id = (select medlem_id from medlem where pnr = '" + id2 + "') and deltagare.narvarolista_id = '" + id4 + "'", _conn);
+                //_dt = new DataTable();
+                //_da.Fill(_dt);
 
-                try
-                {
-                    builder = new NpgsqlCommandBuilder(_da);
-                    _da.Update(_dt);
-                }
-                catch (NpgsqlException ex)
-                {
-                    MessageBox.Show("Error" + ex.Message);
-                }
+                //try
+                //{
+                //    builder = new NpgsqlCommandBuilder(_da);
+                //    _da.Update(_dt);
+                //}
+                //catch (NpgsqlException ex)
+                //{
+                //    MessageBox.Show("Error" + ex.Message);
+                //}
 
             }
         }
 
         private void registreranarvaro_Load(object sender, EventArgs e)
         {
-          //  MessageBox.Show("Problem just nu: Gruppledaren och tid för aktuell grupp vill inte visas. Antagligen dålig query. Buggar: Man kan registrera närvaro oavsett var man klickar i tabellen. Dubbelklickar man på gruppnamnet så registreras närvaro på personen högst upp. KOM IHÅG: fixa listboxnamnet.");
+          //  MessageBox.Show("Problem just nu: Gruppledaren och tid för aktuell grupp vill inte visas. Antagligen dålig query. Buggar: Man kan registrera närvaro oavsett var man klickar i tabellen. Dubbelklickar man på gruppnamnet så registreras närvaro på personen högst upp. KOM IHÅG: fixa listboxnamnet. lägga till gruppnamn i dgv");
         }
 
         private void cbAktivSlutDatum_CheckedChanged(object sender, EventArgs e)
@@ -241,7 +290,9 @@ namespace Uppgift08
             if (dtpSlutDatum.Enabled == false)
             {
                 dtpSlutDatum.Enabled = true;
+                lbxGrupper.DataSource = null;
                 sokGrp();
+
             }
             else
             {
@@ -251,23 +302,64 @@ namespace Uppgift08
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //    sokLedare(); //Metod som ska hämta ledare
+            //if (dgvRegistreraNarvaro.SelectedCells.Count > 0)
+            //{
+            //    int selectedrowindex = dgvRegistreraNarvaro.SelectedCells[0].RowIndex;
 
-                sokNarvaro(); //Metod som hämtar närvarolistan.
+            //    DataGridViewRow selectedRow = dgvRegistreraNarvaro.Rows[selectedrowindex];
+            //    id2 = Convert.ToString(selectedRow.Cells["personnummer"].Value.ToString());
+            //    id3 = Convert.ToString(selectedRow.Cells["deltagit"].Value.ToString());
+            //    id4 = Convert.ToString(selectedRow.Cells["narvaro"].Value.ToString());
 
-            for (int i = 0; i < dgvRegistreraNarvaro.Columns.Count; i++)
+
+            //    if (id3 == "False")
+            //    {
+            //        id3 = "1";
+            //    }
+            //    else
+            //    {
+            //        id3 = "0";
+            //    }
+            //    andraNarvaro();
+            //}
+            ////    sokLedare(); //Metod som ska hämta ledare
+
+            //    sokNarvaro(); //Metod som hämtar närvarolistan.
+
+            //for (int i = 0; i < dgvRegistreraNarvaro.Columns.Count; i++)
+            //{
+            //    if (dgvRegistreraNarvaro.Columns[i].DataPropertyName == "deltagit")
+            //    {
+            //        dgvRegistreraNarvaro.Columns[i].ReadOnly = false;
+            //    }
+            //    else
+            //    {
+            //        dgvRegistreraNarvaro.Columns[i].ReadOnly = true;
+            //    }
+            //}
+            //grupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
+            //dgvRegistreraNarvaro.ClearSelection();
+        }
+
+        private void dgvRegistreraNarvaro_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (dgvRegistreraNarvaro.IsCurrentCellDirty)
             {
-                if (dgvRegistreraNarvaro.Columns[i].DataPropertyName == "deltagit")
-                {
-                    dgvRegistreraNarvaro.Columns[i].ReadOnly = false;
-                }
-                else
-                {
-                    dgvRegistreraNarvaro.Columns[i].ReadOnly = true;
-                }
+                dgvRegistreraNarvaro.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
-            grupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
-            dgvRegistreraNarvaro.ClearSelection();
+        }
+
+
+
+      
+
+        private void dgvRegistreraNarvaro_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvRegistreraNarvaro.Columns[e.ColumnIndex].DataPropertyName == "deltagit")
+             {
+                 andraNarvaro();  
+            }
+
         }
     }
 }
