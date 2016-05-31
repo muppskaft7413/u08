@@ -67,27 +67,35 @@ namespace Uppgift08
         /// <returns>string med sqlfrågetillägg</returns>
         private string antalGrupper(List<string> hamtadLista)
         {
-
-            List<string> gruppLista = new List<string>();
-            foreach (string item in hamtadLista)
+            if (hamtadLista == null)    //Tillagd till parameter
+            {                           //     
+                return null;            //
+            }                           //
+            else
             {
-
-                gruppLista.Add("traningsgrupp.namn = '" + item + "'");                
-            }
-
-            for (int i = 0; i < gruppLista.Count; i++)
-            {
-                if (i == 0)
+                List<string> gruppLista = new List<string>();
+                foreach (string item in hamtadLista)
                 {
-                    nyaGrupper = gruppLista[i];
+
+                    gruppLista.Add(item);
+                    //gruppLista.Add(item);
                 }
-                else
+
+                for (int i = 0; i < gruppLista.Count; i++)
                 {
-                    nyaGrupper = nyaGrupper + " OR " + gruppLista[i];
+                    if (i == 0)
+                    {
+                        nyaGrupper = gruppLista[i];
+                    }
+                    else
+                    {
+                        nyaGrupper = nyaGrupper + " OR traningsgrupp.namn = " + gruppLista[i];
+                    }
                 }
+                //gruppas = "traningsgrupp.namn = 'Enhjuling'";
+                return nyaGrupper;
             }
-            //gruppas = "traningsgrupp.namn = 'Enhjuling'";
-            return nyaGrupper;
+            
         }
 
         /// <summary>
@@ -161,6 +169,7 @@ namespace Uppgift08
             try
             {
                 _cmd = new NpgsqlCommand(sql, _conn);
+                _cmd.Parameters.AddWithValue("grupp", nyaGrupper);      //tillagd till Paramter
                 _dr = _cmd.ExecuteReader();
                 _tabell.Load(_dr);
                 return _tabell;
@@ -243,7 +252,10 @@ namespace Uppgift08
                 {
                     case "datEnkGrp":
                         //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
-                        sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and " + sokGrupper;
+                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and " + sokGrupper;
+                        sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = :grupp"; // tillagd till parameter
+
+                        
                         break;
                     case "datIntGrp":
                         //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
@@ -276,7 +288,7 @@ namespace Uppgift08
             }
             else if (soktyp == "bajs")
             {
-                //string sokGrupper = antalGrupper(grupp);
+                //string sokGrupper = antalGrupper(grupp); //Kallar på metoden antalgrupper
                 switch (sokparameter)
                 {
                     case "datEnkGrp":

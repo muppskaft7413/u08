@@ -59,6 +59,7 @@
             this.dgvRegistreraNarvaro.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvRegistreraNarvaro.Size = new System.Drawing.Size(859, 315);
             this.dgvRegistreraNarvaro.TabIndex = 9;
+            this.dgvRegistreraNarvaro.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegistreraNarvaro_CellClick);
             this.dgvRegistreraNarvaro.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegistreraNarvaro_CellValueChanged);
             this.dgvRegistreraNarvaro.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvRegistreraNarvaro_CurrentCellDirtyStateChanged);
             this.dgvRegistreraNarvaro.SelectionChanged += new System.EventHandler(this.dgvRegistreraNarvaro_SelectionChanged);
