@@ -167,6 +167,7 @@
             this.lbxGrupper.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbxGrupper.Size = new System.Drawing.Size(144, 134);
             this.lbxGrupper.TabIndex = 17;
+            this.lbxGrupper.Click += new System.EventHandler(this.lbxGrupper_Click);
             this.lbxGrupper.SelectedIndexChanged += new System.EventHandler(this.lbxGrupper_SelectedIndexChanged);
             // 
             // lbxLedare
@@ -177,7 +178,7 @@
             this.lbxLedare.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbxLedare.Size = new System.Drawing.Size(144, 134);
             this.lbxLedare.TabIndex = 16;
-            this.lbxLedare.SelectedIndexChanged += new System.EventHandler(this.lbxLedare_SelectedIndexChanged);
+            this.lbxLedare.Click += new System.EventHandler(this.lbxLedare_Click);
             // 
             // hamtarapport
             // 
