@@ -30,7 +30,7 @@
         {
             this.dgvRegistreraNarvaro = new System.Windows.Forms.DataGridView();
             this.lbxGrupper = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbFel = new System.Windows.Forms.TextBox();
             this.gbSokSlutdatum = new System.Windows.Forms.GroupBox();
             this.cbAktivSlutDatum = new System.Windows.Forms.CheckBox();
             this.dtpSlutDatum = new System.Windows.Forms.DateTimePicker();
@@ -42,7 +42,6 @@
             this.lblForening = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.gpGrupp = new System.Windows.Forms.GroupBox();
-            this.lbxInfo = new System.Windows.Forms.ListBox();
             this.lbxLedare = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegistreraNarvaro)).BeginInit();
@@ -60,6 +59,9 @@
             this.dgvRegistreraNarvaro.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvRegistreraNarvaro.Size = new System.Drawing.Size(859, 315);
             this.dgvRegistreraNarvaro.TabIndex = 9;
+            this.dgvRegistreraNarvaro.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegistreraNarvaro_CellClick);
+            this.dgvRegistreraNarvaro.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegistreraNarvaro_CellValueChanged);
+            this.dgvRegistreraNarvaro.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvRegistreraNarvaro_CurrentCellDirtyStateChanged);
             this.dgvRegistreraNarvaro.SelectionChanged += new System.EventHandler(this.dgvRegistreraNarvaro_SelectionChanged);
             // 
             // lbxGrupper
@@ -70,14 +72,14 @@
             this.lbxGrupper.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbxGrupper.Size = new System.Drawing.Size(120, 108);
             this.lbxGrupper.TabIndex = 15;
-            this.lbxGrupper.SelectedIndexChanged += new System.EventHandler(this.lbxGrupper_SelectedIndexChanged);
+            this.lbxGrupper.Click += new System.EventHandler(this.lbxGrupper_Click);
             // 
-            // textBox1
+            // tbFel
             // 
-            this.textBox1.Location = new System.Drawing.Point(39, 569);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(368, 20);
-            this.textBox1.TabIndex = 20;
+            this.tbFel.Location = new System.Drawing.Point(39, 569);
+            this.tbFel.Name = "tbFel";
+            this.tbFel.Size = new System.Drawing.Size(368, 20);
+            this.tbFel.TabIndex = 20;
             // 
             // gbSokSlutdatum
             // 
@@ -173,7 +175,6 @@
             // 
             // gpGrupp
             // 
-            this.gpGrupp.Controls.Add(this.lbxInfo);
             this.gpGrupp.Controls.Add(this.lbxGrupper);
             this.gpGrupp.Location = new System.Drawing.Point(334, 66);
             this.gpGrupp.Name = "gpGrupp";
@@ -181,15 +182,6 @@
             this.gpGrupp.TabIndex = 28;
             this.gpGrupp.TabStop = false;
             this.gpGrupp.Text = "Grupp";
-            // 
-            // lbxInfo
-            // 
-            this.lbxInfo.FormattingEnabled = true;
-            this.lbxInfo.Location = new System.Drawing.Point(132, 21);
-            this.lbxInfo.Name = "lbxInfo";
-            this.lbxInfo.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbxInfo.Size = new System.Drawing.Size(168, 108);
-            this.lbxInfo.TabIndex = 16;
             // 
             // lbxLedare
             // 
@@ -225,7 +217,7 @@
             this.Controls.Add(this.lblForening);
             this.Controls.Add(this.gbSokSlutdatum);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbFel);
             this.Controls.Add(this.dgvRegistreraNarvaro);
             this.Name = "registreranarvaro";
             this.Text = "registreranarvaro";
@@ -249,7 +241,7 @@
 
         private System.Windows.Forms.DataGridView dgvRegistreraNarvaro;
         private System.Windows.Forms.ListBox lbxGrupper;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbFel;
         private System.Windows.Forms.GroupBox gbSokSlutdatum;
         private System.Windows.Forms.CheckBox cbAktivSlutDatum;
         private System.Windows.Forms.DateTimePicker dtpSlutDatum;
@@ -261,7 +253,6 @@
         private System.Windows.Forms.Label lblForening;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gpGrupp;
-        private System.Windows.Forms.ListBox lbxInfo;
         private System.Windows.Forms.ListBox lbxLedare;
         private System.Windows.Forms.Button button1;
     }
