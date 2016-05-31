@@ -163,13 +163,64 @@ namespace Uppgift08
                 }
 
                 dgvRapport.DataSource = narvarolista;     // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
-                dgvRapport.Columns[3].Visible = false; 
+                dgvRapport.Columns[3].Visible = false;
                 dgvRapport.Columns[4].Visible = false;
                 dgvRapport.Columns[5].Visible = false;
+                dgvRapport.Columns[6].Visible = false;
+                dgvRapport.Columns[7].Visible = false;
+                dgvRapport.Columns[8].Visible = false;
+                dgvRapport.Columns[9].Visible = false;
                 dgvRapport.ReadOnly = true;
+                
+                soktyp = "jamfor";
+                sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
+
+                if (sokningResultat.Columns[0].ColumnName.Equals("error"))
+                {
+                    tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
+                }
+                else
+                {
+                    List<narvarolista> jamforLista = new List<narvarolista>();
+                    for (int y = 0; y < sokningResultat.Rows.Count; y++)
+                    {
+                        narvarolista jamforning = new narvarolista();
+                        jamforning.fornamn = sokningResultat.Rows[y]["fnamn"].ToString();
+                        jamforning.efternamn = sokningResultat.Rows[y]["enamn"].ToString();
+                        jamforning.personnummer = sokningResultat.Rows[y]["pnr"].ToString();
+                        jamforning.medlemId = sokningResultat.Rows[y]["medlem_id"].ToString();
+                        jamforning.narvaro = sokningResultat.Rows[y]["narvarolista_id"].ToString();
+                        jamforning.gruppnamn = sokningResultat.Rows[y]["namn"].ToString();
+                        jamforning.datum = sokningResultat.Rows[y]["datum"].ToString();
+                        jamforning.start = sokningResultat.Rows[y]["starttid"].ToString();
+                        jamforning.slut = sokningResultat.Rows[y]["sluttid"].ToString();
+                        
+                        jamforLista.Add(jamforning);
+                    }
+
+                    List<string> unikGrp = raknaGrupper(narvarolista);
+
+
+                    //narvarolista; jamforLista;  <-- skicka ut till metod och loopa/jämför, skapa ny kolumn för varje grupp
+                }
 
                 tbFeedback.Text = sokOk;
             }
+        }
+
+        private List<string> raknaGrupper(List<narvarolista> input)
+        {
+            List<string> unika = new List<string>();
+            bool kontroll = true;
+            foreach(narvarolista selItem in input)
+            {
+                kontroll = unika.Contains(selItem.gruppnamn);
+                if(!kontroll)
+                {
+                    unika.Add(selItem.gruppnamn);
+                }
+            }
+            return unika;
         }
 
         ///// <summary>
@@ -356,13 +407,6 @@ namespace Uppgift08
             lbxLedare.ClearSelected();  //ta bort
         }
        
-
-        private void lbxGrupper_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //sokNarvaro();
-        }
-
-
 
         /// <summary>
         /// Aktiverar metoden för gruppsökning
