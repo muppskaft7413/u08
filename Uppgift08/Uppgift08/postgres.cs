@@ -208,7 +208,7 @@ namespace Uppgift08
                     string sokLedare1 = antalLedare(ledare); //omvandlar Listboxobjekt av markerad(e) ledare och returnerar en SQL-anpassad textsträng med dessa
                     sql = "SELECT DISTINCT traningsgrupp.grupp_id, namn FROM traningsgrupp JOIN deltagare ON deltagare.grupp_id = traningsgrupp.grupp_id JOIN trantillf ON deltagare.narvarolista_id = trantillf.narvarolista_id JOIN gruppledare ON traningsgrupp.grupp_id = gruppledare.grupp JOIN medlem ON medlem.medlem_id = gruppledare.ledare WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "' AND " + sokLedare1 + ";";
                     break;
-                case "datIntkLed":
+                case "datIntLed":
                     string sokLedare2 = antalLedare(ledare); //omvandlar Listboxobjekt av markerad(e) ledare och returnerar en SQL-anpassad textsträng med dessa
                     sql = "SELECT DISTINCT traningsgrupp.grupp_id, namn FROM traningsgrupp JOIN deltagare ON deltagare.grupp_id = traningsgrupp.grupp_id JOIN trantillf ON deltagare.narvarolista_id = trantillf.narvarolista_id JOIN gruppledare ON traningsgrupp.grupp_id = gruppledare.grupp JOIN medlem ON medlem.medlem_id = gruppledare.ledare WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' AND " + sokLedare2 + ";";
                     break;
