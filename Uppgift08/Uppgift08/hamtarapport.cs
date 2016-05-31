@@ -84,7 +84,7 @@ namespace Uppgift08
             string soktyp = "grupp";
 
             List<string> ledarLista = new List<string>();
-            //foreach (object selectedItem in lbxLedare.SelectedItems)
+            
             foreach (gruppledare selectedItem in lbxLedare.SelectedItems)
             {
                 ledarLista.Add(selectedItem.medlemId.ToString());
@@ -158,10 +158,14 @@ namespace Uppgift08
                     narvaro.fornamn = sokningResultat.Rows[y]["fnamn"].ToString();
                     narvaro.efternamn = sokningResultat.Rows[y]["enamn"].ToString();
                     narvaro.personnummer = sokningResultat.Rows[y]["pnr"].ToString();
+                    narvaro.medlemId = sokningResultat.Rows[y]["medlem_id"].ToString();
                     narvarolista.Add(narvaro);
                 }
 
-                dgvRapport.DataSource = narvarolista;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
+                dgvRapport.DataSource = narvarolista;     // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
+                dgvRapport.Columns[3].Visible = false; 
+                dgvRapport.Columns[4].Visible = false;
+                dgvRapport.Columns[5].Visible = false;
                 dgvRapport.ReadOnly = true;
 
                 tbFeedback.Text = sokOk;
@@ -329,6 +333,7 @@ namespace Uppgift08
                 lbxLedare.DataSource = null;
                 lbxGrupper.DataSource = null;
                 sokledare();
+                lbxLedare.ClearSelected();  //ta bort
             }
         }
 
@@ -348,12 +353,13 @@ namespace Uppgift08
             lbxLedare.DataSource = null;
             lbxGrupper.DataSource = null;
             sokledare();
+            lbxLedare.ClearSelected();  //ta bort
         }
        
 
         private void lbxGrupper_SelectedIndexChanged(object sender, EventArgs e)
         {
-            sokNarvaro();
+            //sokNarvaro();
         }
 
 
@@ -363,12 +369,22 @@ namespace Uppgift08
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void lbxLedare_SelectedIndexChanged(object sender, EventArgs e)
+
+        #endregion
+
+        private void lbxLedare_Click(object sender, EventArgs e)
         {
             lbxGrupper.DataSource = null;
             sokgrupper();
+            lbxGrupper.ClearSelected();  //ta bort
         }
-        #endregion
+
+        private void lbxGrupper_Click(object sender, EventArgs e)
+        {
+            sokNarvaro();
+
+        }
+
 
 
     }
