@@ -21,11 +21,44 @@ namespace Uppgift08
         public string deltagit { get; set; }
         public string pnr { get; set; }
         public string narvaro { get; set; }
+        public List<string> ledare { get; set; }
         public List<string> grupp { get; set; }
         public DateTime slutDatum { get; set; }          // Gör man datumintervallsökning behöver båda dessa DateTime-properties
         public DateTime startDatum { get; set; }         // få ett värde då objekt skapas av klassen. slutDatum måste alltid
                                                     // få ett värde.
-        string nyaGrupper;                          //variabel där frågeställningssträng lagras.
+        string nyaGrupper;                               //variabel där frågeställningssträng lagras.
+        private string nyaLedare;                        //variabel där frågeställningssträng lagras.
+
+
+        /// <summary>
+        /// Metod som omvandlar hämtade ledare till sträng med rätt frågeställning.
+        /// </summary>
+        /// <param name="hamtadLista"></param>
+        /// <returns>string med sqlfrågetillägg</returns>
+        private string antalLedare(List<string> hamtadLista)
+        {
+
+            List<string> ledarLista = new List<string>();
+            foreach (string item in hamtadLista)
+            {
+
+                ledarLista.Add("medlem.medlem_id = '" + item + "'");
+            }
+
+            for (int i = 0; i < ledarLista.Count; i++)
+            {
+                if (i == 0)
+                {
+                    nyaLedare = ledarLista[i];
+                }
+                else
+                {
+                    nyaLedare = nyaLedare + " OR " + ledarLista[i];
+                }
+            }
+            //gruppas = "traningsgrupp.namn = 'Enhjuling'";
+            return nyaLedare;
+        }
 
         /// <summary>
         /// Metod som omvandlar hämtade grupper till sträng med rätt frågeställning.
@@ -175,20 +208,31 @@ namespace Uppgift08
                 case "datEnk": // Enkel datumsökning som återger vilka träningsgrupper som tränar ett visst datum
                     sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "';";
                     break;
+                case "datEnkLed":
+                    string sokLedare1 = antalLedare(ledare); //omvandlar Listboxobjekt av markerad(e) ledare och returnerar en SQL-anpassad textsträng med dessa
+                    sql = "SELECT DISTINCT traningsgrupp.grupp_id, namn FROM traningsgrupp JOIN deltagare ON deltagare.grupp_id = traningsgrupp.grupp_id JOIN trantillf ON deltagare.narvarolista_id = trantillf.narvarolista_id JOIN gruppledare ON traningsgrupp.grupp_id = gruppledare.grupp JOIN medlem ON medlem.medlem_id = gruppledare.ledare WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "' AND " + sokLedare1 + ";";
+                    break;
+                case "datIntLed":
+                    string sokLedare2 = antalLedare(ledare); //omvandlar Listboxobjekt av markerad(e) ledare och returnerar en SQL-anpassad textsträng med dessa
+                    sql = "SELECT DISTINCT traningsgrupp.grupp_id, namn FROM traningsgrupp JOIN deltagare ON deltagare.grupp_id = traningsgrupp.grupp_id JOIN trantillf ON deltagare.narvarolista_id = trantillf.narvarolista_id JOIN gruppledare ON traningsgrupp.grupp_id = gruppledare.grupp JOIN medlem ON medlem.medlem_id = gruppledare.ledare WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' AND " + sokLedare2 + ";";
+                    break;
+                        
                         
                 }
             }
-            else if (soktyp == "ledare")
+            else if (soktyp == "ledare")  // söker ledare baserat på vilken grupp som är markerad i grupplistan.
             {
                 switch (sokparameter)
                 {
-                    case "datEnkGrp":
-                        sql = "select fnamn, enamn from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
+                    case "datEnk":
+                        //sql = "select fnamn, enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp WHERE " + sokGrupper;
+                        sql = "select distinct gruppledare.ledare, medlem.fnamn, medlem.enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp JOIN deltagare ON deltagare.grupp_id = traningsgrupp.grupp_id JOIN trantillf ON trantillf.narvarolista_id = deltagare.narvarolista_id WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "';";
+                        break;
+                    case "datInt":
+                        //sql = "select fnamn, enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp WHERE " + sokGrupper;
+                        sql = "select distinct gruppledare.ledare, medlem.fnamn, medlem.enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp JOIN deltagare ON deltagare.grupp_id = traningsgrupp.grupp_id JOIN trantillf ON trantillf.narvarolista_id = deltagare.narvarolista_id WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "';";
                         break;
 
-                    case "datIntGrp":
-                        //sql = ""
-                        break;
                 }
                 
             }

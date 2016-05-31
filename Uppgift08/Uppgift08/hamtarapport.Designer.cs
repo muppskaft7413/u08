@@ -52,7 +52,7 @@
             this.dgvRapport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRapport.Location = new System.Drawing.Point(38, 267);
             this.dgvRapport.Name = "dgvRapport";
-            this.dgvRapport.Size = new System.Drawing.Size(859, 315);
+            this.dgvRapport.Size = new System.Drawing.Size(1168, 341);
             this.dgvRapport.TabIndex = 0;
             // 
             // lblForening
@@ -103,7 +103,7 @@
             // 
             // dtpStartDatum
             // 
-            this.dtpStartDatum.Location = new System.Drawing.Point(73, 30);
+            this.dtpStartDatum.Location = new System.Drawing.Point(83, 30);
             this.dtpStartDatum.Name = "dtpStartDatum";
             this.dtpStartDatum.Size = new System.Drawing.Size(200, 20);
             this.dtpStartDatum.TabIndex = 10;
@@ -120,7 +120,7 @@
             // 
             // btn_klar
             // 
-            this.btn_klar.Location = new System.Drawing.Point(822, 590);
+            this.btn_klar.Location = new System.Drawing.Point(1131, 614);
             this.btn_klar.Name = "btn_klar";
             this.btn_klar.Size = new System.Drawing.Size(75, 23);
             this.btn_klar.TabIndex = 9;
@@ -154,7 +154,7 @@
             // 
             this.tbFeedback.BackColor = System.Drawing.SystemColors.Info;
             this.tbFeedback.Enabled = false;
-            this.tbFeedback.Location = new System.Drawing.Point(38, 592);
+            this.tbFeedback.Location = new System.Drawing.Point(29, 614);
             this.tbFeedback.Name = "tbFeedback";
             this.tbFeedback.Size = new System.Drawing.Size(454, 20);
             this.tbFeedback.TabIndex = 15;
@@ -162,26 +162,28 @@
             // lbxGrupper
             // 
             this.lbxGrupper.FormattingEnabled = true;
-            this.lbxGrupper.Location = new System.Drawing.Point(411, 110);
+            this.lbxGrupper.Location = new System.Drawing.Point(519, 81);
             this.lbxGrupper.Name = "lbxGrupper";
             this.lbxGrupper.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbxGrupper.Size = new System.Drawing.Size(120, 95);
-            this.lbxGrupper.TabIndex = 16;
+            this.lbxGrupper.Size = new System.Drawing.Size(144, 134);
+            this.lbxGrupper.TabIndex = 17;
             this.lbxGrupper.SelectedIndexChanged += new System.EventHandler(this.lbxGrupper_SelectedIndexChanged);
             // 
             // lbxLedare
             // 
             this.lbxLedare.FormattingEnabled = true;
-            this.lbxLedare.Location = new System.Drawing.Point(631, 110);
+            this.lbxLedare.Location = new System.Drawing.Point(349, 81);
             this.lbxLedare.Name = "lbxLedare";
-            this.lbxLedare.Size = new System.Drawing.Size(120, 95);
-            this.lbxLedare.TabIndex = 17;
+            this.lbxLedare.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbxLedare.Size = new System.Drawing.Size(144, 134);
+            this.lbxLedare.TabIndex = 16;
+            this.lbxLedare.SelectedIndexChanged += new System.EventHandler(this.lbxLedare_SelectedIndexChanged);
             // 
             // hamtarapport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(922, 625);
+            this.ClientSize = new System.Drawing.Size(1218, 649);
             this.Controls.Add(this.lbxLedare);
             this.Controls.Add(this.lbxGrupper);
             this.Controls.Add(this.tbFeedback);

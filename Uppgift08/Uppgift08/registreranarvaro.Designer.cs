@@ -42,7 +42,6 @@
             this.lblForening = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.gpGrupp = new System.Windows.Forms.GroupBox();
-            this.lbxInfo = new System.Windows.Forms.ListBox();
             this.lbxLedare = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegistreraNarvaro)).BeginInit();
@@ -72,7 +71,7 @@
             this.lbxGrupper.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbxGrupper.Size = new System.Drawing.Size(120, 108);
             this.lbxGrupper.TabIndex = 15;
-            this.lbxGrupper.SelectedIndexChanged += new System.EventHandler(this.lbxGrupper_SelectedIndexChanged);
+            this.lbxGrupper.Click += new System.EventHandler(this.lbxGrupper_Click);
             // 
             // tbFel
             // 
@@ -175,7 +174,6 @@
             // 
             // gpGrupp
             // 
-            this.gpGrupp.Controls.Add(this.lbxInfo);
             this.gpGrupp.Controls.Add(this.lbxGrupper);
             this.gpGrupp.Location = new System.Drawing.Point(334, 66);
             this.gpGrupp.Name = "gpGrupp";
@@ -183,15 +181,6 @@
             this.gpGrupp.TabIndex = 28;
             this.gpGrupp.TabStop = false;
             this.gpGrupp.Text = "Grupp";
-            // 
-            // lbxInfo
-            // 
-            this.lbxInfo.FormattingEnabled = true;
-            this.lbxInfo.Location = new System.Drawing.Point(132, 21);
-            this.lbxInfo.Name = "lbxInfo";
-            this.lbxInfo.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbxInfo.Size = new System.Drawing.Size(168, 108);
-            this.lbxInfo.TabIndex = 16;
             // 
             // lbxLedare
             // 
@@ -263,7 +252,6 @@
         private System.Windows.Forms.Label lblForening;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gpGrupp;
-        private System.Windows.Forms.ListBox lbxInfo;
         private System.Windows.Forms.ListBox lbxLedare;
         private System.Windows.Forms.Button button1;
     }

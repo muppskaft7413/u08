@@ -13,6 +13,7 @@ namespace Uppgift08
     public partial class hamtarapport : Form
     {
          string felSlutDatum = "Slutdatumet måste vara minst en dag mer än startdatumet.";
+         string sokOk = "Sökning ok";
         
         // konstruktor
         public hamtarapport()
@@ -23,106 +24,260 @@ namespace Uppgift08
             dtpSlutDatum.Value = dtpStartDatum.Value.AddDays(1);
         }
 
-
-
         /// <summary>
-        /// Denna metod kör igång en sökning i databasen utefter
-        /// de sökparametrar som är aktuella.
+        /// Sökning görs efter de ledare som har 
+        /// inbokade pass inom den valda tiden. 
         /// </summary>
-        private void sok()
+        private void sokledare()
         {
             DataTable sokningResultat;
             bool sokDatInterv = cbAktivSlutDatum.Checked;                                       // kollar om datumintervallsökning skall göras
-            bool sokGrupp = !(lbxGrupper.SelectedItems.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
-            bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
+            bool sokGrupp = !(lbxGrupper.Items.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
+            bool sokLedare = !(lbxLedare.Items.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
 
-            string soktyp = "";
+            string soktyp = "ledare";
 
             postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
             s.startDatum = dtpStartDatum.Value;
             s.slutDatum = dtpSlutDatum.Value;
 
-            //for (int i = 0; i < 3; i++)
-            for (int i = 0; i < 2; i++)
+            // sökning i db görs här, svaret skickas tillbaka in i tabellen sokningResultat som har datatypen DataTable
+            sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
+
+
+            if (sokningResultat.Columns[0].ColumnName.Equals("error"))
             {
-
-                // ovan iteration körs 3ggr, vilket nedan kommer generar 3 olika sökningar (dvs efter grupp, ledare eller narvaro).
-                if (i == 0)
+                tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
+            }
+            else
+            {
+                List<gruppledare> ledarlista = new List<gruppledare>();
+                gruppledare ledare;
+                for (int i = 0; i < sokningResultat.Rows.Count; i++)
                 {
-                    soktyp = "grupp";
-                }
-                else if (i == 1)
-                {
-                    soktyp = "ledare";
-                }
-                else
-                {
-                    soktyp = "narvaro";
-                }
-
-                // sökning i db görs här, svaret skickas tillbaka in i tabellen sokningResultat som har datatypen DataTable
-                sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
-
-                // variabeln sokningResultat behandlas. Först kollas om den är felaktig, annars portioneras infon ut till de olika listboxarna och datagridviewen.
-                if (sokningResultat.Columns[0].ColumnName.Equals("error"))
-                {
-                    tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
-                }
-                else
-                {
-                    if (soktyp == "grupp")
+                    ledare = new gruppledare()
                     {
-                        List<traningsgrupp> grupplista = new List<traningsgrupp>(); 
-                        
-                        for (int y = 0; y < sokningResultat.Rows.Count; y++)
-                        {
-                            traningsgrupp grupp = new traningsgrupp();
-                            grupp.namn = sokningResultat.Rows[y]["namn"].ToString();
-                            grupplista.Add(grupp);
-                        }
+                        medlemId = sokningResultat.Rows[i]["ledare"].ToString(),
+                        förnamn = sokningResultat.Rows[i]["fnamn"].ToString(),
+                        efternamn = sokningResultat.Rows[i]["enamn"].ToString()
+                    };
 
-                        lbxGrupper.DataSource = grupplista;
-                        lbxGrupper.DisplayMember = "namn";
-
-                    }
-                    else if (soktyp == "ledare")
-                    {
-                        List<gruppledare> ledarlista = new List<gruppledare>();
-
-                        for (int x = 0; x < sokningResultat.Rows.Count; x++)
-                        {
-                            gruppledare ledare = new gruppledare();
-                            ledare.förnamn = sokningResultat.Rows[x]["fnamn"].ToString();
-                            ledare.efternamn = sokningResultat.Rows[x]["enamn"].ToString();
-                            ledarlista.Add(ledare);
-                        }
-
-                        lbxLedare.DataSource = ledarlista;
-                    }
-                    else
-                    {
-                        List<narvarolista> narvarolista = new List<narvarolista>();
-
-                        for (int a = 0; a < sokningResultat.Rows.Count; a++)
-                        {
-                            narvarolista narvaro = new narvarolista();
-                            narvaro.fornamn = sokningResultat.Rows[a]["fnamn"].ToString();
-                            narvaro.efternamn = sokningResultat.Rows[a]["enamn"].ToString();
-                            narvaro.personnummer = sokningResultat.Rows[a]["pnr"].ToString();
-                            narvarolista.Add(narvaro);
-                        }
-                        dgvRapport.DataSource = narvarolista;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
-                        dgvRapport.ReadOnly = true;
-                    }
-
-
+                    ledarlista.Add(ledare);
                 }
+
+                lbxLedare.DataSource = ledarlista;
+                lbxLedare.DisplayMember = "forOchEftNamn";
+                tbFeedback.Text = sokOk;
             }
         }
 
+        /// <summary>
+        /// Sökning görs efter de grupper som 
+        /// en viss ledare ansvarar för. (Stöd för Multiselect)
+        /// </summary>
+        private void sokgrupper()
+        {
+            DataTable sokningResultat;
+            bool sokDatInterv = cbAktivSlutDatum.Checked;                                       // kollar om datumintervallsökning skall göras
+            bool sokGrupp = !(lbxGrupper.SelectedItems.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
+            bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
+            string soktyp = "grupp";
+
+            List<string> ledarLista = new List<string>();
+            //foreach (object selectedItem in lbxLedare.SelectedItems)
+            foreach (gruppledare selectedItem in lbxLedare.SelectedItems)
+            {
+                ledarLista.Add(selectedItem.medlemId.ToString());
+            }
+
+            postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
+            s.startDatum = dtpStartDatum.Value;
+            s.slutDatum = dtpSlutDatum.Value;
+            s.ledare = ledarLista;
+
+            sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
+
+            if (sokningResultat.Columns[0].ColumnName.Equals("error"))
+            {
+                tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
+            }
+            else
+            {
+                List<traningsgrupp> grupplista = new List<traningsgrupp>();
+
+                for (int y = 0; y < sokningResultat.Rows.Count; y++)
+                {
+                    traningsgrupp grupp = new traningsgrupp();
+                    grupp.namn = sokningResultat.Rows[y]["namn"].ToString();
+                    grupplista.Add(grupp);
+                }
+
+                lbxGrupper.DataSource = grupplista;
+                lbxGrupper.DisplayMember = "namn";
+                tbFeedback.Text = sokOk;
+            }
+        }
+        
+        /// <summary>
+        /// Sökning görs efter de individer som tillhör
+        /// en viss grupp. (Stöd för Multiselect)
+        /// </summary>
+        private void sokNarvaro()
+        {
+            DataTable sokningResultat;
+            bool sokDatInterv = cbAktivSlutDatum.Checked;                                       // kollar om datumintervallsökning skall göras
+            bool sokGrupp = !(lbxGrupper.SelectedItems.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
+            bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
+            string soktyp = "narvaro";
+
+            List<string> gruppLista = new List<string>();
+            //foreach (object selectedItem in lbxLedare.SelectedItems)
+            foreach (traningsgrupp selectedItem in lbxGrupper.SelectedItems)
+            {
+                gruppLista.Add(selectedItem.namn.ToString());
+            }
+
+
+            postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
+            s.startDatum = dtpStartDatum.Value;
+            s.slutDatum = dtpSlutDatum.Value;
+            s.grupp = gruppLista;
+
+            sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
+
+            if (sokningResultat.Columns[0].ColumnName.Equals("error"))
+            {
+                tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
+            }
+            else
+            {
+                List<narvarolista> narvarolista = new List<narvarolista>();
+                for (int y = 0; y < sokningResultat.Rows.Count; y++)
+                {
+                    narvarolista narvaro = new narvarolista();
+                    narvaro.fornamn = sokningResultat.Rows[y]["fnamn"].ToString();
+                    narvaro.efternamn = sokningResultat.Rows[y]["enamn"].ToString();
+                    narvaro.personnummer = sokningResultat.Rows[y]["pnr"].ToString();
+                    narvarolista.Add(narvaro);
+                }
+
+                dgvRapport.DataSource = narvarolista;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
+                dgvRapport.ReadOnly = true;
+
+                tbFeedback.Text = sokOk;
+            }
+        }
+
+        ///// <summary>
+        ///// Denna metod kör igång en sökning i databasen utefter
+        ///// de sökparametrar som är aktuella.
+        ///// </summary>
+        //private void sok()
+        //{
+        //    DataTable sokningResultat;
+        //    bool sokDatInterv = cbAktivSlutDatum.Checked;                                       // kollar om datumintervallsökning skall göras
+        //    bool sokGrupp = !(lbxGrupper.SelectedItems.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
+        //    bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
+
+        //    string soktyp = "";
+
+        //    postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
+        //    s.startDatum = dtpStartDatum.Value;
+        //    s.slutDatum = dtpSlutDatum.Value;
+        //   // if (sokGrupp) { s.grupp = lbxGrupper.SelectedItem.ToString(); };
+            
+
+        //    //for (int i = 0; i < 3; i++)
+        //    for (int i = 0; i < 1; i++)
+        //    {
+
+        //        // ovan iteration körs 3ggr, vilket nedan kommer generar 3 olika sökningar (dvs efter grupp, ledare eller narvaro).
+        //        if (i == 0)
+        //        {
+        //            soktyp = "grupp";
+        //        }
+        //        else if (i == 1)
+        //        {
+        //            soktyp = "ledare";
+        //        }
+        //        else
+        //        {
+        //            soktyp = "narvaro";
+        //        }
+
+        //        // sökning i db görs här, svaret skickas tillbaka in i tabellen sokningResultat som har datatypen DataTable
+        //        sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
+
+        //        // variabeln sokningResultat behandlas. Först kollas om den är felaktig, annars portioneras infon ut till de olika listboxarna och datagridviewen.
+        //        //if (sokningResultat.Columns[0].ColumnName.Equals("error"))
+        //        if (2<1)
+        //        {
+        //            tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
+        //        }
+        //        else
+        //        {
+        //            if (soktyp == "grupp")
+        //            {
+        //                List<traningsgrupp> grupplista = new List<traningsgrupp>(); 
+                        
+        //                for (int y = 0; y < sokningResultat.Rows.Count; y++)
+        //                {
+        //                    traningsgrupp grupp = new traningsgrupp();
+        //                    grupp.namn = sokningResultat.Rows[y]["namn"].ToString();
+        //                    grupplista.Add(grupp);
+        //                }
+
+        //                lbxGrupper.DataSource = grupplista;
+        //                lbxGrupper.DisplayMember = "namn";
+                        
+
+        //            }
+        //            else if (soktyp == "ledare")
+        //            {
+        //                if(lbxGrupper.Items.Count > 0)
+        //                {
+        //                    List<gruppledare> ledarlista = new List<gruppledare>();
+
+        //                    for (int x = 0; x < sokningResultat.Rows.Count; x++)
+        //                    {
+        //                        gruppledare ledare = new gruppledare();
+        //                        ledare.förnamn = sokningResultat.Rows[x]["fnamn"].ToString();
+        //                        ledare.efternamn = sokningResultat.Rows[x]["enamn"].ToString();
+        //                        ledarlista.Add(ledare);
+        //                    }
+
+        //                    lbxLedare.DataSource = ledarlista;
+        //                }
+                        
+        //            }
+        //            else
+        //            {
+        //                List<narvarolista> narvarolista = new List<narvarolista>();
+
+        //                for (int a = 0; a < sokningResultat.Rows.Count; a++)
+        //                {
+        //                    narvarolista narvaro = new narvarolista();
+        //                    narvaro.fornamn = sokningResultat.Rows[a]["fnamn"].ToString();
+        //                    narvaro.efternamn = sokningResultat.Rows[a]["enamn"].ToString();
+        //                    narvaro.personnummer = sokningResultat.Rows[a]["pnr"].ToString();
+        //                    narvarolista.Add(narvaro);
+        //                }
+        //                dgvRapport.DataSource = narvarolista;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
+        //                dgvRapport.ReadOnly = true;
+        //            }
+
+
+        //        }
+        //    }
+        //}
+
         #region ############# EVENT HANDLERS ##############
 
-        //Stänger närvarorapporteringsfönstret
+        /// <summary>
+        /// Stänger närvarorapporteringsfönstret
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_klar_Click(object sender, EventArgs e)
         {
             this.Close();                                               // stänger detta fönster
@@ -140,11 +295,15 @@ namespace Uppgift08
             if(dtpSlutDatum.Enabled == false)
             {
                 dtpSlutDatum.Enabled = true;
-                sok();
+                lbxLedare.DataSource = null;
+                lbxGrupper.DataSource = null;
+                //sokledare();
             }
             else
             {
                 dtpSlutDatum.Enabled = false;
+                lbxLedare.DataSource = null;
+                lbxGrupper.DataSource = null;
             }
         }
 
@@ -167,7 +326,9 @@ namespace Uppgift08
             else
             {
                 tbFeedback.Clear();   // rensar feedbackfältet
-                sok();
+                lbxLedare.DataSource = null;
+                lbxGrupper.DataSource = null;
+                sokledare();
             }
         }
 
@@ -184,14 +345,31 @@ namespace Uppgift08
             {
                 dtpSlutDatum.Value = dtpStartDatum.Value.AddDays(1);
             }
-            sok();
+            lbxLedare.DataSource = null;
+            lbxGrupper.DataSource = null;
+            sokledare();
         }
        
 
         private void lbxGrupper_SelectedIndexChanged(object sender, EventArgs e)
         {
+            sokNarvaro();
+        }
 
+
+
+        /// <summary>
+        /// Aktiverar metoden för gruppsökning
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lbxLedare_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lbxGrupper.DataSource = null;
+            sokgrupper();
         }
         #endregion
+
+
     }
 }

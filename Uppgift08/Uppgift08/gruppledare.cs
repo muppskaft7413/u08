@@ -8,6 +8,7 @@ namespace Uppgift08
 {
     class gruppledare
     {
+        public string medlemId { get; set; }
         public string förnamn { get; set; }
         public string efternamn { get; set; }
 
@@ -18,5 +19,14 @@ namespace Uppgift08
                 return "ledare " + förnamn + " " + efternamn;
             }
         }
+
+        public string forOchEftNamn
+        {
+            get
+            {
+                return förnamn + " " + efternamn;
+            }
+        }
+
     }
 }
