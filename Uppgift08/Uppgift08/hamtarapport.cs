@@ -237,16 +237,16 @@ namespace Uppgift08
                     int kolumn = 3;
 
                     // lägger till kolumner för träningstillfälle
-                    List<narvarolista> _narvarolistan = new List<narvarolista>();
-                    List<narvarolista> _jamforLista = new List<narvarolista>();
+                    List<narvarolista> _narvarolistan;
+                    
                         foreach (narvarolista item in unikaGrupperLista)
                         {
-
+                            
                             tillägg++;
                             kolNamn = item.gruppnamn + "\n " + " Datum: " + Convert.ToDateTime(item.datum).ToShortDateString() + "\n Tid: " + Convert.ToDateTime(item.start).ToShortTimeString() + "-" + Convert.ToDateTime(item.slut).ToShortTimeString();
                             dgvRapport.Columns.Add(kolNamn, kolNamn);
 
-
+                            _narvarolistan = new List<narvarolista>();
 
                             //while (kolumn < dgvRapport.Columns.Count)
                             //{
@@ -257,13 +257,14 @@ namespace Uppgift08
                                 {
                                     foreach (narvarolista jamfor in jamforLista)
                                     {
-                                        if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == true)
+                                        if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == true && item.gruppnamn == jamfor.gruppnamn)
                                         {
                                             bool test2 = _narvarolistan.Contains(narvarande);
                                             if (!test2)
                                             {
                                                 dgvRapport.Rows[index].Cells[kolumn].Value = "x";
                                                 _narvarolistan.Add(narvarande);
+                                                break;
                                             }
 
                                         }
