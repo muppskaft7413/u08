@@ -14,6 +14,8 @@ namespace Uppgift08
     {
          string felSlutDatum = "Slutdatumet måste vara minst en dag mer än startdatumet.";
          string sokOk = "Sökning ok";
+         int kolumncounter = 0;
+         int tillägg = 0;
         
         // konstruktor
         public hamtarapport()
@@ -131,7 +133,6 @@ namespace Uppgift08
             string soktyp = "narvaro";
 
             List<string> gruppLista = new List<string>();
-            //foreach (object selectedItem in lbxLedare.SelectedItems)
             foreach (traningsgrupp selectedItem in lbxGrupper.SelectedItems)
             {
                 gruppLista.Add(selectedItem.namn.ToString());
@@ -162,16 +163,15 @@ namespace Uppgift08
                     narvarolista.Add(narvaro);
                 }
 
-                dgvRapport.DataSource = narvarolista;     // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
-                dgvRapport.Columns[3].Visible = false;
-                dgvRapport.Columns[4].Visible = false;
-                dgvRapport.Columns[5].Visible = false;
-                dgvRapport.Columns[6].Visible = false;
-                dgvRapport.Columns[7].Visible = false;
-                dgvRapport.Columns[8].Visible = false;
-                dgvRapport.Columns[9].Visible = false;
+                dgvRapport.DataSource = narvarolista;
                 dgvRapport.ReadOnly = true;
-                
+                for (int i = 3; i < 10; i++)
+                {
+                    dgvRapport.Columns[i].Visible = false;
+                }
+
+
+                //ny sökning för att ta fram en jämförelselista mot narvarolista
                 soktyp = "jamfor";
                 sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
 
@@ -194,137 +194,53 @@ namespace Uppgift08
                         jamforning.datum = sokningResultat.Rows[y]["datum"].ToString();
                         jamforning.start = sokningResultat.Rows[y]["starttid"].ToString();
                         jamforning.slut = sokningResultat.Rows[y]["sluttid"].ToString();
-                        
+
                         jamforLista.Add(jamforning);
                     }
-
-                    List<string> unikGrp = raknaGrupper(narvarolista);
-
-
                     //narvarolista; jamforLista;  <-- skicka ut till metod och loopa/jämför, skapa ny kolumn för varje grupp
+                }
+
+                //ny sökning för att ta fram unika grupper
+                soktyp = "unikagrupper";
+                sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
+
+                if (sokningResultat.Columns[0].ColumnName.Equals("error"))
+                {
+                    tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
+                }
+                else
+                {
+                    List<narvarolista> unikaGrupperLista = new List<narvarolista>();
+                    for (int y = 0; y < sokningResultat.Rows.Count; y++)
+                    {
+                        narvarolista unikaGrupper = new narvarolista();
+                        unikaGrupper.narvaro = sokningResultat.Rows[y]["narvarolista_id"].ToString();
+                        unikaGrupper.gruppnamn = sokningResultat.Rows[y]["namn"].ToString();
+                        unikaGrupper.datum = sokningResultat.Rows[y]["datum"].ToString();
+                        unikaGrupper.start = sokningResultat.Rows[y]["starttid"].ToString();
+                        unikaGrupper.slut = sokningResultat.Rows[y]["sluttid"].ToString();
+
+                        unikaGrupperLista.Add(unikaGrupper);
+                    }
+                    MessageBox.Show(unikaGrupperLista.Count.ToString());
+
+                    string kolNamn = "";
+                    
+                    kolumncounter = dgvRapport.Columns.Count;
+                    tillägg = 0;
+                    foreach (narvarolista item in unikaGrupperLista)
+                    {
+                        tillägg++;
+                        kolNamn = item.gruppnamn + "\n " + " Datum: " + Convert.ToDateTime(item.datum).ToShortDateString() + "\n Tid: " + Convert.ToDateTime(item.start).ToShortTimeString() + "-" + Convert.ToDateTime(item.slut).ToShortTimeString();
+                        dgvRapport.Columns.Add(kolNamn, kolNamn);
+                    }
+                    
                 }
 
                 tbFeedback.Text = sokOk;
             }
         }
 
-        private List<string> raknaGrupper(List<narvarolista> input)
-        {
-            List<string> unika = new List<string>();
-            bool kontroll = true;
-            foreach(narvarolista selItem in input)
-            {
-                kontroll = unika.Contains(selItem.gruppnamn);
-                if(!kontroll)
-                {
-                    unika.Add(selItem.gruppnamn);
-                }
-            }
-            return unika;
-        }
-
-        ///// <summary>
-        ///// Denna metod kör igång en sökning i databasen utefter
-        ///// de sökparametrar som är aktuella.
-        ///// </summary>
-        //private void sok()
-        //{
-        //    DataTable sokningResultat;
-        //    bool sokDatInterv = cbAktivSlutDatum.Checked;                                       // kollar om datumintervallsökning skall göras
-        //    bool sokGrupp = !(lbxGrupper.SelectedItems.Count == 0) ? true : false;              // kollar om poster i grupplistboxen är markerade
-        //    bool sokLedare = !(lbxLedare.SelectedItems.Count == 0) ? true : false;              // kollar om poster i ledarlistboxen är markerade
-
-        //    string soktyp = "";
-
-        //    postgres s = new postgres();                                                        // objekt av postgres skapas för att göra sökning mot db
-        //    s.startDatum = dtpStartDatum.Value;
-        //    s.slutDatum = dtpSlutDatum.Value;
-        //   // if (sokGrupp) { s.grupp = lbxGrupper.SelectedItem.ToString(); };
-            
-
-        //    //for (int i = 0; i < 3; i++)
-        //    for (int i = 0; i < 1; i++)
-        //    {
-
-        //        // ovan iteration körs 3ggr, vilket nedan kommer generar 3 olika sökningar (dvs efter grupp, ledare eller narvaro).
-        //        if (i == 0)
-        //        {
-        //            soktyp = "grupp";
-        //        }
-        //        else if (i == 1)
-        //        {
-        //            soktyp = "ledare";
-        //        }
-        //        else
-        //        {
-        //            soktyp = "narvaro";
-        //        }
-
-        //        // sökning i db görs här, svaret skickas tillbaka in i tabellen sokningResultat som har datatypen DataTable
-        //        sokningResultat = s.sqlFråga(s.vilkenSokning(sokDatInterv, sokGrupp, sokLedare), soktyp);
-
-        //        // variabeln sokningResultat behandlas. Först kollas om den är felaktig, annars portioneras infon ut till de olika listboxarna och datagridviewen.
-        //        //if (sokningResultat.Columns[0].ColumnName.Equals("error"))
-        //        if (2<1)
-        //        {
-        //            tbFeedback.Text = sokningResultat.Rows[0][1].ToString();
-        //        }
-        //        else
-        //        {
-        //            if (soktyp == "grupp")
-        //            {
-        //                List<traningsgrupp> grupplista = new List<traningsgrupp>(); 
-                        
-        //                for (int y = 0; y < sokningResultat.Rows.Count; y++)
-        //                {
-        //                    traningsgrupp grupp = new traningsgrupp();
-        //                    grupp.namn = sokningResultat.Rows[y]["namn"].ToString();
-        //                    grupplista.Add(grupp);
-        //                }
-
-        //                lbxGrupper.DataSource = grupplista;
-        //                lbxGrupper.DisplayMember = "namn";
-                        
-
-        //            }
-        //            else if (soktyp == "ledare")
-        //            {
-        //                if(lbxGrupper.Items.Count > 0)
-        //                {
-        //                    List<gruppledare> ledarlista = new List<gruppledare>();
-
-        //                    for (int x = 0; x < sokningResultat.Rows.Count; x++)
-        //                    {
-        //                        gruppledare ledare = new gruppledare();
-        //                        ledare.förnamn = sokningResultat.Rows[x]["fnamn"].ToString();
-        //                        ledare.efternamn = sokningResultat.Rows[x]["enamn"].ToString();
-        //                        ledarlista.Add(ledare);
-        //                    }
-
-        //                    lbxLedare.DataSource = ledarlista;
-        //                }
-                        
-        //            }
-        //            else
-        //            {
-        //                List<narvarolista> narvarolista = new List<narvarolista>();
-
-        //                for (int a = 0; a < sokningResultat.Rows.Count; a++)
-        //                {
-        //                    narvarolista narvaro = new narvarolista();
-        //                    narvaro.fornamn = sokningResultat.Rows[a]["fnamn"].ToString();
-        //                    narvaro.efternamn = sokningResultat.Rows[a]["enamn"].ToString();
-        //                    narvaro.personnummer = sokningResultat.Rows[a]["pnr"].ToString();
-        //                    narvarolista.Add(narvaro);
-        //                }
-        //                dgvRapport.DataSource = narvarolista;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
-        //                dgvRapport.ReadOnly = true;
-        //            }
-
-
-        //        }
-        //    }
-        //}
 
         #region ############# EVENT HANDLERS ##############
 
@@ -425,6 +341,15 @@ namespace Uppgift08
 
         private void lbxGrupper_Click(object sender, EventArgs e)
         {
+            if (kolumncounter > 0)
+            {
+                for (int i = kolumncounter; i < kolumncounter + tillägg; i++)
+                {
+                    dgvRapport.Columns.RemoveAt(i);
+                }
+                
+            }
+            
             sokNarvaro();
 
         }
