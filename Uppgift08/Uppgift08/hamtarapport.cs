@@ -14,10 +14,14 @@ namespace Uppgift08
     {
 
         List<narvarolista> jamforLista;
-        string felSlutDatum = "Slutdatumet måste vara minst en dag mer än startdatumet.";
-         string sokOk = "Sökning ok";
-         int tillägg = 0;
-        
+        string felSlutDatum = "Slutdatumet måste vara minst en dag mer än startdatumet.";       // textmeddelande som genereras till gula feedbackfältet om man väljer felaktiga kombos av datum
+        string sokOk = "Sökning ok";                                                            // textmeddelande som genereras till gula feedbackfältet om allt går ok
+        int kolumn;                                                                             // startindex för att lägga till extra kolumner utöver det som datasource ger.
+        int tillägg = 0;                                                                        // håller koll på hur många extra kolumner som lagts till.
+        int raknare;                                                                            // kontrollvärde för summeringslistboxen
+        int summa;
+        List<string> summering = new List<string>();
+
         // konstruktor
         public hamtarapport()
         {
@@ -202,7 +206,6 @@ namespace Uppgift08
 
                         jamforLista.Add(jamforning);
                     }
-                    //narvarolista; jamforLista;  <-- skicka ut till metod och loopa/jämför, skapa ny kolumn för varje grupp
                 }
 
                 //ny sökning för att ta fram unika grupper
@@ -232,53 +235,82 @@ namespace Uppgift08
 
                     
                     tillägg = 0;
+                    raknare = 0;
                     string kolNamn = "";
-                    
-                    int kolumn = 3;
+                    kolumn = 3;
+                    summa = 0;
+                    summering.Clear();
+                    int antalDeltagare = 0;
 
                     // lägger till kolumner för träningstillfälle
                     List<narvarolista> _narvarolistan;
                     
                         foreach (narvarolista item in unikaGrupperLista)
                         {
-                            
                             tillägg++;
                             kolNamn = item.gruppnamn + "\n " + " Datum: " + Convert.ToDateTime(item.datum).ToShortDateString() + "\n Tid: " + Convert.ToDateTime(item.start).ToShortTimeString() + "-" + Convert.ToDateTime(item.slut).ToShortTimeString();
                             dgvRapport.Columns.Add(kolNamn, kolNamn);
 
                             _narvarolistan = new List<narvarolista>();
 
-                            //while (kolumn < dgvRapport.Columns.Count)
-                            //{
-                                int index = 0;
-                                _narvarolistan.Clear();
+                            int index = 0;
+                            antalDeltagare = 0;
+                            _narvarolistan.Clear();
 
-                                foreach (narvarolista narvarande in narvarolistan)
+                            foreach (narvarolista narvarande in narvarolistan)
+                            {
+                                foreach (narvarolista jamfor in jamforLista)
                                 {
-                                    foreach (narvarolista jamfor in jamforLista)
+                                    if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == true && item.gruppnamn == jamfor.gruppnamn)
                                     {
-                                        if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == true && item.gruppnamn == jamfor.gruppnamn)
+                                        bool test2 = _narvarolistan.Contains(narvarande);
+                                        if (!test2)
                                         {
-                                            bool test2 = _narvarolistan.Contains(narvarande);
-                                            if (!test2)
-                                            {
-                                                dgvRapport.Rows[index].Cells[kolumn].Value = "x";
-                                                _narvarolistan.Add(narvarande);
-                                                break;
-                                            }
-
+                                            dgvRapport.Rows[index].Cells[kolumn].Value = "x";
+                                            _narvarolistan.Add(narvarande);
+                                            antalDeltagare++;
+                                            break;
                                         }
-                                    }
-                                    index++;
-                                }
-                                kolumn++;
 
-                            //}
+                                    }
+                                }
+                                index++;
+                            }
+                            kolumn++;
+                            skickaTillSummering(kolNamn, antalDeltagare, false);
+                            
                         }
+                        skickaTillSummering(kolNamn, antalDeltagare, true);
                 }
                 tbFeedback.Text = sokOk;
             }
         }
+
+        private void skickaTillSummering(string kolNamn, int antalDeltagare, bool jaNej)
+        {
+            if (!jaNej)
+            {
+                raknare++;
+                summa += antalDeltagare;
+                string sammansatt = kolNamn + ", antal deltagare: " + antalDeltagare;
+                summering.Add(sammansatt);
+            }
+            else
+            {
+                summering.Add("--");
+                summering.Add("Totalt antal deltagare: " + summa);
+                //lbxSummering.DataSource = null;
+                lbxSummering.SelectionMode = SelectionMode.MultiExtended;
+                lbxSummering.DataSource = summering;
+                lbxSummering.SelectionMode = SelectionMode.None;
+                
+            }
+        }
+
+        
+
+ 
+
 
 
         #region ############# EVENT HANDLERS ##############
@@ -368,28 +400,32 @@ namespace Uppgift08
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
-        #endregion
-
         private void lbxLedare_Click(object sender, EventArgs e)
         {
             lbxGrupper.DataSource = null;
             sokgrupper();
-            lbxGrupper.ClearSelected();  //ta bort
+            lbxGrupper.ClearSelected(); 
         }
 
+        /// <summary>
+        /// Genererar en lista med vilka som har deltagit i träningstillfällen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lbxGrupper_Click(object sender, EventArgs e)
         {
+
+            lbxSummering.DataSource = null;
 
             dgvRapport.DataSource = null;
             dgvRapport.Rows.Clear();
             dgvRapport.Columns.Clear();
-            dgvRapport.Refresh();
             sokNarvaro();
+            
 
         }
 
-
+        #endregion
 
     }
 }

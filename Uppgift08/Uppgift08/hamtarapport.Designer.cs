@@ -31,8 +31,6 @@
             this.dgvRapport = new System.Windows.Forms.DataGridView();
             this.lblForening = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.gbSokDatum = new System.Windows.Forms.GroupBox();
             this.dtpStartDatum = new System.Windows.Forms.DateTimePicker();
             this.dtpSlutDatum = new System.Windows.Forms.DateTimePicker();
@@ -42,6 +40,9 @@
             this.tbFeedback = new System.Windows.Forms.TextBox();
             this.lbxGrupper = new System.Windows.Forms.ListBox();
             this.lbxLedare = new System.Windows.Forms.ListBox();
+            this.lbxSummering = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRapport)).BeginInit();
             this.gbSokDatum.SuspendLayout();
             this.gbSokSlutdatum.SuspendLayout();
@@ -50,7 +51,7 @@
             // dgvRapport
             // 
             this.dgvRapport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRapport.Location = new System.Drawing.Point(38, 267);
+            this.dgvRapport.Location = new System.Drawing.Point(38, 221);
             this.dgvRapport.Name = "dgvRapport";
             this.dgvRapport.Size = new System.Drawing.Size(1168, 341);
             this.dgvRapport.TabIndex = 0;
@@ -72,24 +73,6 @@
             this.label2.Size = new System.Drawing.Size(96, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Cirkus Kul och Bus";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(163, 20);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Idrott:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(203, 20);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Akrobatik/cirkushallen";
             // 
             // gbSokDatum
             // 
@@ -154,7 +137,7 @@
             // 
             this.tbFeedback.BackColor = System.Drawing.SystemColors.Info;
             this.tbFeedback.Enabled = false;
-            this.tbFeedback.Location = new System.Drawing.Point(29, 614);
+            this.tbFeedback.Location = new System.Drawing.Point(38, 614);
             this.tbFeedback.Name = "tbFeedback";
             this.tbFeedback.Size = new System.Drawing.Size(454, 20);
             this.tbFeedback.TabIndex = 15;
@@ -179,19 +162,48 @@
             this.lbxLedare.TabIndex = 16;
             this.lbxLedare.Click += new System.EventHandler(this.lbxLedare_Click);
             // 
+            // lbxSummering
+            // 
+            this.lbxSummering.FormattingEnabled = true;
+            this.lbxSummering.Location = new System.Drawing.Point(550, 568);
+            this.lbxSummering.Name = "lbxSummering";
+            this.lbxSummering.ScrollAlwaysVisible = true;
+            this.lbxSummering.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.lbxSummering.Size = new System.Drawing.Size(575, 69);
+            this.lbxSummering.TabIndex = 18;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(346, 65);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(96, 13);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "Cirkus Kul och Bus";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(516, 65);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(96, 13);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "Cirkus Kul och Bus";
+            // 
             // hamtarapport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1218, 649);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbxSummering);
             this.Controls.Add(this.lbxLedare);
             this.Controls.Add(this.lbxGrupper);
             this.Controls.Add(this.tbFeedback);
             this.Controls.Add(this.gbSokSlutdatum);
             this.Controls.Add(this.btn_klar);
             this.Controls.Add(this.gbSokDatum);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblForening);
             this.Controls.Add(this.dgvRapport);
@@ -211,8 +223,6 @@
         private System.Windows.Forms.DataGridView dgvRapport;
         private System.Windows.Forms.Label lblForening;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox gbSokDatum;
         private System.Windows.Forms.DateTimePicker dtpStartDatum;
         private System.Windows.Forms.DateTimePicker dtpSlutDatum;
@@ -222,5 +232,8 @@
         private System.Windows.Forms.TextBox tbFeedback;
         private System.Windows.Forms.ListBox lbxGrupper;
         private System.Windows.Forms.ListBox lbxLedare;
+        private System.Windows.Forms.ListBox lbxSummering;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
     }
 }
