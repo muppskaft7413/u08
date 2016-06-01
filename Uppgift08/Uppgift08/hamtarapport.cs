@@ -12,9 +12,10 @@ namespace Uppgift08
 {
     public partial class hamtarapport : Form
     {
-         string felSlutDatum = "Slutdatumet måste vara minst en dag mer än startdatumet.";
+
+        List<narvarolista> jamforLista;
+        string felSlutDatum = "Slutdatumet måste vara minst en dag mer än startdatumet.";
          string sokOk = "Sökning ok";
-         int kolumncounter = 0;
          int tillägg = 0;
         
         // konstruktor
@@ -152,7 +153,7 @@ namespace Uppgift08
             }
             else
             {
-                List<narvarolista> narvarolista = new List<narvarolista>();
+                List<narvarolista> narvarolistan = new List<narvarolista>();
                 for (int y = 0; y < sokningResultat.Rows.Count; y++)
                 {
                     narvarolista narvaro = new narvarolista();
@@ -160,14 +161,17 @@ namespace Uppgift08
                     narvaro.efternamn = sokningResultat.Rows[y]["enamn"].ToString();
                     narvaro.personnummer = sokningResultat.Rows[y]["pnr"].ToString();
                     narvaro.medlemId = sokningResultat.Rows[y]["medlem_id"].ToString();
-                    narvarolista.Add(narvaro);
+                    narvarolistan.Add(narvaro);
                 }
 
-                dgvRapport.DataSource = narvarolista;
+                dgvRapport.DataSource = narvarolistan;
                 dgvRapport.ReadOnly = true;
-                for (int i = 3; i < 10; i++)
+
+                int hej = dgvRapport.Columns.Count -1;
+
+                for (int i = hej; i > 2; i--)
                 {
-                    dgvRapport.Columns[i].Visible = false;
+                    dgvRapport.Columns.RemoveAt(i);
                 }
 
 
@@ -181,7 +185,7 @@ namespace Uppgift08
                 }
                 else
                 {
-                    List<narvarolista> jamforLista = new List<narvarolista>();
+                    jamforLista = new List<narvarolista>();
                     for (int y = 0; y < sokningResultat.Rows.Count; y++)
                     {
                         narvarolista jamforning = new narvarolista();
@@ -194,6 +198,7 @@ namespace Uppgift08
                         jamforning.datum = sokningResultat.Rows[y]["datum"].ToString();
                         jamforning.start = sokningResultat.Rows[y]["starttid"].ToString();
                         jamforning.slut = sokningResultat.Rows[y]["sluttid"].ToString();
+                        jamforning.deltagit = (bool)sokningResultat.Rows[y]["deltagit"];
 
                         jamforLista.Add(jamforning);
                     }
@@ -211,6 +216,7 @@ namespace Uppgift08
                 else
                 {
                     List<narvarolista> unikaGrupperLista = new List<narvarolista>();
+
                     for (int y = 0; y < sokningResultat.Rows.Count; y++)
                     {
                         narvarolista unikaGrupper = new narvarolista();
@@ -222,21 +228,53 @@ namespace Uppgift08
 
                         unikaGrupperLista.Add(unikaGrupper);
                     }
-                    MessageBox.Show(unikaGrupperLista.Count.ToString());
+                    
 
+                    
+                    tillägg = 0;
                     string kolNamn = "";
                     
-                    kolumncounter = dgvRapport.Columns.Count;
-                    tillägg = 0;
-                    foreach (narvarolista item in unikaGrupperLista)
-                    {
-                        tillägg++;
-                        kolNamn = item.gruppnamn + "\n " + " Datum: " + Convert.ToDateTime(item.datum).ToShortDateString() + "\n Tid: " + Convert.ToDateTime(item.start).ToShortTimeString() + "-" + Convert.ToDateTime(item.slut).ToShortTimeString();
-                        dgvRapport.Columns.Add(kolNamn, kolNamn);
-                    }
-                    
-                }
+                    int kolumn = 3;
 
+                    // lägger till kolumner för träningstillfälle
+                    List<narvarolista> _narvarolistan = new List<narvarolista>();
+                    List<narvarolista> _jamforLista = new List<narvarolista>();
+                        foreach (narvarolista item in unikaGrupperLista)
+                        {
+
+                            tillägg++;
+                            kolNamn = item.gruppnamn + "\n " + " Datum: " + Convert.ToDateTime(item.datum).ToShortDateString() + "\n Tid: " + Convert.ToDateTime(item.start).ToShortTimeString() + "-" + Convert.ToDateTime(item.slut).ToShortTimeString();
+                            dgvRapport.Columns.Add(kolNamn, kolNamn);
+
+
+
+                            //while (kolumn < dgvRapport.Columns.Count)
+                            //{
+                                int index = 0;
+                                _narvarolistan.Clear();
+
+                                foreach (narvarolista narvarande in narvarolistan)
+                                {
+                                    foreach (narvarolista jamfor in jamforLista)
+                                    {
+                                        if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == true)
+                                        {
+                                            bool test2 = _narvarolistan.Contains(narvarande);
+                                            if (!test2)
+                                            {
+                                                dgvRapport.Rows[index].Cells[kolumn].Value = "x";
+                                                _narvarolistan.Add(narvarande);
+                                            }
+
+                                        }
+                                    }
+                                    index++;
+                                }
+                                kolumn++;
+
+                            //}
+                        }
+                }
                 tbFeedback.Text = sokOk;
             }
         }
@@ -341,15 +379,11 @@ namespace Uppgift08
 
         private void lbxGrupper_Click(object sender, EventArgs e)
         {
-            if (kolumncounter > 0)
-            {
-                for (int i = kolumncounter; i < kolumncounter + tillägg; i++)
-                {
-                    dgvRapport.Columns.RemoveAt(i);
-                }
-                
-            }
-            
+
+            dgvRapport.DataSource = null;
+            dgvRapport.Rows.Clear();
+            dgvRapport.Columns.Clear();
+            dgvRapport.Refresh();
             sokNarvaro();
 
         }
