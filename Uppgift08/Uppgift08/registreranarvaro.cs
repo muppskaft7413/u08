@@ -32,6 +32,7 @@ namespace Uppgift08
         narvarolista narvarolistaRatt;
         List<narvarolista> jamforLista;
         int tillägg;
+        string kolNamn;
 
  
 
@@ -163,7 +164,7 @@ namespace Uppgift08
 
                 int hej = dgvRegistreraNarvaro.Columns.Count - 1;
 
-                for (int i = 4; i < 10; i++)
+                for (int i = 3; i < 10; i++)
                 {
                     dgvRegistreraNarvaro.Columns[i].Visible = false;
                 }
@@ -230,7 +231,6 @@ namespace Uppgift08
 
                     foreach (narvarolista item in unikaGrupperLista)
                     {
-                        string kolNamn;
                         tillägg++;
                         counter++;
                         
@@ -256,11 +256,6 @@ namespace Uppgift08
                                     {
                                         dgvRegistreraNarvaro.Rows[index].Cells[kolumn].Value = true;
                                         _narvarolistan.Add(narvarande);
-
-
-	{
-		 
-	}
                                         break;
                                     }
                                 }
@@ -341,7 +336,7 @@ namespace Uppgift08
 
         private void dgvRegistreraNarvaro_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvRegistreraNarvaro.Columns[e.ColumnIndex].DataPropertyName == "deltagit")
+            if (dgvRegistreraNarvaro.Columns[e.ColumnIndex].DataPropertyName == "deltagit" || dgvRegistreraNarvaro.Columns[e.ColumnIndex].DataPropertyName == "nyaKol")
              {
 
                  andraNarvaro();
@@ -385,23 +380,32 @@ namespace Uppgift08
                 DataGridViewRow selectedRow = dgvRegistreraNarvaro.Rows[selectedrowindex];
 
                 personnummer = Convert.ToString(selectedRow.Cells["personnummer"].Value.ToString());
-                deltagit = Convert.ToString(selectedRow.Cells["deltagit"].Value.ToString());
+                //deltagit = Convert.ToString(selectedRow.Cells["deltagit"].Value.ToString());
                 narvaro = Convert.ToString(selectedRow.Cells["narvaro"].Value.ToString());
                 grupp = Convert.ToString(selectedRow.Cells["gruppnamn"].Value.ToString());
-                for (int i = 0; i < dgvRegistreraNarvaro.Columns.Count; i++)
-                {
-                 if (dgvRegistreraNarvaro.Columns[i].DataPropertyName == "häst")
-                 {
-                     //string bla2 = dgvRegistreraNarvaro.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                     //string bla = ((bool)dgvRegistreraNarvaro[e.ColumnIndex, e.RowIndex].) == true ? "true" : "false";
-                     DataGridViewCheckBoxCell checkbox = (DataGridViewCheckBoxCell)dgvRegistreraNarvaro[e.ColumnIndex, e.RowIndex].Value;
-                     //DataGridViewCheckBoxCell checkbox = (DataGridViewCheckBoxCell)dgvRegistreraNarvaro.CurrentCell;
-                     bool isChecked = (bool)checkbox.EditedFormattedValue;
-                     MessageBox.Show("hej");
-                     break;
 
-                 }
+                if (selectedRow.Cells[kolNamn].Value == null)
+                {
+                    selectedRow.Cells[kolNamn].Value = false;
                 }
+
+                deltagit = Convert.ToString(selectedRow.Cells[kolNamn].Value.ToString());
+                MessageBox.Show("bae");
+                //for (int i = 0; i < dgvRegistreraNarvaro.Columns.Count; i++)
+                //{
+                // if (dgvRegistreraNarvaro.Columns[i].DataPropertyName == "häst")
+                // {
+
+                //     //string bla2 = dgvRegistreraNarvaro.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                //     //string bla = ((bool)dgvRegistreraNarvaro[e.ColumnIndex, e.RowIndex].) == true ? "true" : "false";
+                //     //DataGridViewCheckBoxCell checkbox = (DataGridViewCheckBoxCell)dgvRegistreraNarvaro[e.ColumnIndex, e.RowIndex].Value;
+                //     ////DataGridViewCheckBoxCell checkbox = (DataGridViewCheckBoxCell)dgvRegistreraNarvaro.CurrentCell;
+                //     //bool isChecked = (bool)checkbox.EditedFormattedValue;
+                //     MessageBox.Show("hej");
+                //     break;
+
+                // }
+                //}
 
 
             }
