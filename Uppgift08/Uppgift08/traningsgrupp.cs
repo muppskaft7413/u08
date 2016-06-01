@@ -11,13 +11,15 @@ namespace Uppgift08
     {
         public int grupp_id { get; set; }
         public string namn { get; set; }
+        public string datum { get; set; }
+        public string tid { get; set; }
         public string beskrivning { get; set; }
 
         public string traningsgrupps
         {
             get
             {
-                return namn;
+                return namn + tid;
             }
         }
 
