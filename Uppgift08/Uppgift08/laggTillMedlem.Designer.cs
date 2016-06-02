@@ -79,6 +79,7 @@
             // 
             // btnFran
             // 
+            this.btnFran.Enabled = false;
             this.btnFran.Location = new System.Drawing.Point(289, 98);
             this.btnFran.Name = "btnFran";
             this.btnFran.Size = new System.Drawing.Size(31, 23);

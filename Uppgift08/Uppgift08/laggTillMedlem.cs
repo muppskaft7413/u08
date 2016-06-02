@@ -187,6 +187,8 @@ namespace Uppgift08
         private void btnTill_Click(object sender, EventArgs e)
         {
             lankaGruppOchMedklem();
+            hamtaEjGruppmedlemmar();
+            hamtaGruppmedlemmar();
         }
         }
     }
