@@ -17,7 +17,6 @@ namespace Uppgift08
         private string felSlutDatum = "Slutdatumet måste vara minst en dag mer än startdatumet.";       // textmeddelande som genereras till gula feedbackfältet om man väljer felaktiga kombos av datum
         private string sokOk = "Sökning ok";                                                            // textmeddelande som genereras till gula feedbackfältet om allt går ok
         private int kolumn;                                                                             // startindex för att lägga till extra kolumner utöver det som datasource ger.
-        private int tillägg = 0;                                                                        // håller koll på hur många extra kolumner som lagts till.
         private int summa;
         private List<string> summering = new List<string>();
         private bool sokDatInterv;
@@ -122,12 +121,9 @@ namespace Uppgift08
                 _lbxLedare.DataSource = ledarlista;
                 _lbxLedare.DisplayMember = "forOchEftNamn";
                 _tbFeedback.Text = sokOk;
+
             }
         }
-
-
-
-
         
 
         /// <summary>
@@ -172,6 +168,7 @@ namespace Uppgift08
                 _lbxGrupper.DataSource = grupplista;
                 _lbxGrupper.DisplayMember = "namn";
                 _tbFeedback.Text = sokOk;
+
             }
         }
         
@@ -286,7 +283,6 @@ namespace Uppgift08
                     }
  
                     
-                    tillägg = 0;
                     string kolNamn = "";
                     kolumn = 3;
                     summa = 0;
@@ -298,7 +294,6 @@ namespace Uppgift08
                     
                         foreach (narvarolista item in unikaGrupperLista)
                         {
-                            tillägg++;
                             kolNamn = item.gruppnamn + "\n" + "Datum: " + Convert.ToDateTime(item.datum).ToShortDateString() + "\nTid: " + Convert.ToDateTime(item.start).ToShortTimeString() + "-" + Convert.ToDateTime(item.slut).ToShortTimeString();
                             _dgvRapport.Columns.Add(kolNamn, kolNamn);
 
@@ -322,7 +317,6 @@ namespace Uppgift08
                                             antalDeltagare++;
                                             break;
                                         }
-
                                     }
                                 }
                                 index++;
