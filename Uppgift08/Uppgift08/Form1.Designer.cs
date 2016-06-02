@@ -31,6 +31,7 @@
             this.btn_rapport = new System.Windows.Forms.Button();
             this.btn_narvaro = new System.Windows.Forms.Button();
             this.btnLaggTillmdlm = new System.Windows.Forms.Button();
+            this.btnHantGrp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_rapport
@@ -63,11 +64,22 @@
             this.btnLaggTillmdlm.UseVisualStyleBackColor = true;
             this.btnLaggTillmdlm.Click += new System.EventHandler(this.btnLaggTillmdlm_Click);
             // 
+            // btnHantGrp
+            // 
+            this.btnHantGrp.Location = new System.Drawing.Point(94, 235);
+            this.btnHantGrp.Name = "btnHantGrp";
+            this.btnHantGrp.Size = new System.Drawing.Size(75, 34);
+            this.btnHantGrp.TabIndex = 3;
+            this.btnHantGrp.Text = "Hantera grupp";
+            this.btnHantGrp.UseVisualStyleBackColor = true;
+            this.btnHantGrp.Click += new System.EventHandler(this.btnHantGrp_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(284, 305);
+            this.Controls.Add(this.btnHantGrp);
             this.Controls.Add(this.btnLaggTillmdlm);
             this.Controls.Add(this.btn_narvaro);
             this.Controls.Add(this.btn_rapport);
@@ -82,6 +94,7 @@
         private System.Windows.Forms.Button btn_rapport;
         private System.Windows.Forms.Button btn_narvaro;
         private System.Windows.Forms.Button btnLaggTillmdlm;
+        private System.Windows.Forms.Button btnHantGrp;
     }
 }
 

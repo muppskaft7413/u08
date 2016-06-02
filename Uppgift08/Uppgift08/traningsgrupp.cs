@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Uppgift08
 {
-    class traningsgrupp
+    public class traningsgrupp
     {
         public int grupp_id { get; set; }
         public string namn { get; set; }
         public string datum { get; set; }
         public string tid { get; set; }
         public string beskrivning { get; set; }
+        public int plats { get; set; }
 
         public string traningsgrupps
         {

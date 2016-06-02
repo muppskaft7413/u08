@@ -339,6 +339,20 @@ namespace Uppgift08
                 }
 
             }
+            else if (soktyp == "hanteraGrp")
+            {
+                //string sokGrupper = antalGrupper(grupp); //Kallar på metoden antalgrupper
+                switch (sokparameter)
+                {
+                    case "uppdLbGrupp":
+                        sql = "select * from traningsgrupp";
+                        break;
+                    case "uppdLbPlats":
+                        sql = "select * from Plats";
+                        break;
+                }
+
+            }
 
 
             return sql;
