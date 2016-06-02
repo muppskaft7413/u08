@@ -70,7 +70,10 @@ namespace Uppgift08
             sokLedare = !(_lbxLedare.Items.Count == 0) ? true : false;                // kollar om poster i ledarlistboxen är markerade
         }
 
-
+        /// <summary>
+        /// Verktyg för att prata med databasen
+        /// </summary>
+        /// <returns></returns>
         private postgres startaPostgres()
         {
             postgres s = new postgres();                                              // objekt av postgres skapas för att göra sökning mot db
