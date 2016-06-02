@@ -246,19 +246,40 @@ namespace Uppgift08
 
                         foreach (narvarolista narvarande in nyNarvarolista) //
                         {
+                            
                             foreach (narvarolista jamfor in jamforLista)
                             {
-                                if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == true && item.gruppnamn == jamfor.gruppnamn)
+                                if (narvarande.gruppnamn == item.gruppnamn && narvarande.narvaro == item.narvaro)
                                 {
-
-                                    bool test2 = _narvarolistan.Contains(narvarande);
-                                    if (!test2)
+                                    if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == true && item.gruppnamn == jamfor.gruppnamn)
                                     {
-                                        dgvRegistreraNarvaro.Rows[index].Cells[kolumn].Value = true;
-                                        _narvarolistan.Add(narvarande);
-                                        break;
+
+                                        bool test2 = _narvarolistan.Contains(narvarande);
+                                        if (!test2)
+                                        {
+                                            dgvRegistreraNarvaro.Rows[index].Cells[kolumn].Value = true;
+                                            _narvarolistan.Add(narvarande);
+                                            break;
+                                        }
+
+                                    }
+                                    else if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == false && item.gruppnamn == jamfor.gruppnamn)
+                                    {
+                                        dgvRegistreraNarvaro.Rows[index].Cells[kolumn].Value = false;
                                     }
                                 }
+                                else
+                                {
+                                    // checkboxarna simuleras som disablade för att illustrera att medlemmar ej tillhör en viss grupp.
+                                    DataGridViewCell cell = dgvRegistreraNarvaro.Rows[index].Cells[kolumn];
+                                    DataGridViewCheckBoxCell chkCell = cell as DataGridViewCheckBoxCell;
+                                    chkCell.Value = false;
+                                    chkCell.FlatStyle = FlatStyle.Flat;
+                                    chkCell.Style.ForeColor = Color.DarkGray;
+                                    cell.ReadOnly = true;
+                                    
+                                }
+                                
                             }
                             index++;
                         }
