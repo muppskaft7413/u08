@@ -38,6 +38,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tbSvar = new System.Windows.Forms.TextBox();
+            this.btnKlar = new System.Windows.Forms.Button();
             this.gbMedlemmar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -129,16 +130,27 @@
             // 
             // tbSvar
             // 
-            this.tbSvar.Location = new System.Drawing.Point(502, 46);
+            this.tbSvar.Location = new System.Drawing.Point(77, 394);
             this.tbSvar.Name = "tbSvar";
-            this.tbSvar.Size = new System.Drawing.Size(100, 20);
+            this.tbSvar.Size = new System.Drawing.Size(331, 20);
             this.tbSvar.TabIndex = 7;
+            // 
+            // btnKlar
+            // 
+            this.btnKlar.Location = new System.Drawing.Point(627, 391);
+            this.btnKlar.Name = "btnKlar";
+            this.btnKlar.Size = new System.Drawing.Size(75, 23);
+            this.btnKlar.TabIndex = 22;
+            this.btnKlar.Text = "Klar";
+            this.btnKlar.UseVisualStyleBackColor = true;
+            this.btnKlar.Click += new System.EventHandler(this.btnKlar_Click);
             // 
             // laggTillMedlem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(766, 416);
+            this.ClientSize = new System.Drawing.Size(766, 431);
+            this.Controls.Add(this.btnKlar);
             this.Controls.Add(this.tbSvar);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.gbMedlemmar);
@@ -165,5 +177,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbSvar;
+        private System.Windows.Forms.Button btnKlar;
     }
 }

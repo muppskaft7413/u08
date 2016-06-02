@@ -154,5 +154,10 @@ namespace Uppgift08
             hamtaGruppmedlemmar();
             hamtaEjGruppmedlemmar();
         }
+
+        private void btnKlar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
         }
     }
