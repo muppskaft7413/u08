@@ -363,7 +363,7 @@ namespace Uppgift08
                 {
                     case "datEnk":
                         //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
-                        sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where medlem.medlemstyp = '1' or medlem.medlemstyp = '2' and deltagare.grupp_id not in (select grupp_id from traningsgrupp where "+sokGrupper+")";
+                        sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where traningsgrupp.namn != '"+enkelGrupp+"' and medlem.medlemstyp != 3 and medlem.medlem_id not in (select medlem_id from deltagare where grupp_id in (select grupp_id from traningsgrupp where "+sokGrupper+"))";
                         break;
                 }
 
