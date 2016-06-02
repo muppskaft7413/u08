@@ -43,5 +43,11 @@ namespace Uppgift08
             laggTillMedlem nyLaggTillMedlem = new laggTillMedlem();
             nyLaggTillMedlem.ShowDialog();
         }
+
+        private void btnHantGrp_Click(object sender, EventArgs e)
+        {
+            laggTillGrupp nyLaggTillGrupp = new laggTillGrupp();
+            nyLaggTillGrupp.ShowDialog();
+        }
     }
 }

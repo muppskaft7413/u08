@@ -69,6 +69,12 @@
     </Compile>
     <Compile Include="inbetalning.cs" />
     <Compile Include="intressent.cs" />
+    <Compile Include="laggTillGrupp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="laggTillGrupp.Designer.cs">
+      <DependentUpon>laggTillGrupp.cs</DependentUpon>
+    </Compile>
     <Compile Include="laggTillMedlem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="hamtarapport.resx">
       <DependentUpon>hamtarapport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="laggTillGrupp.resx">
+      <DependentUpon>laggTillGrupp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="laggTillMedlem.resx">
       <DependentUpon>laggTillMedlem.cs</DependentUpon>
