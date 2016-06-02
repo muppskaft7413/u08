@@ -33,11 +33,12 @@
             this.lbxTraningsgrupper = new System.Windows.Forms.ListBox();
             this.btnTill = new System.Windows.Forms.Button();
             this.btnFran = new System.Windows.Forms.Button();
-            this.g = new System.Windows.Forms.GroupBox();
+            this.gbMedlemmar = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.g.SuspendLayout();
+            this.tbSvar = new System.Windows.Forms.TextBox();
+            this.gbMedlemmar.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbxMedlemmar
@@ -83,20 +84,20 @@
             this.btnFran.UseVisualStyleBackColor = true;
             this.btnFran.Click += new System.EventHandler(this.button2_Click);
             // 
-            // g
+            // gbMedlemmar
             // 
-            this.g.Controls.Add(this.label1);
-            this.g.Controls.Add(this.label2);
-            this.g.Controls.Add(this.lbxMedlemmar);
-            this.g.Controls.Add(this.btnTill);
-            this.g.Controls.Add(this.btnFran);
-            this.g.Controls.Add(this.lbxGruppmedlemmar);
-            this.g.Location = new System.Drawing.Point(77, 178);
-            this.g.Name = "g";
-            this.g.Size = new System.Drawing.Size(552, 210);
-            this.g.TabIndex = 5;
-            this.g.TabStop = false;
-            this.g.Text = "Medlemmar";
+            this.gbMedlemmar.Controls.Add(this.label1);
+            this.gbMedlemmar.Controls.Add(this.label2);
+            this.gbMedlemmar.Controls.Add(this.lbxMedlemmar);
+            this.gbMedlemmar.Controls.Add(this.btnTill);
+            this.gbMedlemmar.Controls.Add(this.btnFran);
+            this.gbMedlemmar.Controls.Add(this.lbxGruppmedlemmar);
+            this.gbMedlemmar.Location = new System.Drawing.Point(77, 178);
+            this.gbMedlemmar.Name = "gbMedlemmar";
+            this.gbMedlemmar.Size = new System.Drawing.Size(552, 210);
+            this.gbMedlemmar.TabIndex = 5;
+            this.gbMedlemmar.TabStop = false;
+            this.gbMedlemmar.Text = "Medlemmar";
             // 
             // label1
             // 
@@ -125,18 +126,27 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Träningsgrupper";
             // 
+            // tbSvar
+            // 
+            this.tbSvar.Location = new System.Drawing.Point(502, 46);
+            this.tbSvar.Name = "tbSvar";
+            this.tbSvar.Size = new System.Drawing.Size(100, 20);
+            this.tbSvar.TabIndex = 7;
+            // 
             // laggTillMedlem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(716, 416);
+            this.Controls.Add(this.tbSvar);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.g);
+            this.Controls.Add(this.gbMedlemmar);
             this.Controls.Add(this.lbxTraningsgrupper);
             this.Name = "laggTillMedlem";
             this.Text = "laggTillMedlem";
-            this.g.ResumeLayout(false);
-            this.g.PerformLayout();
+            this.Load += new System.EventHandler(this.laggTillMedlem_Load);
+            this.gbMedlemmar.ResumeLayout(false);
+            this.gbMedlemmar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,9 +159,10 @@
         private System.Windows.Forms.ListBox lbxTraningsgrupper;
         private System.Windows.Forms.Button btnTill;
         private System.Windows.Forms.Button btnFran;
-        private System.Windows.Forms.GroupBox g;
+        private System.Windows.Forms.GroupBox gbMedlemmar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tbSvar;
     }
 }

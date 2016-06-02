@@ -327,6 +327,18 @@ namespace Uppgift08
                 }
 
             }
+            else if (soktyp == "gruppNy")
+            {
+                //string sokGrupper = antalGrupper(grupp); //Kallar på metoden antalgrupper
+                switch (sokparameter)
+                {
+                    case "sokNarv":
+                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
+                        sql = "select namn from traningsgrupp";
+                        break;
+                }
+
+            }
 
 
             return sql;
