@@ -349,7 +349,7 @@ namespace Uppgift08
             {
                 summering.Add("--");
                 summering.Add("Totalt antal deltagare: " + summa);
-                _lbxSummering.SelectionMode = SelectionMode.MultiExtended;
+                _lbxSummering.SelectionMode = SelectionMode.MultiExtended;                      // workaround för att få icke-valbara listboxar att uppdatera sig. Datasource fungerar annars ej på dessa 
                 _lbxSummering.DataSource = summering;
                 _lbxSummering.SelectionMode = SelectionMode.None;
                 
