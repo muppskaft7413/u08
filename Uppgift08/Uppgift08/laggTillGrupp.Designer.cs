@@ -38,13 +38,11 @@
             this.lbGrupp = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lbPlats = new System.Windows.Forms.ListBox();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.btnTaBortGrp = new System.Windows.Forms.Button();
             this.btnUppdBeskrivning = new System.Windows.Forms.Button();
             this.btnUppdPlats = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tbBeskrivning = new System.Windows.Forms.TextBox();
-            this.maskedTextBox2 = new System.Windows.Forms.MaskedTextBox();
             this.lblGrpNamn = new System.Windows.Forms.Label();
             this.lblBeskrivning = new System.Windows.Forms.Label();
             this.lbValjPlats = new System.Windows.Forms.ListBox();
@@ -52,6 +50,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnLäggTillGrp = new System.Windows.Forms.Button();
             this.btnKlar = new System.Windows.Forms.Button();
+            this.tbInputGrupp = new System.Windows.Forms.TextBox();
+            this.tbInputBeskrivning = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -149,13 +149,6 @@
             this.lbPlats.Size = new System.Drawing.Size(200, 147);
             this.lbPlats.TabIndex = 10;
             // 
-            // maskedTextBox1
-            // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(76, 33);
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(368, 20);
-            this.maskedTextBox1.TabIndex = 11;
-            // 
             // btnTaBortGrp
             // 
             this.btnTaBortGrp.Location = new System.Drawing.Point(29, 189);
@@ -206,13 +199,6 @@
             this.tbBeskrivning.Size = new System.Drawing.Size(203, 147);
             this.tbBeskrivning.TabIndex = 15;
             // 
-            // maskedTextBox2
-            // 
-            this.maskedTextBox2.Location = new System.Drawing.Point(76, 59);
-            this.maskedTextBox2.Name = "maskedTextBox2";
-            this.maskedTextBox2.Size = new System.Drawing.Size(368, 20);
-            this.maskedTextBox2.TabIndex = 16;
-            // 
             // lblGrpNamn
             // 
             this.lblGrpNamn.AutoSize = true;
@@ -250,11 +236,11 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.tbInputBeskrivning);
+            this.groupBox3.Controls.Add(this.tbInputGrupp);
             this.groupBox3.Controls.Add(this.btnLäggTillGrp);
             this.groupBox3.Controls.Add(this.lbValjPlats);
             this.groupBox3.Controls.Add(this.lblPlats);
-            this.groupBox3.Controls.Add(this.maskedTextBox1);
-            this.groupBox3.Controls.Add(this.maskedTextBox2);
             this.groupBox3.Controls.Add(this.lblBeskrivning);
             this.groupBox3.Controls.Add(this.lblGrpNamn);
             this.groupBox3.Location = new System.Drawing.Point(240, 285);
@@ -282,6 +268,20 @@
             this.btnKlar.Text = "Klar";
             this.btnKlar.UseVisualStyleBackColor = true;
             this.btnKlar.Click += new System.EventHandler(this.btnKlar_Click);
+            // 
+            // tbInputGrupp
+            // 
+            this.tbInputGrupp.Location = new System.Drawing.Point(76, 33);
+            this.tbInputGrupp.Name = "tbInputGrupp";
+            this.tbInputGrupp.Size = new System.Drawing.Size(368, 20);
+            this.tbInputGrupp.TabIndex = 22;
+            // 
+            // tbInputBeskrivning
+            // 
+            this.tbInputBeskrivning.Location = new System.Drawing.Point(76, 56);
+            this.tbInputBeskrivning.Name = "tbInputBeskrivning";
+            this.tbInputBeskrivning.Size = new System.Drawing.Size(368, 20);
+            this.tbInputBeskrivning.TabIndex = 23;
             // 
             // laggTillGrupp
             // 
@@ -316,12 +316,10 @@
         private System.Windows.Forms.ListBox lbGrupp;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox lbPlats;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
         private System.Windows.Forms.Button btnTaBortGrp;
         private System.Windows.Forms.Button btnUppdBeskrivning;
         private System.Windows.Forms.Button btnUppdPlats;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox2;
         private System.Windows.Forms.Label lblGrpNamn;
         private System.Windows.Forms.Label lblBeskrivning;
         private System.Windows.Forms.ListBox lbValjPlats;
@@ -330,5 +328,7 @@
         private System.Windows.Forms.Button btnKlar;
         private System.Windows.Forms.Button btnLäggTillGrp;
         private System.Windows.Forms.TextBox tbBeskrivning;
+        private System.Windows.Forms.TextBox tbInputBeskrivning;
+        private System.Windows.Forms.TextBox tbInputGrupp;
     }
 }
