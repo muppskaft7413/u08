@@ -9,9 +9,9 @@ namespace Uppgift08
 {
     class narvarolista
     {
-        public string fornamn { get; set; }
-        public string efternamn { get; set; }
-        public string personnummer { get; set; }
+        public string Förnamn { get; set; }
+        public string Efternamn { get; set; }
+        public string Personnummer { get; set; }
         public bool deltagit { get; set; }
         public string narvaro { get; set; }
         public string gruppnamn { get; set; }
