@@ -43,13 +43,17 @@
             this.lbxSummering = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.gbInfo = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRapport)).BeginInit();
             this.gbSokDatum.SuspendLayout();
             this.gbSokSlutdatum.SuspendLayout();
+            this.gbInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvRapport
             // 
+            this.dgvRapport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRapport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRapport.Location = new System.Drawing.Point(38, 221);
             this.dgvRapport.Name = "dgvRapport";
@@ -190,11 +194,33 @@
             this.label3.TabIndex = 20;
             this.label3.Text = "Cirkus Kul och Bus";
             // 
+            // gbInfo
+            // 
+            this.gbInfo.Controls.Add(this.textBox1);
+            this.gbInfo.Location = new System.Drawing.Point(979, 33);
+            this.gbInfo.Name = "gbInfo";
+            this.gbInfo.Size = new System.Drawing.Size(169, 100);
+            this.gbInfo.TabIndex = 21;
+            this.gbInfo.TabStop = false;
+            this.gbInfo.Text = "Tips!";
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.Info;
+            this.textBox1.Location = new System.Drawing.Point(7, 19);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(156, 74);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "CTRL + musklick kan användas för att markera eller avmarkera flera rader i grupp-" +
+    " och ledarlistan.";
+            // 
             // hamtarapport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1218, 649);
+            this.Controls.Add(this.gbInfo);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbxSummering);
@@ -213,6 +239,8 @@
             this.gbSokDatum.ResumeLayout(false);
             this.gbSokSlutdatum.ResumeLayout(false);
             this.gbSokSlutdatum.PerformLayout();
+            this.gbInfo.ResumeLayout(false);
+            this.gbInfo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,5 +263,7 @@
         private System.Windows.Forms.ListBox lbxSummering;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox gbInfo;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

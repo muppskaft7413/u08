@@ -25,8 +25,8 @@ namespace Uppgift08
         public List<string> grupp { get; set; }
         public DateTime slutDatum { get; set; }          // Gör man datumintervallsökning behöver båda dessa DateTime-properties
         public DateTime startDatum { get; set; }         // få ett värde då objekt skapas av klassen. slutDatum måste alltid
-                                                    // få ett värde.
-        private string nyaGrupper;                               //variabel där frågeställningssträng lagras.
+                                                         // få ett värde.
+        private string nyaGrupper;                       //variabel där frågeställningssträng lagras.
         private string nyaLedare;                        //variabel där frågeställningssträng lagras.
 
 
@@ -66,18 +66,10 @@ namespace Uppgift08
         /// <returns>string med sqlfrågetillägg</returns>
         private string antalGrupper(List<string> hamtadLista)
         {
-            //if (hamtadLista == null)    //Tillagd till parameter
-            //{                           //     
-            //    return null;            //
-            //}                           //
-            //else
-            //{
                 List<string> gruppLista = new List<string>();
                 foreach (string item in hamtadLista)
                 {
-
                     gruppLista.Add("traningsgrupp.namn = '" + item + "'");
-                    //gruppLista.Add(item);
                 }
 
                 for (int i = 0; i < gruppLista.Count; i++)
@@ -91,10 +83,7 @@ namespace Uppgift08
                         nyaGrupper = nyaGrupper + " OR " + gruppLista[i];
                     }
                 }
-                //gruppas = "traningsgrupp.namn = 'Enhjuling'";
                 return nyaGrupper;
-            //}
-            
         }
 
         /// <summary>
@@ -168,7 +157,6 @@ namespace Uppgift08
             try
             {
                 _cmd = new NpgsqlCommand(sql, _conn);
-                //_cmd.Parameters.AddWithValue("grupp", nyaGrupper);      //tillagd till Paramter
                 _dr = _cmd.ExecuteReader();
                 _tabell.Load(_dr);
                 return _tabell;
@@ -249,8 +237,6 @@ namespace Uppgift08
                     string sokLedare2 = antalLedare(ledare); //omvandlar Listboxobjekt av markerad(e) ledare och returnerar en SQL-anpassad textsträng med dessa
                     sql = "SELECT DISTINCT traningsgrupp.grupp_id, namn FROM traningsgrupp JOIN deltagare ON deltagare.grupp_id = traningsgrupp.grupp_id JOIN trantillf ON deltagare.narvarolista_id = trantillf.narvarolista_id JOIN gruppledare ON traningsgrupp.grupp_id = gruppledare.grupp JOIN medlem ON medlem.medlem_id = gruppledare.ledare WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' AND " + sokLedare2 + ";";
                     break;
-                        
-                        
                 }
             }
             else if (soktyp == "ledare")  // söker ledare baserat på vilken grupp som är markerad i grupplistan.
@@ -258,16 +244,13 @@ namespace Uppgift08
                 switch (sokparameter)
                 {
                     case "datEnk":
-                        //sql = "select fnamn, enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp WHERE " + sokGrupper;
                         sql = "select distinct gruppledare.ledare, medlem.fnamn, medlem.enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp JOIN deltagare ON deltagare.grupp_id = traningsgrupp.grupp_id JOIN trantillf ON trantillf.narvarolista_id = deltagare.narvarolista_id WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "';";
                         break;
                     case "datInt":
                         //sql = "select fnamn, enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp WHERE " + sokGrupper;
                         sql = "select distinct gruppledare.ledare, medlem.fnamn, medlem.enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp JOIN deltagare ON deltagare.grupp_id = traningsgrupp.grupp_id JOIN trantillf ON trantillf.narvarolista_id = deltagare.narvarolista_id WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "';";
                         break;
-
                 }
-                
             }
             else if (soktyp == "narvaro")
             {
@@ -284,11 +267,9 @@ namespace Uppgift08
                         sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, namn, medlem.medlem_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' AND " + sokGrupper;
                         break;
                     case "datEnkGrpLed":
-                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and " + sokGrupper;
                         sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and " + sokGrupper;
                         break;
                     case "datIntGrpLed":
-                        //sql = "select distinct fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' and " + sokGrupper;
                         sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' and " + sokGrupper;
                         break;
                 }
