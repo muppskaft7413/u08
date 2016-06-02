@@ -61,6 +61,7 @@
             this.dgvRegistreraNarvaro.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegistreraNarvaro_CellClick);
             this.dgvRegistreraNarvaro.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegistreraNarvaro_CellValueChanged);
             this.dgvRegistreraNarvaro.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvRegistreraNarvaro_CurrentCellDirtyStateChanged);
+            this.dgvRegistreraNarvaro.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvRegistreraNarvaro_DataBindingComplete);
             this.dgvRegistreraNarvaro.SelectionChanged += new System.EventHandler(this.dgvRegistreraNarvaro_SelectionChanged);
             // 
             // lbxGrupper

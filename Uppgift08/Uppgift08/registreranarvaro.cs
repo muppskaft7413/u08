@@ -25,7 +25,7 @@ namespace Uppgift08
         //private NpgsqlCommandBuilder builder;
         string grupp;
         string personnummer;
-        string deltagit;
+        string deltagit = null;
         int counter = 0;
         string narvaro;
         traningsgrupp traningsgruppRatt;
@@ -56,11 +56,11 @@ namespace Uppgift08
             //sokning.enkelGrupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
             sokning.enkelGrupp = grupp;
 
-            svarAndraNarvaro = sokning.sqlFråga(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "andraNarvaro");     // hämtar sökning efter träningsgrupper
+            tbFel.Text = sokning.sqlNonQuery(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "andraNarvaro");     // hämtar sökning efter träningsgrupper
 
             //if (svarAndraNarvaro.Columns[0].ColumnName.Equals("error"))
             //{
-                     //    tbFel.Text = svarAndraNarvaro.Rows[0][1].ToString();
+            //    tbFel.Text = svarAndraNarvaro.Rows[0][1].ToString();
             //}
             //else
             //{
@@ -148,18 +148,22 @@ namespace Uppgift08
                 {
                     narvarolistaRatt = new narvarolista()
                     {
-                        fornamn = svarNarvaro.Rows[i]["fnamn"].ToString(),
-                        efternamn = svarNarvaro.Rows[i]["enamn"].ToString(),
-                        personnummer = svarNarvaro.Rows[i]["pnr"].ToString(),
+                        Förnamn = svarNarvaro.Rows[i]["fnamn"].ToString(),
+                        Efternamn = svarNarvaro.Rows[i]["enamn"].ToString(),
+                        Personnummer = svarNarvaro.Rows[i]["pnr"].ToString(),
                         narvaro = svarNarvaro.Rows[i]["narvarolista_id"].ToString(),
                         gruppnamn = svarNarvaro.Rows[i]["namn"].ToString(),
                         medlemId = svarNarvaro.Rows[i]["medlem_id"].ToString(),
                         deltagit = (bool)svarNarvaro.Rows[i]["deltagit"]
                     };
 
+
                     nyNarvarolista.Add(narvarolistaRatt);
+
                 }
                 dgvRegistreraNarvaro.DataSource = nyNarvarolista;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
+                //dgvRegistreraNarvaro.CurrentCell = null;
+
 
                 int hej = dgvRegistreraNarvaro.Columns.Count - 1;
 
@@ -182,9 +186,9 @@ namespace Uppgift08
                     {
                         narvarolista jamforning = new narvarolista()
                         {
-                            fornamn = svarNarvaro.Rows[i]["fnamn"].ToString(),
-                            efternamn = svarNarvaro.Rows[i]["enamn"].ToString(),
-                            personnummer = svarNarvaro.Rows[i]["pnr"].ToString(),
+                            Förnamn = svarNarvaro.Rows[i]["fnamn"].ToString(),
+                            Efternamn = svarNarvaro.Rows[i]["enamn"].ToString(),
+                            Personnummer = svarNarvaro.Rows[i]["pnr"].ToString(),
                             narvaro = svarNarvaro.Rows[i]["narvarolista_id"].ToString(),
                             gruppnamn = svarNarvaro.Rows[i]["namn"].ToString(),
                             deltagit = (bool)svarNarvaro.Rows[i]["deltagit"],
@@ -244,9 +248,11 @@ namespace Uppgift08
 
                         foreach (narvarolista narvarande in nyNarvarolista) //
                         {
+                            
                             foreach (narvarolista jamfor in jamforLista)
                             {
-
+                                if (narvarande.gruppnamn == item.gruppnamn && narvarande.narvaro == item.narvaro)
+                                {
                                 if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == true && item.gruppnamn == jamfor.gruppnamn)
                                 {
 
@@ -259,14 +265,25 @@ namespace Uppgift08
                                         _narvarolistan.Add(narvarande);
                                         break;
                                     }
-                                    else
-                                    {
-                                        dgvRegistreraNarvaro.Rows[index].Cells[kolumn].Value = false;
-                                        checkboxColumn.FlatStyle = FlatStyle.Flat;
-                                        break;
-                                    }
 
                                 }
+                                    else if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == false && item.gruppnamn == jamfor.gruppnamn)
+                                    {
+                                        dgvRegistreraNarvaro.Rows[index].Cells[kolumn].Value = false;
+                                    }
+                                }
+                                else
+                                {
+                                    // checkboxarna simuleras som disablade för att illustrera att medlemmar ej tillhör en viss grupp.
+                                    DataGridViewCell cell = dgvRegistreraNarvaro.Rows[index].Cells[kolumn];
+                                    DataGridViewCheckBoxCell chkCell = cell as DataGridViewCheckBoxCell;
+                                    chkCell.Value = false;
+                                    chkCell.FlatStyle = FlatStyle.Flat;
+                                    chkCell.Style.ForeColor = Color.DarkGray;
+                                    cell.ReadOnly = true;
+                                    
+                                }
+                                
                             }
                             index++;
                         }
@@ -307,10 +324,13 @@ namespace Uppgift08
         /// <param name="e"></param>
         private void dgvRegistreraNarvaro_SelectionChanged(object sender, EventArgs e)
         {
+
         }
         //Används inte.
         private void registreranarvaro_Load(object sender, EventArgs e)
         {
+
+            
             //  MessageBox.Show("Problem just nu: Gruppledaren och tid för aktuell grupp vill inte visas. Har alla ett närvaro_id? kan var abugg om de inte har det eller databasen.");
         }
 
@@ -344,12 +364,10 @@ namespace Uppgift08
 
         private void dgvRegistreraNarvaro_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvRegistreraNarvaro.Columns[e.ColumnIndex].DataPropertyName == "deltagit" || dgvRegistreraNarvaro.Columns[e.ColumnIndex].DataPropertyName == "nyaKol")
-             {
-
-                 andraNarvaro();
+            if (deltagit == "1" || deltagit == "0")
+            {
+                andraNarvaro();
             }
-
         }
 
         /// <summary>
@@ -397,35 +415,30 @@ namespace Uppgift08
                     selectedRow.Cells[kolNamn].Value = false;
                 }
 
-                deltagit = Convert.ToString(selectedRow.Cells[kolNamn].Value.ToString());
-
-                //for (int i = 0; i < dgvRegistreraNarvaro.Columns.Count; i++)
-                //{
-                // if (dgvRegistreraNarvaro.Columns[i].DataPropertyName == "häst")
-                // {
-
-                //     //string bla2 = dgvRegistreraNarvaro.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                //     //string bla = ((bool)dgvRegistreraNarvaro[e.ColumnIndex, e.RowIndex].) == true ? "true" : "false";
-                //     //DataGridViewCheckBoxCell checkbox = (DataGridViewCheckBoxCell)dgvRegistreraNarvaro[e.ColumnIndex, e.RowIndex].Value;
-                //     ////DataGridViewCheckBoxCell checkbox = (DataGridViewCheckBoxCell)dgvRegistreraNarvaro.CurrentCell;
-                //     //bool isChecked = (bool)checkbox.EditedFormattedValue;
-                //     MessageBox.Show("hej");
-                //     break;
-
-                // }
-                //}
+                deltagit = Convert.ToString(selectedRow.Cells[kolNamn].Value);
 
 
             }
-                if (deltagit == "False")
-                {
-                    deltagit = "1";
-                }
-                else
-                {
-                    deltagit = "0";
-                }
+            if (deltagit == "False")
+            {
+                deltagit = "1";
             }
+            else
+            {
+                deltagit = "0";
+            }
+            }
+
+        private void dgvRegistreraNarvaro_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgvRegistreraNarvaro.ClearSelection();
+            //dgvRegistreraNarvaro.Rows[0].Selected = false;
+        }
+
+        private void dgvRegistreraNarvaro_CurrentCellChanged(object sender, EventArgs e)
+        {
+
+        }
         }
         #endregion
     }

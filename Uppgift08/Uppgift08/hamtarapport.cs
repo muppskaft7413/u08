@@ -209,9 +209,9 @@ namespace Uppgift08
                 for (int y = 0; y < sokningResultat.Rows.Count; y++)
                 {
                     narvarolista narvaro = new narvarolista();
-                    narvaro.fornamn = sokningResultat.Rows[y]["fnamn"].ToString();
-                    narvaro.efternamn = sokningResultat.Rows[y]["enamn"].ToString();
-                    narvaro.personnummer = sokningResultat.Rows[y]["pnr"].ToString();
+                    narvaro.Förnamn = sokningResultat.Rows[y]["fnamn"].ToString();
+                    narvaro.Efternamn = sokningResultat.Rows[y]["enamn"].ToString();
+                    narvaro.Personnummer = sokningResultat.Rows[y]["pnr"].ToString();
                     narvaro.medlemId = sokningResultat.Rows[y]["medlem_id"].ToString();
                     narvarolistan.Add(narvaro);
                 }
@@ -246,9 +246,9 @@ namespace Uppgift08
                     for (int y = 0; y < sokningResultat.Rows.Count; y++)
                     {
                         narvarolista jamforning = new narvarolista();
-                        jamforning.fornamn = sokningResultat.Rows[y]["fnamn"].ToString();
-                        jamforning.efternamn = sokningResultat.Rows[y]["enamn"].ToString();
-                        jamforning.personnummer = sokningResultat.Rows[y]["pnr"].ToString();
+                        jamforning.Förnamn = sokningResultat.Rows[y]["fnamn"].ToString();
+                        jamforning.Efternamn = sokningResultat.Rows[y]["enamn"].ToString();
+                        jamforning.Personnummer = sokningResultat.Rows[y]["pnr"].ToString();
                         jamforning.medlemId = sokningResultat.Rows[y]["medlem_id"].ToString();
                         jamforning.narvaro = sokningResultat.Rows[y]["narvarolista_id"].ToString();
                         jamforning.gruppnamn = sokningResultat.Rows[y]["namn"].ToString();

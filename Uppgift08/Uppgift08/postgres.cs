@@ -197,6 +197,28 @@ namespace Uppgift08
             }
         }
 
+        public string sqlNonQuery(string sokparameter, string soktyp)
+        {
+            string sql;
+            sql = vilkenSqlFraga(sokparameter, soktyp);
+            _conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["db_g12"].ConnectionString);
+            _conn.Open();
+            string apa = "ok";
+            try
+            {
+
+                _cmd = new NpgsqlCommand(sql, _conn);
+                _cmd.ExecuteNonQuery();
+                return apa;
+            }
+            catch (NpgsqlException ex)
+            {
+                apa = ex.ToString();
+                return apa;
+            }
+            return apa;
+        }
+
         /// <summary>
         /// Reder ut vilken SQL-sats som metoden sqlfråga() skall skicka till servern
         /// </summary>
