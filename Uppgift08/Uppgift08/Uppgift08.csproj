@@ -60,6 +60,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="gruppledare.cs" />
+    <Compile Include="gruppmedlemmar.cs" />
     <Compile Include="hamtarapport.cs">
       <SubType>Form</SubType>
     </Compile>

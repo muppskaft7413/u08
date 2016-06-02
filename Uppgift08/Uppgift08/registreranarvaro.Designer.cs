@@ -42,10 +42,14 @@
             this.lblForening = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.gpGrupp = new System.Windows.Forms.GroupBox();
+            this.gbInfo = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btn_klar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegistreraNarvaro)).BeginInit();
             this.gbSokSlutdatum.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gpGrupp.SuspendLayout();
+            this.gbInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvRegistreraNarvaro
@@ -181,11 +185,44 @@
             this.gpGrupp.TabStop = false;
             this.gpGrupp.Text = "Grupp";
             // 
+            // gbInfo
+            // 
+            this.gbInfo.Controls.Add(this.textBox1);
+            this.gbInfo.Location = new System.Drawing.Point(729, 16);
+            this.gbInfo.Name = "gbInfo";
+            this.gbInfo.Size = new System.Drawing.Size(169, 100);
+            this.gbInfo.TabIndex = 29;
+            this.gbInfo.TabStop = false;
+            this.gbInfo.Text = "Tips!";
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.Info;
+            this.textBox1.Location = new System.Drawing.Point(7, 19);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(156, 74);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "CTRL + musklick kan användas för att markera eller avmarkera flera rader i gruppl" +
+    "istan.";
+            // 
+            // btn_klar
+            // 
+            this.btn_klar.Location = new System.Drawing.Point(823, 569);
+            this.btn_klar.Name = "btn_klar";
+            this.btn_klar.Size = new System.Drawing.Size(75, 23);
+            this.btn_klar.TabIndex = 30;
+            this.btn_klar.Text = "Klar";
+            this.btn_klar.UseVisualStyleBackColor = true;
+            this.btn_klar.Click += new System.EventHandler(this.btn_klar_Click);
+            // 
             // registreranarvaro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(940, 598);
+            this.Controls.Add(this.btn_klar);
+            this.Controls.Add(this.gbInfo);
             this.Controls.Add(this.gpGrupp);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label4);
@@ -203,6 +240,8 @@
             this.gbSokSlutdatum.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.gpGrupp.ResumeLayout(false);
+            this.gbInfo.ResumeLayout(false);
+            this.gbInfo.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,5 +268,8 @@
         private System.Windows.Forms.Label lblForening;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gpGrupp;
+        private System.Windows.Forms.GroupBox gbInfo;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btn_klar;
     }
 }
