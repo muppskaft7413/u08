@@ -29,6 +29,9 @@ namespace Uppgift08
         private string nyaGrupper;                       //variabel där frågeställningssträng lagras.
         private string nyaLedare;                        //variabel där frågeställningssträng lagras.
 
+        public string gNamn { get; set; }      // behövs för laggTillGrupp.cs klassen
+        public string gBeskrivning { get; set; }     // behövs för laggTillGrupp.cs klassen
+        public int gPlats { get; set; }         // behövs för laggTillGrupp.cs klassen
 
         /// <summary>
         /// Metod som omvandlar hämtade ledare till sträng med rätt frågeställning.
@@ -375,6 +378,9 @@ namespace Uppgift08
                         break;
                     case "uppdLbPlats":
                         sql = "select * from Plats";
+                        break;
+                    case "adderaGrupp":
+                        sql = "INSERT INTO traningsgrupp(namn, beskrivning, plats) VALUES ('" + gNamn + "', '" + gBeskrivning +"', '" + gPlats + "');";
                         break;
                 }
 
