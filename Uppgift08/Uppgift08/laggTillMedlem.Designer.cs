@@ -46,15 +46,15 @@
             this.lbxMedlemmar.FormattingEnabled = true;
             this.lbxMedlemmar.Location = new System.Drawing.Point(22, 54);
             this.lbxMedlemmar.Name = "lbxMedlemmar";
-            this.lbxMedlemmar.Size = new System.Drawing.Size(199, 134);
+            this.lbxMedlemmar.Size = new System.Drawing.Size(223, 134);
             this.lbxMedlemmar.TabIndex = 0;
             // 
             // lbxGruppmedlemmar
             // 
             this.lbxGruppmedlemmar.FormattingEnabled = true;
-            this.lbxGruppmedlemmar.Location = new System.Drawing.Point(335, 54);
+            this.lbxGruppmedlemmar.Location = new System.Drawing.Point(371, 54);
             this.lbxGruppmedlemmar.Name = "lbxGruppmedlemmar";
-            this.lbxGruppmedlemmar.Size = new System.Drawing.Size(199, 134);
+            this.lbxGruppmedlemmar.Size = new System.Drawing.Size(223, 134);
             this.lbxGruppmedlemmar.TabIndex = 1;
             // 
             // lbxTraningsgrupper
@@ -68,7 +68,7 @@
             // 
             // btnTill
             // 
-            this.btnTill.Location = new System.Drawing.Point(265, 123);
+            this.btnTill.Location = new System.Drawing.Point(289, 127);
             this.btnTill.Name = "btnTill";
             this.btnTill.Size = new System.Drawing.Size(31, 23);
             this.btnTill.TabIndex = 3;
@@ -77,7 +77,7 @@
             // 
             // btnFran
             // 
-            this.btnFran.Location = new System.Drawing.Point(265, 94);
+            this.btnFran.Location = new System.Drawing.Point(289, 98);
             this.btnFran.Name = "btnFran";
             this.btnFran.Size = new System.Drawing.Size(31, 23);
             this.btnFran.TabIndex = 4;
@@ -95,7 +95,7 @@
             this.gbMedlemmar.Controls.Add(this.lbxGruppmedlemmar);
             this.gbMedlemmar.Location = new System.Drawing.Point(77, 178);
             this.gbMedlemmar.Name = "gbMedlemmar";
-            this.gbMedlemmar.Size = new System.Drawing.Size(552, 210);
+            this.gbMedlemmar.Size = new System.Drawing.Size(625, 210);
             this.gbMedlemmar.TabIndex = 5;
             this.gbMedlemmar.TabStop = false;
             this.gbMedlemmar.Text = "Medlemmar";
@@ -112,7 +112,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(332, 38);
+            this.label2.Location = new System.Drawing.Point(368, 38);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 13);
             this.label2.TabIndex = 7;
@@ -138,7 +138,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(716, 416);
+            this.ClientSize = new System.Drawing.Size(766, 416);
             this.Controls.Add(this.tbSvar);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.gbMedlemmar);
