@@ -31,7 +31,6 @@ namespace Uppgift08
         traningsgrupp traningsgruppRatt;
         narvarolista narvarolistaRatt;
         List<narvarolista> jamforLista;
-        int tillägg;
         string kolNamn;
 
  
@@ -57,7 +56,7 @@ namespace Uppgift08
             //sokning.enkelGrupp = lbxGrupper.GetItemText(lbxGrupper.SelectedItem);
             sokning.enkelGrupp = grupp;
 
-            svarAndraNarvaro = sokning.sqlFråga(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "bajs");     // hämtar sökning efter träningsgrupper
+            svarAndraNarvaro = sokning.sqlFråga(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "andraNarvaro");     // hämtar sökning efter träningsgrupper
 
             //if (svarAndraNarvaro.Columns[0].ColumnName.Equals("error"))
             //{
@@ -222,7 +221,6 @@ namespace Uppgift08
                         unikaGrupperLista.Add(unikaGrupper);
                     }
 
-                    tillägg = 0;
 
 
                     int kolumn = 10;
@@ -231,7 +229,6 @@ namespace Uppgift08
 
                     foreach (narvarolista item in unikaGrupperLista)
                     {
-                        tillägg++;
                         counter++;
                         
                         kolNamn = item.gruppnamn + "\n " + " Datum: " + Convert.ToDateTime(item.datum).ToShortDateString() + "\n Tid: " + Convert.ToDateTime(item.start).ToShortTimeString() + "-" + Convert.ToDateTime(item.slut).ToShortTimeString();
@@ -239,6 +236,7 @@ namespace Uppgift08
                         checkboxColumn.Name = kolNamn;
                         checkboxColumn.DataPropertyName = "nyaKol";
                         dgvRegistreraNarvaro.Columns.Add(checkboxColumn);
+
                         _narvarolistan = new List<narvarolista>();
                         
                         int index = 0;
@@ -248,16 +246,26 @@ namespace Uppgift08
                         {
                             foreach (narvarolista jamfor in jamforLista)
                             {
+
                                 if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == true && item.gruppnamn == jamfor.gruppnamn)
                                 {
+
 
                                     bool test2 = _narvarolistan.Contains(narvarande);
                                     if (!test2)
                                     {
+
                                         dgvRegistreraNarvaro.Rows[index].Cells[kolumn].Value = true;
                                         _narvarolistan.Add(narvarande);
                                         break;
                                     }
+                                    else
+                                    {
+                                        dgvRegistreraNarvaro.Rows[index].Cells[kolumn].Value = false;
+                                        checkboxColumn.FlatStyle = FlatStyle.Flat;
+                                        break;
+                                    }
+
                                 }
                             }
                             index++;
@@ -390,7 +398,7 @@ namespace Uppgift08
                 }
 
                 deltagit = Convert.ToString(selectedRow.Cells[kolNamn].Value.ToString());
-                MessageBox.Show("bae");
+
                 //for (int i = 0; i < dgvRegistreraNarvaro.Columns.Count; i++)
                 //{
                 // if (dgvRegistreraNarvaro.Columns[i].DataPropertyName == "häst")

@@ -303,7 +303,7 @@ namespace Uppgift08
                 }
 
             }
-            else if (soktyp == "bajs")
+            else if (soktyp == "andraNarvaro")
             {
                 //string sokGrupper = antalGrupper(grupp); //Kallar på metoden antalgrupper
                 switch (sokparameter)
