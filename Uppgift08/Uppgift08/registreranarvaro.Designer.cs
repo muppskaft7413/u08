@@ -43,7 +43,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.gpGrupp = new System.Windows.Forms.GroupBox();
             this.lbxLedare = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegistreraNarvaro)).BeginInit();
             this.gbSokSlutdatum.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -175,6 +174,7 @@
             // 
             // gpGrupp
             // 
+            this.gpGrupp.Controls.Add(this.lbxLedare);
             this.gpGrupp.Controls.Add(this.lbxGrupper);
             this.gpGrupp.Location = new System.Drawing.Point(334, 66);
             this.gpGrupp.Name = "gpGrupp";
@@ -186,29 +186,17 @@
             // lbxLedare
             // 
             this.lbxLedare.FormattingEnabled = true;
-            this.lbxLedare.Location = new System.Drawing.Point(646, 77);
+            this.lbxLedare.Location = new System.Drawing.Point(132, 21);
             this.lbxLedare.Name = "lbxLedare";
             this.lbxLedare.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.lbxLedare.Size = new System.Drawing.Size(168, 108);
             this.lbxLedare.TabIndex = 17;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(492, 18);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 29;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // registreranarvaro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(940, 598);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.lbxLedare);
             this.Controls.Add(this.gpGrupp);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label4);
@@ -254,6 +242,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gpGrupp;
         private System.Windows.Forms.ListBox lbxLedare;
-        private System.Windows.Forms.Button button1;
     }
 }

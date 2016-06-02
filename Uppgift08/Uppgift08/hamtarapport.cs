@@ -221,6 +221,11 @@ namespace Uppgift08
 
                 int hej = _dgvRapport.Columns.Count -1;
 
+                //for (int i = 2; i < 10; i++)
+                //{
+                //    dgvRapport.Columns[i].Visible = false;
+                //}
+
                 for (int i = hej; i > 2; i--)
                 {
                     _dgvRapport.Columns.RemoveAt(i);
