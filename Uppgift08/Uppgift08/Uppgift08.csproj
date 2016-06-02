@@ -68,6 +68,12 @@
     </Compile>
     <Compile Include="inbetalning.cs" />
     <Compile Include="intressent.cs" />
+    <Compile Include="laggTillMedlem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="laggTillMedlem.Designer.cs">
+      <DependentUpon>laggTillMedlem.cs</DependentUpon>
+    </Compile>
     <Compile Include="medlem.cs" />
     <Compile Include="narvarolista.cs" />
     <Compile Include="plats.cs" />
@@ -88,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="hamtarapport.resx">
       <DependentUpon>hamtarapport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="laggTillMedlem.resx">
+      <DependentUpon>laggTillMedlem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

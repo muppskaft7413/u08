@@ -203,20 +203,23 @@ namespace Uppgift08
             sql = vilkenSqlFraga(sokparameter, soktyp);
             _conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["db_g12"].ConnectionString);
             _conn.Open();
-            string apa = "ok";
+            string svar = "ok";
             try
             {
-
                 _cmd = new NpgsqlCommand(sql, _conn);
                 _cmd.ExecuteNonQuery();
-                return apa;
+                return svar;
             }
             catch (NpgsqlException ex)
             {
-                apa = ex.ToString();
-                return apa;
+                svar = ex.ToString();
+                return svar;
             }
-            return apa;
+            finally
+            {
+                _conn.Close();
+            }
+
         }
 
         /// <summary>
@@ -233,7 +236,7 @@ namespace Uppgift08
                 switch (sokparameter)
                 {
                 case "datInt": // Datumintervallsökning som återger vilka träningsgrupper som tränar inom ett datumintervall
-                    sql = "select distinct traningsgrupp.grupp_id, namn, datum from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "';";
+                    sql = "select distinct traningsgrupp.grupp_id, namn, datum, starttid from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "';";
                     break;
                 case "datEnk": // Enkel datumsökning som återger vilka träningsgrupper som tränar ett visst datum
                     sql = "select distinct traningsgrupp.grupp_id, namn, datum, starttid from traningsgrupp join deltagare on deltagare.grupp_id = traningsgrupp.grupp_id join trantillf on deltagare.narvarolista_id = trantillf.narvarolista_id WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "';";
@@ -278,7 +281,7 @@ namespace Uppgift08
                         break;
                     case "datIntGrp":
                         //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
-                        sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' AND " + sokGrupper;
+                        sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, namn, medlem.medlem_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' AND " + sokGrupper;
                         break;
                     case "datEnkGrpLed":
                         //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and " + sokGrupper;
@@ -305,6 +308,9 @@ namespace Uppgift08
                     case "datEnkGrp":
                         sql = "select distinct deltagare.narvarolista_id, namn, datum, starttid, sluttid from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and " + sokGrupper;
                         break;
+                    case "datIntGrp":
+                        sql = "select distinct deltagare.narvarolista_id, namn, datum, starttid, sluttid from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' and " + sokGrupper;
+                        break;
                 }
 
             }
@@ -322,6 +328,9 @@ namespace Uppgift08
                     case "datEnkGrp":
                         sql = "select fnamn, enamn, pnr, medlem.medlem_id, deltagare.narvarolista_id, namn, datum, starttid, sluttid, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and " + sokGrupper;
                         break;
+                    case "datIntGrp":
+                        sql = "select fnamn, enamn, pnr, medlem.medlem_id, deltagare.narvarolista_id, namn, datum, starttid, sluttid, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' and " + sokGrupper;
+                        break;
                 }
 
             }
@@ -333,9 +342,7 @@ namespace Uppgift08
                     case "datEnkGrp":
                         //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
                         sql = "update deltagare set deltagit = '" + deltagit + "' where deltagare.grupp_id = (select grupp_id from traningsgrupp where namn = '"+enkelGrupp+"') and deltagare.medlem_id = (select medlem_id from medlem where pnr = '" + pnr + "') and deltagare.narvarolista_id = '" + narvaro + "'";
-
                         break;
-
                 }
 
             }

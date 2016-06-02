@@ -30,7 +30,7 @@
         {
             this.dgvRegistreraNarvaro = new System.Windows.Forms.DataGridView();
             this.lbxGrupper = new System.Windows.Forms.ListBox();
-            this.tbFel = new System.Windows.Forms.TextBox();
+            this.tbSvar = new System.Windows.Forms.TextBox();
             this.gbSokSlutdatum = new System.Windows.Forms.GroupBox();
             this.cbAktivSlutDatum = new System.Windows.Forms.CheckBox();
             this.dtpSlutDatum = new System.Windows.Forms.DateTimePicker();
@@ -42,7 +42,6 @@
             this.lblForening = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.gpGrupp = new System.Windows.Forms.GroupBox();
-            this.lbxLedare = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegistreraNarvaro)).BeginInit();
             this.gbSokSlutdatum.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -61,8 +60,6 @@
             this.dgvRegistreraNarvaro.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegistreraNarvaro_CellClick);
             this.dgvRegistreraNarvaro.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRegistreraNarvaro_CellValueChanged);
             this.dgvRegistreraNarvaro.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvRegistreraNarvaro_CurrentCellDirtyStateChanged);
-            this.dgvRegistreraNarvaro.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvRegistreraNarvaro_DataBindingComplete);
-            this.dgvRegistreraNarvaro.SelectionChanged += new System.EventHandler(this.dgvRegistreraNarvaro_SelectionChanged);
             // 
             // lbxGrupper
             // 
@@ -70,16 +67,16 @@
             this.lbxGrupper.Location = new System.Drawing.Point(6, 21);
             this.lbxGrupper.Name = "lbxGrupper";
             this.lbxGrupper.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbxGrupper.Size = new System.Drawing.Size(120, 108);
+            this.lbxGrupper.Size = new System.Drawing.Size(294, 108);
             this.lbxGrupper.TabIndex = 15;
             this.lbxGrupper.Click += new System.EventHandler(this.lbxGrupper_Click);
             // 
-            // tbFel
+            // tbSvar
             // 
-            this.tbFel.Location = new System.Drawing.Point(39, 569);
-            this.tbFel.Name = "tbFel";
-            this.tbFel.Size = new System.Drawing.Size(368, 20);
-            this.tbFel.TabIndex = 20;
+            this.tbSvar.Location = new System.Drawing.Point(39, 569);
+            this.tbSvar.Name = "tbSvar";
+            this.tbSvar.Size = new System.Drawing.Size(368, 20);
+            this.tbSvar.TabIndex = 20;
             // 
             // gbSokSlutdatum
             // 
@@ -110,6 +107,7 @@
             this.dtpSlutDatum.Name = "dtpSlutDatum";
             this.dtpSlutDatum.Size = new System.Drawing.Size(200, 20);
             this.dtpSlutDatum.TabIndex = 11;
+            this.dtpSlutDatum.ValueChanged += new System.EventHandler(this.dtpSlutDatum_ValueChanged);
             // 
             // groupBox1
             // 
@@ -175,7 +173,6 @@
             // 
             // gpGrupp
             // 
-            this.gpGrupp.Controls.Add(this.lbxLedare);
             this.gpGrupp.Controls.Add(this.lbxGrupper);
             this.gpGrupp.Location = new System.Drawing.Point(334, 66);
             this.gpGrupp.Name = "gpGrupp";
@@ -183,15 +180,6 @@
             this.gpGrupp.TabIndex = 28;
             this.gpGrupp.TabStop = false;
             this.gpGrupp.Text = "Grupp";
-            // 
-            // lbxLedare
-            // 
-            this.lbxLedare.FormattingEnabled = true;
-            this.lbxLedare.Location = new System.Drawing.Point(132, 21);
-            this.lbxLedare.Name = "lbxLedare";
-            this.lbxLedare.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbxLedare.Size = new System.Drawing.Size(168, 108);
-            this.lbxLedare.TabIndex = 17;
             // 
             // registreranarvaro
             // 
@@ -206,11 +194,10 @@
             this.Controls.Add(this.lblForening);
             this.Controls.Add(this.gbSokSlutdatum);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.tbFel);
+            this.Controls.Add(this.tbSvar);
             this.Controls.Add(this.dgvRegistreraNarvaro);
             this.Name = "registreranarvaro";
             this.Text = "registreranarvaro";
-            this.Load += new System.EventHandler(this.registreranarvaro_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegistreraNarvaro)).EndInit();
             this.gbSokSlutdatum.ResumeLayout(false);
             this.gbSokSlutdatum.PerformLayout();
@@ -230,7 +217,7 @@
 
         private System.Windows.Forms.DataGridView dgvRegistreraNarvaro;
         private System.Windows.Forms.ListBox lbxGrupper;
-        private System.Windows.Forms.TextBox tbFel;
+        private System.Windows.Forms.TextBox tbSvar;
         private System.Windows.Forms.GroupBox gbSokSlutdatum;
         private System.Windows.Forms.CheckBox cbAktivSlutDatum;
         private System.Windows.Forms.DateTimePicker dtpSlutDatum;
@@ -242,6 +229,5 @@
         private System.Windows.Forms.Label lblForening;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gpGrupp;
-        private System.Windows.Forms.ListBox lbxLedare;
     }
 }

@@ -37,5 +37,11 @@ namespace Uppgift08
             registreranarvaro nyNarvaro = new registreranarvaro();
             nyNarvaro.ShowDialog();
         }
+
+        private void btnLaggTillmdlm_Click(object sender, EventArgs e)
+        {
+            laggTillMedlem nyLaggTillMedlem = new laggTillMedlem();
+            nyLaggTillMedlem.ShowDialog();
+        }
     }
 }

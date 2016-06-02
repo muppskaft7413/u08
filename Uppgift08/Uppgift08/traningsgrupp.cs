@@ -19,7 +19,8 @@ namespace Uppgift08
         {
             get
             {
-                return namn + tid;
+
+                return namn + " " + Convert.ToDateTime(datum).ToShortDateString() + " " + Convert.ToDateTime(tid).ToShortTimeString();
             }
         }
 
