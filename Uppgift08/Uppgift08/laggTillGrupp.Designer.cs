@@ -43,15 +43,15 @@
             this.btnUppdBeskrivning = new System.Windows.Forms.Button();
             this.btnUppdPlats = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tbBeskrivning = new System.Windows.Forms.TextBox();
             this.maskedTextBox2 = new System.Windows.Forms.MaskedTextBox();
             this.lblGrpNamn = new System.Windows.Forms.Label();
             this.lblBeskrivning = new System.Windows.Forms.Label();
             this.lbValjPlats = new System.Windows.Forms.ListBox();
             this.lblPlats = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnKlar = new System.Windows.Forms.Button();
             this.btnLäggTillGrp = new System.Windows.Forms.Button();
-            this.tbBeskrivning = new System.Windows.Forms.TextBox();
+            this.btnKlar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -180,7 +180,7 @@
             this.btnUppdPlats.Name = "btnUppdPlats";
             this.btnUppdPlats.Size = new System.Drawing.Size(75, 23);
             this.btnUppdPlats.TabIndex = 14;
-            this.btnUppdPlats.Text = "Uppdatera";
+            this.btnUppdPlats.Text = "Byt plats";
             this.btnUppdPlats.UseVisualStyleBackColor = true;
             // 
             // groupBox2
@@ -197,6 +197,14 @@
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Hantera grupper";
+            // 
+            // tbBeskrivning
+            // 
+            this.tbBeskrivning.Location = new System.Drawing.Point(244, 35);
+            this.tbBeskrivning.Multiline = true;
+            this.tbBeskrivning.Name = "tbBeskrivning";
+            this.tbBeskrivning.Size = new System.Drawing.Size(203, 147);
+            this.tbBeskrivning.TabIndex = 15;
             // 
             // maskedTextBox2
             // 
@@ -256,16 +264,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Lägg till grupp";
             // 
-            // btnKlar
-            // 
-            this.btnKlar.Location = new System.Drawing.Point(977, 491);
-            this.btnKlar.Name = "btnKlar";
-            this.btnKlar.Size = new System.Drawing.Size(75, 23);
-            this.btnKlar.TabIndex = 21;
-            this.btnKlar.Text = "Klar";
-            this.btnKlar.UseVisualStyleBackColor = true;
-            this.btnKlar.Click += new System.EventHandler(this.btnKlar_Click);
-            // 
             // btnLäggTillGrp
             // 
             this.btnLäggTillGrp.Location = new System.Drawing.Point(369, 206);
@@ -275,13 +273,15 @@
             this.btnLäggTillGrp.Text = "Lägg till";
             this.btnLäggTillGrp.UseVisualStyleBackColor = true;
             // 
-            // tbBeskrivning
+            // btnKlar
             // 
-            this.tbBeskrivning.Location = new System.Drawing.Point(244, 35);
-            this.tbBeskrivning.Multiline = true;
-            this.tbBeskrivning.Name = "tbBeskrivning";
-            this.tbBeskrivning.Size = new System.Drawing.Size(203, 147);
-            this.tbBeskrivning.TabIndex = 15;
+            this.btnKlar.Location = new System.Drawing.Point(977, 491);
+            this.btnKlar.Name = "btnKlar";
+            this.btnKlar.Size = new System.Drawing.Size(75, 23);
+            this.btnKlar.TabIndex = 21;
+            this.btnKlar.Text = "Klar";
+            this.btnKlar.UseVisualStyleBackColor = true;
+            this.btnKlar.Click += new System.EventHandler(this.btnKlar_Click);
             // 
             // laggTillGrupp
             // 
