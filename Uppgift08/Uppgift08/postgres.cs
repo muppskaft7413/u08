@@ -18,6 +18,7 @@ namespace Uppgift08
         private DataTable _tabell;
 
         public string enkelGrupp { get; set; }
+        public string nyMedlem { get; set; }
         public string deltagit { get; set; }
         public string pnr { get; set; }
         public string narvaro { get; set; }
@@ -334,7 +335,7 @@ namespace Uppgift08
                 {
                     case "datEnk":
                         //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
-                        sql = "select namn from traningsgrupp";
+                        sql = "select namn, grupp_id from traningsgrupp";
                         break;
                 }
 
@@ -347,7 +348,7 @@ namespace Uppgift08
                 {
                     case "datEnk":
                         //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
-                        sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where "+ sokGrupper +"";
+                        sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join gruppmedlemmar on gruppmedlemmar.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = gruppmedlemmar.grupp_id where "+sokGrupper+"";
                         break;
                 }
 
@@ -360,11 +361,23 @@ namespace Uppgift08
                 {
                     case "datEnk":
                         //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
-                        sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where traningsgrupp.namn != '"+enkelGrupp+"' and medlem.medlemstyp != 3 and medlem.medlem_id not in (select medlem_id from deltagare where grupp_id in (select grupp_id from traningsgrupp where "+sokGrupper+"))";
+                        sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join gruppmedlemmar on gruppmedlemmar.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = gruppmedlemmar.grupp_id where traningsgrupp.namn != '"+enkelGrupp+"' and medlem.medlemstyp != 3 and medlem.medlem_id not in (select medlem_id from gruppmedlemmar where grupp_id in (select grupp_id from traningsgrupp where "+sokGrupper+"))";
                         break;
                 }
 
             }
+            else if (soktyp == "laggTillMedlem")
+            {
+                switch (sokparameter)
+                {
+                    case "datEnk":
+                        sql = "insert into gruppmedlemmar (grupp_id, medlem_id) Values ("+enkelGrupp+", "+nyMedlem+")";
+                        break;
+                }
+
+            }
+
+                
             else if (soktyp == "hanteraGrp")
             {
                 //string sokGrupper = antalGrupper(grupp); //Kallar på metoden antalgrupper

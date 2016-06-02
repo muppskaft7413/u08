@@ -16,11 +16,65 @@ namespace Uppgift08
         {
             InitializeComponent();
         }
-        private string sokOk = "Sökning ok";   
+        private string sokOk = "Sökning ok";
+        string nyMedlem;
+        string nyGrupp;
 
         private void button2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void lankaGruppOchMedklem()
+        {
+
+            foreach (gruppmedlemmar selectedItem in lbxMedlemmar.SelectedItems)
+            {
+                nyMedlem = selectedItem.medlemId;
+            }
+            foreach (traningsgrupp selectedItem in lbxTraningsgrupper.SelectedItems)
+            {
+
+                nyGrupp = selectedItem.grupp_id.ToString();
+            }                
+                postgres sokning = new postgres();
+                sokning.nyMedlem = nyMedlem;
+                sokning.enkelGrupp = nyGrupp;
+                string narvaroSvar = sokning.sqlNonQuery(sokning.vilkenSokning(false, false, false), "laggTillMedlem");     // hämtar sökning efter träningsgrupper
+                tbSvar.Text = narvaroSvar;
+        }
+
+        private void hamtaGrupper()
+        {
+            DataTable svarGrp;
+            postgres sokning = new postgres();
+
+            svarGrp = sokning.sqlFråga(sokning.vilkenSokning(false, false, false), "gruppNy");     // hämtar sökning efter träningsgrupper
+
+            if (svarGrp.Columns[0].ColumnName.Equals("error"))
+            {
+                tbSvar.Text = svarGrp.Rows[0][1].ToString();
+            }
+            else
+            {
+                List<traningsgrupp> nyTraningsgruppLista = new List<traningsgrupp>();
+                for (int i = 0; i < svarGrp.Rows.Count; i++)
+                {
+                    traningsgrupp traningsgruppRatt = new traningsgrupp()
+                    {
+                        namn = svarGrp.Rows[i]["namn"].ToString(),
+                        grupp_id = (int)svarGrp.Rows[i]["grupp_id"]
+                    };
+
+
+                    nyTraningsgruppLista.Add(traningsgruppRatt);
+                }
+
+                lbxTraningsgrupper.DataSource = nyTraningsgruppLista;
+                lbxTraningsgrupper.DisplayMember = "nyaGrupper";
+                tbSvar.Text = sokOk;
+
+            }
         }
 
         private void hamtaEjGruppmedlemmar()
@@ -114,39 +168,9 @@ namespace Uppgift08
             }
     }
 
-
         private void laggTillMedlem_Load(object sender, EventArgs e)
         {
-            DataTable svarGrp;
-            postgres sokning = new postgres();
-
-            svarGrp = sokning.sqlFråga(sokning.vilkenSokning(false, false, false), "gruppNy");     // hämtar sökning efter träningsgrupper
-
-            if (svarGrp.Columns[0].ColumnName.Equals("error"))
-            {
-                tbSvar.Text = svarGrp.Rows[0][1].ToString();
-            }
-            else
-            {
-                List<traningsgrupp> nyTraningsgruppLista = new List<traningsgrupp>();
-                for (int i = 0; i < svarGrp.Rows.Count; i++)
-                {
-                    traningsgrupp traningsgruppRatt = new traningsgrupp()
-                    {
-                        namn = svarGrp.Rows[i]["namn"].ToString(),
-                        //tid = svarGrp.Rows[i]["starttid"].ToString(),
-                        //datum = svarGrp.Rows[i]["datum"].ToString()
-                    };
-
-
-                    nyTraningsgruppLista.Add(traningsgruppRatt);
-                }
-
-                lbxTraningsgrupper.DataSource = nyTraningsgruppLista;
-                lbxTraningsgrupper.DisplayMember = "nyaGrupper";
-                tbSvar.Text = sokOk;
-
-            }
+            hamtaGrupper();
         }
 
         private void lbxTraningsgrupper_Click(object sender, EventArgs e)
@@ -158,6 +182,11 @@ namespace Uppgift08
         private void btnKlar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnTill_Click(object sender, EventArgs e)
+        {
+            lankaGruppOchMedklem();
         }
         }
     }

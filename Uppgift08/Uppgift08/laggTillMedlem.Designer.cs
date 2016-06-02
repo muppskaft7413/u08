@@ -75,6 +75,7 @@
             this.btnTill.TabIndex = 3;
             this.btnTill.Text = "->";
             this.btnTill.UseVisualStyleBackColor = true;
+            this.btnTill.Click += new System.EventHandler(this.btnTill_Click);
             // 
             // btnFran
             // 
