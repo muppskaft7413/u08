@@ -64,6 +64,7 @@
             this.lbxTraningsgrupper.Name = "lbxTraningsgrupper";
             this.lbxTraningsgrupper.Size = new System.Drawing.Size(250, 95);
             this.lbxTraningsgrupper.TabIndex = 2;
+            this.lbxTraningsgrupper.Click += new System.EventHandler(this.lbxTraningsgrupper_Click);
             // 
             // btnTill
             // 

@@ -19,7 +19,5 @@ namespace Uppgift08
         public string datum { get; set; }
         public string start { get; set; }
         public string slut { get; set; }
-
-
     }
 }

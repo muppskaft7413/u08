@@ -25,6 +25,15 @@ namespace Uppgift08
             }
         }
 
+        public string nyaGrupper
+        {
+            get
+            {
+
+                return namn;
+            }
+        }
+
 
     }
 }

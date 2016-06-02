@@ -44,8 +44,7 @@ namespace Uppgift08
         /// Meto som ändrar en deltagas närvaro.
         /// </summary>
         private void andraNarvaro()
-        {
-            vilkaParam();            
+        {          
             postgres sokning = new postgres();
             
             sokning.startDatum = dtpFran.Value;
@@ -54,7 +53,7 @@ namespace Uppgift08
             sokning.pnr = personnummer;
             sokning.deltagit = deltagit;
             sokning.enkelGrupp = grupp;
-            string narvaroSvar = sokning.sqlNonQuery(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "andraNarvaro");     // hämtar sökning efter träningsgrupper
+            string narvaroSvar = sokning.sqlNonQuery(sokning.vilkenSokning(false, false, false), "andraNarvaro");     // hämtar sökning efter träningsgrupper
             tbSvar.Text = narvaroSvar;
          }
 
@@ -425,6 +424,11 @@ namespace Uppgift08
                 sokGrp();
                 tbSvar.Clear();
             }
+        }
+
+        private void btn_klar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
 
