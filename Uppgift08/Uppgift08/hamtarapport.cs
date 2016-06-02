@@ -29,7 +29,7 @@ namespace Uppgift08
         /// Listboxar/etc knyts till variablar.
         /// Deras identitet kan därmed kontrolleras från ett ställe (constructorn).
         /// </summary>
-        #region ##### Control-variablar #####
+        #region ##### Variablar kopplade till listboxar/textbox/datagridview #####
         private CheckBox chkBoxDat;                                                                     // checkboxen för att aktivera/deaktivera datumintervallsökning
         private ListBox _lbxGrupper;                                                                    // listboxen för grupper 
         private ListBox _lbxLedare;                                                                     // listboxen för ledare
@@ -477,6 +477,7 @@ namespace Uppgift08
         }
 
         #endregion
+
 
     }
 }
