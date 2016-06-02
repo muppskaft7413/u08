@@ -48,10 +48,10 @@
             this.lbValjPlats = new System.Windows.Forms.ListBox();
             this.lblPlats = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tbInputBeskrivning = new System.Windows.Forms.TextBox();
+            this.tbInputGrupp = new System.Windows.Forms.TextBox();
             this.btnLäggTillGrp = new System.Windows.Forms.Button();
             this.btnKlar = new System.Windows.Forms.Button();
-            this.tbInputGrupp = new System.Windows.Forms.TextBox();
-            this.tbInputBeskrivning = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -250,6 +250,20 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Lägg till grupp";
             // 
+            // tbInputBeskrivning
+            // 
+            this.tbInputBeskrivning.Location = new System.Drawing.Point(76, 59);
+            this.tbInputBeskrivning.Name = "tbInputBeskrivning";
+            this.tbInputBeskrivning.Size = new System.Drawing.Size(368, 20);
+            this.tbInputBeskrivning.TabIndex = 23;
+            // 
+            // tbInputGrupp
+            // 
+            this.tbInputGrupp.Location = new System.Drawing.Point(76, 33);
+            this.tbInputGrupp.Name = "tbInputGrupp";
+            this.tbInputGrupp.Size = new System.Drawing.Size(368, 20);
+            this.tbInputGrupp.TabIndex = 22;
+            // 
             // btnLäggTillGrp
             // 
             this.btnLäggTillGrp.Location = new System.Drawing.Point(369, 206);
@@ -258,6 +272,7 @@
             this.btnLäggTillGrp.TabIndex = 22;
             this.btnLäggTillGrp.Text = "Lägg till";
             this.btnLäggTillGrp.UseVisualStyleBackColor = true;
+            this.btnLäggTillGrp.Click += new System.EventHandler(this.btnLäggTillGrp_Click);
             // 
             // btnKlar
             // 
@@ -268,20 +283,6 @@
             this.btnKlar.Text = "Klar";
             this.btnKlar.UseVisualStyleBackColor = true;
             this.btnKlar.Click += new System.EventHandler(this.btnKlar_Click);
-            // 
-            // tbInputGrupp
-            // 
-            this.tbInputGrupp.Location = new System.Drawing.Point(76, 33);
-            this.tbInputGrupp.Name = "tbInputGrupp";
-            this.tbInputGrupp.Size = new System.Drawing.Size(368, 20);
-            this.tbInputGrupp.TabIndex = 22;
-            // 
-            // tbInputBeskrivning
-            // 
-            this.tbInputBeskrivning.Location = new System.Drawing.Point(76, 56);
-            this.tbInputBeskrivning.Name = "tbInputBeskrivning";
-            this.tbInputBeskrivning.Size = new System.Drawing.Size(368, 20);
-            this.tbInputBeskrivning.TabIndex = 23;
             // 
             // laggTillGrupp
             // 
