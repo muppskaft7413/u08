@@ -43,6 +43,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.gpNyttTillfalle = new System.Windows.Forms.GroupBox();
             this.dtpTidTill = new System.Windows.Forms.DateTimePicker();
+            this.btnTabort = new System.Windows.Forms.Button();
             this.gpNyttTillfalle.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -183,11 +184,22 @@
             this.dtpTidTill.TabIndex = 14;
             this.dtpTidTill.ValueChanged += new System.EventHandler(this.dtpTidTill_ValueChanged);
             // 
+            // btnTabort
+            // 
+            this.btnTabort.Location = new System.Drawing.Point(247, 264);
+            this.btnTabort.Name = "btnTabort";
+            this.btnTabort.Size = new System.Drawing.Size(75, 37);
+            this.btnTabort.TabIndex = 15;
+            this.btnTabort.Text = "Ta bort träningstillfälle";
+            this.btnTabort.UseVisualStyleBackColor = true;
+            this.btnTabort.Click += new System.EventHandler(this.btnTabort_Click);
+            // 
             // traningstillfalle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 440);
+            this.Controls.Add(this.btnTabort);
             this.Controls.Add(this.gpNyttTillfalle);
             this.Controls.Add(this.gruppaktiviter);
             this.Controls.Add(this.btnAdd);
@@ -224,5 +236,6 @@
         private System.Windows.Forms.GroupBox gpNyttTillfalle;
         private System.Windows.Forms.DateTimePicker dtpTidTill;
         private System.Windows.Forms.DateTimePicker dtpTidFran;
+        private System.Windows.Forms.Button btnTabort;
     }
 }

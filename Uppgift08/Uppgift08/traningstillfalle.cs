@@ -88,6 +88,18 @@ namespace Uppgift08
 
 
 
+        private void taBortTraningstillf()
+        {
+            postgres sokning = new postgres();
+
+            foreach (trantillfInfo selectedItem in _lbxTrantillfalle.SelectedItems)
+            {
+                sokning.narvaro = selectedItem.narvarolistaID.ToString();
+            }
+            string narvaroSvar = sokning.sqlNonQuery("taBortTrantillfDel", "tranTillfalle");
+            narvaroSvar = sokning.sqlNonQuery("taBortTrantillf", "tranTillfalle");
+            tbSvar.Text = narvaroSvar;
+        }
 
 
 
@@ -363,6 +375,14 @@ namespace Uppgift08
         {
 
         }
+
+        private void btnTabort_Click(object sender, EventArgs e)
+        {
+            taBortTraningstillf();
+            hamtaTranTillf();
+            gruppaktiviter.DataSource = null;
+        }
+
 
 
 

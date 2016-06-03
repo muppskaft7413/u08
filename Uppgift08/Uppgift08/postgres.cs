@@ -403,6 +403,12 @@ namespace Uppgift08
                     case "skapaTillf":
                         sql = "insert into trantillf (datum, starttid, sluttid) values ('"+ startDatum.ToShortDateString()+"', '"+startTid.ToLongTimeString()+"', '"+slutTid.ToLongTimeString()+"')";
                         break;
+                    case "taBortTrantillf":
+                        sql = "delete from trantillf where narvarolista_id = "+narvaro+"";
+                        break;
+                    case "taBortTrantillfDel":
+                        sql = "delete from deltagare where narvarolista_id = "+narvaro+"";
+                        break;
 
 
                         
