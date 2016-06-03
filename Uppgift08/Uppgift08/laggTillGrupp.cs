@@ -280,6 +280,16 @@ namespace Uppgift08
         /// <param name="e"></param>
         private void btnLäggTillGrp_Click(object sender, EventArgs e)
         {
+            bool t1 = _platsBox2.SelectedIndex == -1 ? true : false;
+            bool t2 = _tbBeskrivning.Text == "" ? true : false;
+            bool t3 = _tbInputGrupp.Text == "" ? true : false;
+            if (t1 || t2 || t3)
+            {
+                _tbFeedback.Text = "Samtliga fält måste fyllas i";
+
+                return;
+            }
+
             postgres s = startaPostgres();
             s.gNamn = _tbInputGrupp.Text;
             s.gBeskrivning = _tbBeskrivning.Text;
@@ -287,6 +297,7 @@ namespace Uppgift08
             _tbFeedback.Text = s.sqlNonQuery("adderaGrupp", "hanteraGrp");
             trnGrpLst.Clear();
             uppdLbGrupp();
+            _tbFeedback.Text = "Grupp tillagd";
         }
 
         /// <summary>
