@@ -108,6 +108,7 @@
             this.btnAdd.TabIndex = 7;
             this.btnAdd.Text = "<<";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // gruppaktiviter
             // 

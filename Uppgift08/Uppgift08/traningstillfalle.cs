@@ -22,6 +22,7 @@ namespace Uppgift08
         ListBox _lbxGruppmedlemmar;
         ListBox _lbxTraningsgrupper;
         ListBox _gruppaktiviter;
+        TextBox _tbSvar;
 
 
 
@@ -33,6 +34,9 @@ namespace Uppgift08
         private ListBox _gruppBox;
         string sokOk = "";
 
+        /// <summary>
+        /// ######### CONSTRUCTOR ######### 
+        /// </summary>
         public traningstillfalle()
         {
             InitializeComponent();
@@ -41,6 +45,7 @@ namespace Uppgift08
             _lbxGruppmedlemmar = lbxGruppmedlemmar;
             _lbxTraningsgrupper = lbxTraningsgrupper;
             _gruppaktiviter = gruppaktiviter;
+            _tbSvar = tbSvar;
             
             _gruppBox = lbxTraningsgrupper;                                                      // grupplistboxen knyts till variabel
             hamtaTranTillf();
@@ -63,8 +68,6 @@ namespace Uppgift08
         private void uppdateraGruppbox()
         {
             postgres s = startaPostgres();
-
-
         }
 
         /// <summary>
@@ -99,7 +102,7 @@ namespace Uppgift08
 
             if (sokning.Columns[0].ColumnName.Equals("error"))
             {
-                tbSvar.Text = sokning.Rows[0][1].ToString();
+                _tbSvar.Text = sokning.Rows[0][1].ToString();
             }
             else
             {
@@ -109,17 +112,15 @@ namespace Uppgift08
 
                     trantillfInfo tillfalle = new trantillfInfo()
                     {
-                        
                         narvarolistaID = (int)sokning.Rows[i]["narvarolista_id"],
                         datum = sokning.Rows[i]["datum"].ToString(),
                         sluttid = (DateTime)sokning.Rows[i]["sluttid"],
                         starttid = (DateTime)sokning.Rows[i]["starttid"],
-                        
                     };
 
 
                     trantillfLista.Add(tillfalle);
-                    tbSvar.Text = sokOk;
+                    _tbSvar.Text = sokOk;
                 }
 
                 lbxTrantillfalle.DataSource = trantillfLista;
@@ -150,7 +151,7 @@ namespace Uppgift08
 
             if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
             {
-                tbSvar.Text = svarNarvaro.Rows[0][1].ToString();
+                _tbSvar.Text = svarNarvaro.Rows[0][1].ToString();
             }
             else
             {
@@ -169,7 +170,7 @@ namespace Uppgift08
 
 
                     nyNarvarolista.Add(narvarolistaRatt);
-                    tbSvar.Text = sokOk;
+                    _tbSvar.Text = sokOk;
                 }
 
                 lbxGruppmedlemmar.DataSource = nyNarvarolista;
@@ -177,48 +178,42 @@ namespace Uppgift08
             }
         }
 
+        /// <summary>
+        /// hämtar grupper som är kopplade till ett i listboxen markerat träningstillfälle.
+        /// </summary>
         private void koppladeGrupper()
         {
+            lasAvListboxarna();
             DataTable sokning;
             postgres s = startaPostgres();
+            s.narvaro = nuvarandeTrantillf.narvarolistaID.ToString();
             sokning = s.sqlFråga("kopplade", "tranTillfalle");
 
             if (sokning.Columns[0].ColumnName.Equals("error"))
             {
-                tbSvar.Text = sokning.Rows[0][1].ToString();
+                _tbSvar.Text = sokning.Rows[0][1].ToString();
             }
             else
             {
-                lasAvListboxarna();
+               
                 trnGrpLst_kopplad.Clear();
-                int jamfor;
+
                 for (int i = 0; i < sokning.Rows.Count; i++)
                 {
-                    
-
                     
                     traningsgrupp tillfalle = new traningsgrupp()
                     {
 
                         narvarolista = (int)sokning.Rows[i]["narvarolista_id"],
                         del_grupp_id = (int)sokning.Rows[i]["del_grupp_id"],
-                        trn_grp_id = (int)sokning.Rows[i]["trn_grupp_id"],
                         namn = sokning.Rows[i]["namn"].ToString(),
-                        medlem_id = (int)sokning.Rows[i]["medlem_id"],
-                        deltagit = (bool)sokning.Rows[i]["deltagit"]
+
                     };
                     
-                    jamfor = nuvarandeTrantillf.narvarolistaID;
-                    if (jamfor == tillfalle.narvarolista)
-                    {
-                        trnGrpLst_kopplad.Add(tillfalle);
-                    }
-                   
-                    tbSvar.Text = sokOk;
+                    trnGrpLst_kopplad.Add(tillfalle);
+                    _tbSvar.Text = sokOk;
                 }
 
-
-                
                 _gruppaktiviter.DataSource = null;
                 _gruppaktiviter.DataSource = trnGrpLst_kopplad;
                 _gruppaktiviter.DisplayMember = "namn";
@@ -237,7 +232,11 @@ namespace Uppgift08
             nuvarandeTranGrp = (traningsgrupp)_lbxTraningsgrupper.SelectedItem;
             //nuvarandeGruppAktivitet = (gruppaktiviter)_gruppaktiviter.SelectedItem;
         }
-
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            lasAvListboxarna();
+            flyMedlemTillTrantillf();
+        }
 
         // ############ EVENT HANDLERS
         #region
@@ -259,6 +258,65 @@ namespace Uppgift08
 
 
         #endregion
+
+
+
+        private void flyMedlemTillTrantillf()
+        {
+
+            DataTable sokning;
+            postgres s = new postgres();
+
+            s.enkelGrupp = Convert.ToString(nuvarandeTranGrp.trn_grp_id);         // läser in och för över den markerade gruppens ID till postgres
+            sokning = sokning = s.sqlFråga("lasUtMedlemmar", "tranTillfalle");
+
+
+
+            //skriva medlemmar till deltagare-tabellen
+            
+            s.narvaro = Convert.ToString(nuvarandeTrantillf.narvarolistaID);      // läser in och för över det markerade träningstillfällets ID till postgres
+            _tbSvar.Text = s.sqlNonQuery("flyttaTillAktivitet", "tranTillfalle");  //skriver till databasen
+
+
+
+            
+            trnGrpLst_kopplad.Clear();
+
+            s.narvaro = nuvarandeTrantillf.narvarolistaID.ToString();
+            sokning = s.sqlFråga("kopplade", "tranTillfalle");
+
+            if (sokning.Columns[0].ColumnName.Equals("error"))
+            {
+                _tbSvar.Text = sokning.Rows[0][1].ToString();
+            }
+            else
+            {
+               
+                trnGrpLst_kopplad.Clear();
+
+                for (int i = 0; i < sokning.Rows.Count; i++)
+                {
+                    
+                    traningsgrupp tillfalle = new traningsgrupp()
+                    {
+
+                        narvarolista = (int)sokning.Rows[i]["narvarolista_id"],
+                        del_grupp_id = (int)sokning.Rows[i]["del_grupp_id"],
+                        namn = sokning.Rows[i]["namn"].ToString(),
+
+                    };
+                    
+                    trnGrpLst_kopplad.Add(tillfalle);
+                    _tbSvar.Text = sokOk;
+                }
+
+                _gruppaktiviter.DataSource = null;
+                _gruppaktiviter.DataSource = trnGrpLst_kopplad;
+                _gruppaktiviter.DisplayMember = "namn";
+            }
+            
+            //nuvarandeTrantillf.narvarolistaID
+        }
 
 
 

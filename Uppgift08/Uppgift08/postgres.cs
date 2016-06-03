@@ -381,8 +381,17 @@ namespace Uppgift08
                         sql = "select * from trantillf";
                         break;
                     case "kopplade":
-                        sql = "select distinct narvarolista_id, deltagare.grupp_id as del_grupp_id, traningsgrupp.grupp_id as trn_grupp_id, traningsgrupp.namn, medlem_id, deltagit  from deltagare, traningsgrupp where traningsgrupp.grupp_id = deltagare.grupp_id order by narvarolista_id, namn, del_grupp_id, medlem_id;";
+                        sql = "select distinct narvarolista_id, deltagare.grupp_id as del_grupp_id, traningsgrupp.namn from deltagare, traningsgrupp where traningsgrupp.grupp_id = deltagare.grupp_id AND deltagare.narvarolista_id = '" + narvaro + "';";
                         break;
+                    case "flyttaTillAktivitet":
+                        sql = "insert into deltagare(narvarolista_id, grupp_id, medlem_id, deltagit) values('" + narvaro + "', '" + enkelGrupp + "', '" + nyMedlem + "', '0');";
+                        break;
+                    case "lasUtMedlemmar":
+                        sql = "insert into deltagare(narvarolista_id, grupp_id, medlem_id, deltagit) values('" + narvaro + "', '" + enkelGrupp + "', '" + nyMedlem + "', '0');";
+                        break;
+
+
+                        
                 }
             }
 
