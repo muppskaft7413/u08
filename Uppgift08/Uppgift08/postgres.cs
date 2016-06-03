@@ -348,7 +348,7 @@ namespace Uppgift08
                 switch (sokparameter)
                 {
                     case "datEnk":
-                        sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join gruppmedlemmar on gruppmedlemmar.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = gruppmedlemmar.grupp_id where "+sokGrupper+"";
+                        sql = "select fnamn, enamn, medlem_id, pnr from medlem where medlem_id in (select medlem_id from gruppmedlemmar where grupp_id = (select grupp_id from traningsgrupp where "+sokGrupper+")) and medlem.medlemstyp !=3";
                         break;
                 }
 
@@ -359,7 +359,7 @@ namespace Uppgift08
                 switch (sokparameter)
                 {
                     case "datEnk":
-                        sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join gruppmedlemmar on gruppmedlemmar.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = gruppmedlemmar.grupp_id where traningsgrupp.namn != '"+enkelGrupp+"' and medlem.medlemstyp != 3 and medlem.medlem_id not in (select medlem_id from gruppmedlemmar where grupp_id in (select grupp_id from traningsgrupp where "+sokGrupper+"))";
+                        sql = "select fnamn, enamn, medlem_id, pnr from medlem where medlem_id not in (select medlem_id from gruppmedlemmar where grupp_id = (select grupp_id from traningsgrupp where "+sokGrupper+")) and medlem.medlemstyp !=3";
                         break;
                 }
 
@@ -370,6 +370,15 @@ namespace Uppgift08
                 {
                     case "datEnk":
                         sql = "insert into gruppmedlemmar (grupp_id, medlem_id) Values (" + enkelGrupp + ", " + nyMedlem + ")";
+                        break;
+                }
+            }
+            else if (soktyp == "taBortMedlem")
+            {
+                switch (sokparameter)
+                {
+                    case "datEnk":
+                        sql = "delete from gruppmedlemmar where grupp_id = " + enkelGrupp + " and medlem_id = " + nyMedlem + "";
                         break;
                 }
             }

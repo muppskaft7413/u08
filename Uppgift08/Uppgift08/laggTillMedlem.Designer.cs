@@ -82,13 +82,13 @@
             // 
             // btnFran
             // 
-            this.btnFran.Enabled = false;
             this.btnFran.Location = new System.Drawing.Point(289, 98);
             this.btnFran.Name = "btnFran";
             this.btnFran.Size = new System.Drawing.Size(31, 23);
             this.btnFran.TabIndex = 4;
             this.btnFran.Text = "<-";
             this.btnFran.UseVisualStyleBackColor = true;
+            this.btnFran.Click += new System.EventHandler(this.btnFran_Click);
             // 
             // gbMedlemmar
             // 
