@@ -24,6 +24,8 @@ namespace Uppgift08
         public string narvaro { get; set; }
         public List<string> ledare { get; set; }
         public List<string> grupp { get; set; }
+        public DateTime startTid { get; set; }        
+        public DateTime slutTid { get; set; }        
         public DateTime slutDatum { get; set; }          // Gör man datumintervallsökning behöver båda dessa DateTime-properties
         public DateTime startDatum { get; set; }         // få ett värde då objekt skapas av klassen. slutDatum måste alltid
                                                          // få ett värde.
@@ -397,6 +399,9 @@ namespace Uppgift08
                         break;
                     case "lasUtMedlemmar":
                         sql = "insert into deltagare(narvarolista_id, grupp_id, medlem_id, deltagit) values('" + narvaro + "', '" + enkelGrupp + "', '" + nyMedlem + "', '0');";
+                        break;
+                    case "skapaTillf":
+                        sql = "insert into trantillf (datum, starttid, sluttid) values ('"+ startDatum.ToShortDateString()+"', '"+startTid.ToLongTimeString()+"', '"+slutTid.ToLongTimeString()+"')";
                         break;
 
 

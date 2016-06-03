@@ -13,6 +13,7 @@ namespace Uppgift08
     public partial class traningstillfalle : Form
     {
 
+
         gruppmedlemmar nuvarandeGruppMdlm = new gruppmedlemmar();
         trantillfInfo nuvarandeTrantillf = new trantillfInfo();
         traningsgrupp nuvarandeTranGrp = new traningsgrupp();
@@ -34,6 +35,7 @@ namespace Uppgift08
         private ListBox _gruppBox;
         string sokOk = "";
 
+
         /// <summary>
         /// ######### CONSTRUCTOR ######### 
         /// </summary>
@@ -50,6 +52,13 @@ namespace Uppgift08
             _gruppBox = lbxTraningsgrupper;                                                      // grupplistboxen knyts till variabel
             hamtaTranTillf();
             uppdLbGrupp();
+            dtpTidFran.ShowUpDown = true;
+            dtpTidFran.CustomFormat = "hh:mm:ss";
+            dtpTidFran.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            dtpTidTill.ShowUpDown = true;
+            dtpTidTill.CustomFormat = "hh:mm:ss";
+            dtpTidTill.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            
         }
 
         
@@ -64,6 +73,23 @@ namespace Uppgift08
             postgres s = new postgres();
             return s;
         }
+
+
+        private void skapaTranTillf()
+        {
+            postgres sokning = new postgres();
+            sokning.startDatum = dtpNar.Value;
+            sokning.startTid = dtpTidFran.Value;
+            sokning.slutTid = dtpTidTill.Value;
+            string narvaroSvar = sokning.sqlNonQuery("skapaTillf", "tranTillfalle"); 
+            tbSvar.Text = narvaroSvar;
+        }
+
+
+
+
+
+
 
         private void uppdateraGruppbox()
         {
@@ -316,6 +342,26 @@ namespace Uppgift08
             }
             
             //nuvarandeTrantillf.narvarolistaID
+        }
+
+        private void btnSkapa_Click(object sender, EventArgs e)
+        {
+            skapaTranTillf();
+            hamtaTranTillf();
+        }
+
+        private void dtpTidFran_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtpTidFran.Value <= dtpTidTill.Value)
+            {
+                dtpTidTill.Value = dtpTidFran.Value.AddHours(1);
+            }
+
+        }
+
+        private void dtpTidTill_ValueChanged(object sender, EventArgs e)
+        {
+
         }
 
 
