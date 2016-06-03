@@ -122,7 +122,7 @@ namespace Uppgift08
             }
         }
 
-        private void hamtaGruppmedlemmar()
+        public void hamtaGruppmedlemmar()
         {
             List<string> gruppLista = new List<string>();
             foreach (traningsgrupp selectedItem in lbxTraningsgrupper.SelectedItems)

@@ -85,7 +85,7 @@
             // 
             this.gbSokSlutdatum.Controls.Add(this.cbAktivSlutDatum);
             this.gbSokSlutdatum.Controls.Add(this.dtpSlutDatum);
-            this.gbSokSlutdatum.Location = new System.Drawing.Point(39, 137);
+            this.gbSokSlutdatum.Location = new System.Drawing.Point(40, 173);
             this.gbSokSlutdatum.Name = "gbSokSlutdatum";
             this.gbSokSlutdatum.Size = new System.Drawing.Size(289, 64);
             this.gbSokSlutdatum.TabIndex = 22;

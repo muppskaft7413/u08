@@ -49,5 +49,11 @@ namespace Uppgift08
             laggTillGrupp nyLaggTillGrupp = new laggTillGrupp();
             nyLaggTillGrupp.ShowDialog();
         }
+
+        private void btnSkapaPass_Click(object sender, EventArgs e)
+        {
+            traningstillfalle ny = new traningstillfalle();
+            ny.ShowDialog();
+        }
     }
 }

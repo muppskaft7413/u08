@@ -375,13 +375,20 @@ namespace Uppgift08
                 switch (sokparameter)
                 {
                     case "datEnk":
-                        sql = "insert into gruppmedlemmar (grupp_id, medlem_id) Values ("+enkelGrupp+", "+nyMedlem+")";
+                        sql = "insert into gruppmedlemmar (grupp_id, medlem_id) Values (" + enkelGrupp + ", " + nyMedlem + ")";
                         break;
                 }
-
+            }
+            else if (soktyp == "tranTillfalle")
+            {
+                switch (sokparameter)
+                {
+                    case "hamtaTillf":
+                        sql = "select * from trantillf";
+                        break;
+                }
             }
 
-                
             else if (soktyp == "hanteraGrp")
             {
                 //string sokGrupper = antalGrupper(grupp); //Kallar på metoden antalgrupper
@@ -394,7 +401,7 @@ namespace Uppgift08
                         sql = "select * from Plats";
                         break;
                     case "adderaGrupp":
-                        sql = "INSERT INTO traningsgrupp(namn, beskrivning, plats) VALUES ('" + gNamn + "', '" + gBeskrivning +"', '" + gPlats + "');";
+                        sql = "INSERT INTO traningsgrupp(namn, beskrivning, plats) VALUES ('" + gNamn + "', '" + gBeskrivning + "', '" + gPlats + "');";
                         break;
                     case "taBortGrupp":
                         sql = "DELETE FROM traningsgrupp WHERE grupp_id = '" + gId + "';";
@@ -417,6 +424,7 @@ namespace Uppgift08
                     case "taBortLedare":
                         sql = "DELETE FROM gruppledare WHERE grupp = '" + gPlats + "' AND ledare = '" + gId + "';";
                         break;
+
 
                 }
 

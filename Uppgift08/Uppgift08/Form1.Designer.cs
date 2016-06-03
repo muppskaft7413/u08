@@ -33,6 +33,7 @@
             this.btnLaggTillmdlm = new System.Windows.Forms.Button();
             this.btnHantGrp = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnSkapaPass = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_rapport
@@ -57,7 +58,7 @@
             // 
             // btnLaggTillmdlm
             // 
-            this.btnLaggTillmdlm.Location = new System.Drawing.Point(94, 177);
+            this.btnLaggTillmdlm.Location = new System.Drawing.Point(94, 224);
             this.btnLaggTillmdlm.Name = "btnLaggTillmdlm";
             this.btnLaggTillmdlm.Size = new System.Drawing.Size(75, 34);
             this.btnLaggTillmdlm.TabIndex = 2;
@@ -67,7 +68,7 @@
             // 
             // btnHantGrp
             // 
-            this.btnHantGrp.Location = new System.Drawing.Point(94, 235);
+            this.btnHantGrp.Location = new System.Drawing.Point(94, 282);
             this.btnHantGrp.Name = "btnHantGrp";
             this.btnHantGrp.Size = new System.Drawing.Size(75, 34);
             this.btnHantGrp.TabIndex = 3;
@@ -85,11 +86,22 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Cirkus Kul och Bus";
             // 
+            // btnSkapaPass
+            // 
+            this.btnSkapaPass.Location = new System.Drawing.Point(94, 172);
+            this.btnSkapaPass.Name = "btnSkapaPass";
+            this.btnSkapaPass.Size = new System.Drawing.Size(75, 34);
+            this.btnSkapaPass.TabIndex = 6;
+            this.btnSkapaPass.Text = "Skapa pass";
+            this.btnSkapaPass.UseVisualStyleBackColor = true;
+            this.btnSkapaPass.Click += new System.EventHandler(this.btnSkapaPass_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 305);
+            this.ClientSize = new System.Drawing.Size(284, 356);
+            this.Controls.Add(this.btnSkapaPass);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnHantGrp);
             this.Controls.Add(this.btnLaggTillmdlm);
@@ -109,6 +121,7 @@
         private System.Windows.Forms.Button btnLaggTillmdlm;
         private System.Windows.Forms.Button btnHantGrp;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnSkapaPass;
     }
 }
 
