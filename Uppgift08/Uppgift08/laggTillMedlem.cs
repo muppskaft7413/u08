@@ -21,6 +21,28 @@ namespace Uppgift08
         string nyGrupp;
 
         /// <summary>
+        /// Ta bort länk mellan medlem och grupp.
+        /// </summary>
+        private void taBortGruppmedlem()
+        {
+
+            foreach (gruppmedlemmar selectedItem in lbxGruppmedlemmar.SelectedItems)
+            {
+                nyMedlem = selectedItem.medlemId;
+            }
+            foreach (traningsgrupp selectedItem in lbxTraningsgrupper.SelectedItems)
+            {
+
+                nyGrupp = selectedItem.grupp_id.ToString();
+            }
+            postgres sokning = new postgres();
+            sokning.nyMedlem = nyMedlem;
+            sokning.enkelGrupp = nyGrupp;
+            string narvaroSvar = sokning.sqlNonQuery(sokning.vilkenSokning(false, false, false), "taBortMedlem");     // hämtar sökning efter träningsgrupper
+            tbSvar.Text = narvaroSvar;
+        }
+
+        /// <summary>
         /// Metod som länker ihop medlem med en vald grupp.
         /// </summary>
         private void lankaGruppOchMedlem()
@@ -218,6 +240,18 @@ namespace Uppgift08
             hamtaGruppmedlemmar();
         }
 
+        /// <summary>
+        /// Kallar på metoderna taBortGruppmedlem, hamtaEjGruppmedlemmar och hamtaGruppmedlemmar
+        /// Det som händer är att en medlem tas bort som gruppmedlem från en grupp.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFran_Click(object sender, EventArgs e)
+        {
+            taBortGruppmedlem();
+            hamtaEjGruppmedlemmar();
+            hamtaGruppmedlemmar();
+        }
         # endregion
     }
 }
