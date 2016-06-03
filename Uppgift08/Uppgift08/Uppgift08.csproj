@@ -53,7 +53,6 @@
   <ItemGroup>
     <Compile Include="ansvarsomrade.cs" />
     <Compile Include="gruppaktiviter.cs" />
-    <Compile Include="felhantering.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,8 +67,6 @@
     <Compile Include="hamtarapport.Designer.cs">
       <DependentUpon>hamtarapport.cs</DependentUpon>
     </Compile>
-    <Compile Include="inbetalning.cs" />
-    <Compile Include="intressent.cs" />
     <Compile Include="laggTillGrupp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,7 +79,6 @@
     <Compile Include="laggTillMedlem.Designer.cs">
       <DependentUpon>laggTillMedlem.cs</DependentUpon>
     </Compile>
-    <Compile Include="medlem.cs" />
     <Compile Include="narvarolista.cs" />
     <Compile Include="plats.cs" />
     <Compile Include="postgres.cs" />
@@ -95,7 +91,6 @@
       <DependentUpon>registreranarvaro.cs</DependentUpon>
     </Compile>
     <Compile Include="traningsgrupp.cs" />
-    <Compile Include="medlemstyp.cs" />
     <Compile Include="traningstillfalle.cs">
       <SubType>Form</SubType>
     </Compile>
