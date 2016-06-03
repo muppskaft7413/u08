@@ -89,7 +89,6 @@
             this.btnFran.TabIndex = 4;
             this.btnFran.Text = "<-";
             this.btnFran.UseVisualStyleBackColor = true;
-            this.btnFran.Click += new System.EventHandler(this.button2_Click);
             // 
             // gbMedlemmar
             // 
