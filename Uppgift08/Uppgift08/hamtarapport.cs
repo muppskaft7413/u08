@@ -294,7 +294,7 @@ namespace Uppgift08
                     
                         foreach (narvarolista item in unikaGrupperLista)
                         {
-                            kolNamn = item.gruppnamn + "\n" + "Datum: " + Convert.ToDateTime(item.datum).ToShortDateString() + "\nTid: " + Convert.ToDateTime(item.start).ToShortTimeString() + "-" + Convert.ToDateTime(item.slut).ToShortTimeString();
+                            kolNamn = " " + item.gruppnamn + "\n" + " Datum: " + Convert.ToDateTime(item.datum).ToShortDateString() + "\n Tid: " + Convert.ToDateTime(item.start).ToShortTimeString() + "-" + Convert.ToDateTime(item.slut).ToShortTimeString();
                             _dgvRapport.Columns.Add(kolNamn, kolNamn);
 
                             _narvarolistan = new List<narvarolista>();
