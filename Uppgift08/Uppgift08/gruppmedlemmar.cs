@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Uppgift08
 {
-    class gruppmedlemmar
+    public class gruppmedlemmar
     {
         public string Förnamn { get; set; }
         public string Efternamn { get; set; }
@@ -18,6 +18,7 @@ namespace Uppgift08
         public string datum { get; set; }
         public string start { get; set; }
         public string slut { get; set; }
+        public string gruppId { get; set; }
 
 
         public string redanGruppMedlemmar
@@ -26,6 +27,15 @@ namespace Uppgift08
             {
 
                 return Förnamn + " " + Efternamn + "\t" + Personnummer;
+            }
+        }
+
+        public string forEftNamn
+        {
+            get
+            {
+
+                return Förnamn + " " + Efternamn;
             }
         }
 

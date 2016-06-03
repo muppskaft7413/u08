@@ -33,8 +33,6 @@
             this.lblGraphics = new System.Windows.Forms.Label();
             this.lblLaggTillMM = new System.Windows.Forms.Button();
             this.taBortMM = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.lblFiltrera = new System.Windows.Forms.Label();
             this.lbGrupp = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lbPlats = new System.Windows.Forms.ListBox();
@@ -52,6 +50,8 @@
             this.tbInputGrupp = new System.Windows.Forms.TextBox();
             this.btnLäggTillGrp = new System.Windows.Forms.Button();
             this.btnKlar = new System.Windows.Forms.Button();
+            this.tbFeedback = new System.Windows.Forms.TextBox();
+            this.lblFeedback = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -84,37 +84,23 @@
             // 
             // lblLaggTillMM
             // 
-            this.lblLaggTillMM.Location = new System.Drawing.Point(53, 212);
+            this.lblLaggTillMM.Location = new System.Drawing.Point(53, 189);
             this.lblLaggTillMM.Name = "lblLaggTillMM";
             this.lblLaggTillMM.Size = new System.Drawing.Size(75, 23);
             this.lblLaggTillMM.TabIndex = 3;
             this.lblLaggTillMM.Text = "Lägg till";
             this.lblLaggTillMM.UseVisualStyleBackColor = true;
+            this.lblLaggTillMM.Click += new System.EventHandler(this.lblLaggTillMM_Click);
             // 
             // taBortMM
             // 
-            this.taBortMM.Location = new System.Drawing.Point(203, 212);
+            this.taBortMM.Location = new System.Drawing.Point(203, 189);
             this.taBortMM.Name = "taBortMM";
             this.taBortMM.Size = new System.Drawing.Size(75, 23);
             this.taBortMM.TabIndex = 4;
             this.taBortMM.Text = "Ta bort";
             this.taBortMM.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(53, 186);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 5;
-            // 
-            // lblFiltrera
-            // 
-            this.lblFiltrera.AutoSize = true;
-            this.lblFiltrera.Location = new System.Drawing.Point(6, 189);
-            this.lblFiltrera.Name = "lblFiltrera";
-            this.lblFiltrera.Size = new System.Drawing.Size(41, 13);
-            this.lblFiltrera.TabIndex = 6;
-            this.lblFiltrera.Text = "Filtrera:";
+            this.taBortMM.Click += new System.EventHandler(this.taBortMM_Click);
             // 
             // lbGrupp
             // 
@@ -123,13 +109,12 @@
             this.lbGrupp.Name = "lbGrupp";
             this.lbGrupp.Size = new System.Drawing.Size(200, 147);
             this.lbGrupp.TabIndex = 7;
+            this.lbGrupp.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lbGrupp_MouseClick);
             this.lbGrupp.SelectedIndexChanged += new System.EventHandler(this.lbGrupp_SelectedIndexChanged);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lblFiltrera);
             this.groupBox1.Controls.Add(this.lbGrpLedare);
-            this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.lbMedlemmar);
             this.groupBox1.Controls.Add(this.taBortMM);
             this.groupBox1.Controls.Add(this.lblGraphics);
@@ -157,6 +142,7 @@
             this.btnTaBortGrp.TabIndex = 12;
             this.btnTaBortGrp.Text = "Ta bort";
             this.btnTaBortGrp.UseVisualStyleBackColor = true;
+            this.btnTaBortGrp.Click += new System.EventHandler(this.btnTaBortGrp_Click);
             // 
             // btnUppdBeskrivning
             // 
@@ -166,6 +152,7 @@
             this.btnUppdBeskrivning.TabIndex = 13;
             this.btnUppdBeskrivning.Text = "Uppdatera";
             this.btnUppdBeskrivning.UseVisualStyleBackColor = true;
+            this.btnUppdBeskrivning.Click += new System.EventHandler(this.btnUppdBeskrivning_Click);
             // 
             // btnUppdPlats
             // 
@@ -175,6 +162,7 @@
             this.btnUppdPlats.TabIndex = 14;
             this.btnUppdPlats.Text = "Byt plats";
             this.btnUppdPlats.UseVisualStyleBackColor = true;
+            this.btnUppdPlats.Click += new System.EventHandler(this.btnUppdPlats_Click);
             // 
             // groupBox2
             // 
@@ -284,11 +272,31 @@
             this.btnKlar.UseVisualStyleBackColor = true;
             this.btnKlar.Click += new System.EventHandler(this.btnKlar_Click);
             // 
+            // tbFeedback
+            // 
+            this.tbFeedback.BackColor = System.Drawing.SystemColors.Info;
+            this.tbFeedback.Location = new System.Drawing.Point(814, 369);
+            this.tbFeedback.Multiline = true;
+            this.tbFeedback.Name = "tbFeedback";
+            this.tbFeedback.Size = new System.Drawing.Size(206, 104);
+            this.tbFeedback.TabIndex = 22;
+            // 
+            // lblFeedback
+            // 
+            this.lblFeedback.AutoSize = true;
+            this.lblFeedback.Location = new System.Drawing.Point(814, 350);
+            this.lblFeedback.Name = "lblFeedback";
+            this.lblFeedback.Size = new System.Drawing.Size(58, 13);
+            this.lblFeedback.TabIndex = 23;
+            this.lblFeedback.Text = "Feedback:";
+            // 
             // laggTillGrupp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1078, 529);
+            this.Controls.Add(this.lblFeedback);
+            this.Controls.Add(this.tbFeedback);
             this.Controls.Add(this.btnKlar);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
@@ -302,6 +310,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -312,8 +321,6 @@
         private System.Windows.Forms.Label lblGraphics;
         private System.Windows.Forms.Button lblLaggTillMM;
         private System.Windows.Forms.Button taBortMM;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label lblFiltrera;
         private System.Windows.Forms.ListBox lbGrupp;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox lbPlats;
@@ -331,5 +338,7 @@
         private System.Windows.Forms.TextBox tbBeskrivning;
         private System.Windows.Forms.TextBox tbInputBeskrivning;
         private System.Windows.Forms.TextBox tbInputGrupp;
+        private System.Windows.Forms.TextBox tbFeedback;
+        private System.Windows.Forms.Label lblFeedback;
     }
 }

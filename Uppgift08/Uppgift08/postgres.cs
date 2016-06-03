@@ -32,6 +32,7 @@ namespace Uppgift08
 
         public string gNamn { get; set; }      // behövs för laggTillGrupp.cs klassen
         public string gBeskrivning { get; set; }     // behövs för laggTillGrupp.cs klassen
+        public int gId { get; set; }     // behövs för laggTillGrupp.cs klassen
         public int gPlats { get; set; }         // behövs för laggTillGrupp.cs klassen
 
         /// <summary>
@@ -395,6 +396,28 @@ namespace Uppgift08
                     case "adderaGrupp":
                         sql = "INSERT INTO traningsgrupp(namn, beskrivning, plats) VALUES ('" + gNamn + "', '" + gBeskrivning +"', '" + gPlats + "');";
                         break;
+                    case "taBortGrupp":
+                        sql = "DELETE FROM traningsgrupp WHERE grupp_id = '" + gId + "';";
+                        break;
+                    case "nyBeskrivning":
+                        sql = "UPDATE traningsgrupp SET beskrivning = '" + gBeskrivning + "' WHERE grupp_id = '" + gId + "';";
+                        break;
+                    case "bytGrupp":
+                        sql = "UPDATE traningsgrupp SET plats = '" + gPlats.ToString() + "' WHERE grupp_id = '" + gId + "';";
+                        break;
+                    case "uppdMedlem":
+                        sql = "select medlem_id, fnamn, enamn from medlem;";
+                        break;
+                    case "uppdLedare":
+                        sql = "select medlem.medlem_id, fnamn, enamn, grupp from medlem FULL JOIN gruppledare ON medlem.medlem_id = gruppledare.ledare;";
+                        break;
+                    case "nyLedare":
+                        sql = "INSERT INTO gruppledare(grupp, ledare) VALUES('" + gId + "', '" + gPlats + "');";
+                        break;
+                    case "taBortLedare":
+                        sql = "DELETE FROM gruppledare WHERE grupp = '" + gPlats + "' AND ledare = '" + gId + "';";
+                        break;
+
                 }
 
             }
