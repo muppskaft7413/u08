@@ -266,16 +266,35 @@ namespace Uppgift08
 
             DataTable sokning;
             postgres s = new postgres();
+            List<string> lstMedlemmar = new List<string>();            // lista för att hålla medlemmar som skall speglas över ifrån tabellen gruppmedlemmar till deltagare
+
 
             s.enkelGrupp = Convert.ToString(nuvarandeTranGrp.trn_grp_id);         // läser in och för över den markerade gruppens ID till postgres
             sokning = sokning = s.sqlFråga("lasUtMedlemmar", "tranTillfalle");
 
+            if (sokning.Columns[0].ColumnName.Equals("error"))
+            {
+                _tbSvar.Text = sokning.Rows[0][1].ToString();
+            }
+            else
+            {
+                s.narvaro = Convert.ToString(nuvarandeTrantillf.narvarolistaID);      // läser in och för över det markerade träningstillfällets ID till postgres
+                for (int i = 0; i < sokning.Rows.Count; i++)
+                {
+                    string utlasning= Convert.ToString(sokning.Rows[i]["medlem_id"]);
+                    lstMedlemmar.Add(utlasning);
+                }
+                for (int i = 0; i < lstMedlemmar.Count; i++)
+                {
+                    //skriva medlemmar till deltagare-tabellen
+                    _tbSvar.Text = s.sqlNonQuery("flyttaTillAktivitet", "tranTillfalle");  //skriver till databasen
+                }
+            }
 
-
-            //skriva medlemmar till deltagare-tabellen
             
-            s.narvaro = Convert.ToString(nuvarandeTrantillf.narvarolistaID);      // läser in och för över det markerade träningstillfällets ID till postgres
-            _tbSvar.Text = s.sqlNonQuery("flyttaTillAktivitet", "tranTillfalle");  //skriver till databasen
+                
+
+
 
 
 

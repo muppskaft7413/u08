@@ -396,7 +396,7 @@ namespace Uppgift08
                         sql = "insert into deltagare(narvarolista_id, grupp_id, medlem_id, deltagit) values('" + narvaro + "', '" + enkelGrupp + "', '" + nyMedlem + "', '0');";
                         break;
                     case "lasUtMedlemmar":
-                        sql = "insert into deltagare(narvarolista_id, grupp_id, medlem_id, deltagit) values('" + narvaro + "', '" + enkelGrupp + "', '" + nyMedlem + "', '0');";
+                        sql = "select * from deltagare JOIN medlem on deltagare.medlem_id = medlem.medlem_id Where grupp_id = '" + enkelGrupp + "';";
                         break;
 
 
