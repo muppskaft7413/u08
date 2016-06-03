@@ -190,6 +190,12 @@ namespace Uppgift08
             }
         }
 
+        /// <summary>
+        /// En metod som gör ändringar mot databasen.
+        /// </summary>
+        /// <param name="sokparameter"></param>
+        /// <param name="soktyp"></param>
+        /// <returns></returns>
         public string sqlNonQuery(string sokparameter, string soktyp)
         {
             string sql;
@@ -252,7 +258,6 @@ namespace Uppgift08
                         sql = "select distinct gruppledare.ledare, medlem.fnamn, medlem.enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp JOIN deltagare ON deltagare.grupp_id = traningsgrupp.grupp_id JOIN trantillf ON trantillf.narvarolista_id = deltagare.narvarolista_id WHERE trantillf.datum = '" + startDatum.ToShortDateString() + "';";
                         break;
                     case "datInt":
-                        //sql = "select fnamn, enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp WHERE " + sokGrupper;
                         sql = "select distinct gruppledare.ledare, medlem.fnamn, medlem.enamn FROM medlem JOIN gruppledare ON gruppledare.ledare = medlem.medlem_id JOIN traningsgrupp ON traningsgrupp.grupp_id = gruppledare.grupp JOIN deltagare ON deltagare.grupp_id = traningsgrupp.grupp_id JOIN trantillf ON trantillf.narvarolista_id = deltagare.narvarolista_id WHERE trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "';";
                         break;
                 }
@@ -263,12 +268,9 @@ namespace Uppgift08
                 switch (sokparameter)
                 {
                     case "datEnkGrp":
-                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
                         sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, namn, medlem.medlem_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and " + sokGrupper;
-                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = :grupp"; // tillagd till parameter
                         break;
                     case "datIntGrp":
-                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
                         sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, namn, medlem.medlem_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum >= '" + startDatum.ToShortDateString() + "' AND trantillf.datum <= '" + slutDatum.ToShortDateString() + "' AND " + sokGrupper;
                         break;
                     case "datEnkGrpLed":
@@ -322,11 +324,9 @@ namespace Uppgift08
             }
             else if (soktyp == "andraNarvaro")
             {
-                //string sokGrupper = antalGrupper(grupp); //Kallar på metoden antalgrupper
                 switch (sokparameter)
                 {
                     case "datEnk":
-                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
                         sql = "update deltagare set deltagit = '" + deltagit + "' where deltagare.grupp_id = (select grupp_id from traningsgrupp where namn = '"+enkelGrupp+"') and deltagare.medlem_id = (select medlem_id from medlem where pnr = '" + pnr + "') and deltagare.narvarolista_id = '" + narvaro + "'";
                         break;
                 }
@@ -334,11 +334,9 @@ namespace Uppgift08
             }
             else if (soktyp == "gruppNy")
             {
-                //string sokGrupper = antalGrupper(grupp); //Kallar på metoden antalgrupper
                 switch (sokparameter)
                 {
                     case "datEnk":
-                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
                         sql = "select namn, grupp_id from traningsgrupp";
                         break;
                 }
@@ -347,11 +345,9 @@ namespace Uppgift08
             else if (soktyp == "hamtaGruppmedlemmar")
             {
                 string sokGrupper = antalGrupper(grupp); //Kallar på metoden antalgrupper
-
                 switch (sokparameter)
                 {
                     case "datEnk":
-                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
                         sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join gruppmedlemmar on gruppmedlemmar.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = gruppmedlemmar.grupp_id where "+sokGrupper+"";
                         break;
                 }
@@ -360,11 +356,9 @@ namespace Uppgift08
             else if (soktyp == "hamtaEjGruppmedlemmar")
             {
                 string sokGrupper = antalGrupper(grupp); //Kallar på metoden antalgrupper
-
                 switch (sokparameter)
                 {
                     case "datEnk":
-                        //sql = "select fnamn, enamn, pnr, deltagare.narvarolista_id, deltagit from medlem join deltagare on deltagare.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = deltagare.grupp_id join trantillf on trantillf.narvarolista_id = deltagare.narvarolista_id where trantillf.datum = '" + startDatum.ToShortDateString() + "' and traningsgrupp.namn = '" + grupp + "'";
                         sql = "select distinct fnamn, enamn, pnr, medlem.medlem_id from medlem join gruppmedlemmar on gruppmedlemmar.medlem_id = medlem.medlem_id join traningsgrupp on traningsgrupp.grupp_id = gruppmedlemmar.grupp_id where traningsgrupp.namn != '"+enkelGrupp+"' and medlem.medlemstyp != 3 and medlem.medlem_id not in (select medlem_id from gruppmedlemmar where grupp_id in (select grupp_id from traningsgrupp where "+sokGrupper+"))";
                         break;
                 }
