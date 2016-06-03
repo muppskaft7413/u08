@@ -341,8 +341,8 @@ namespace Uppgift08
 
             // kollar vilken grupp och träningstillfälle som är berörd, skickar till postgres
             traningsgrupp aktivitetsGrupp = (traningsgrupp)_gruppaktiviter.SelectedItem;
-            s.enkelGrupp = aktivitetsGrupp.grupp_id.ToString();
-            s.narvaro = nuvarandeTrantillf.narvaro.ToString();
+            s.enkelGrupp = aktivitetsGrupp.del_grupp_id.ToString();
+            s.narvaro = nuvarandeTrantillf.narvarolistaID.ToString();
             s.sqlNonQuery("taBortGruppUrAktivitet", "tranTillfalle");
 
             s.narvaro = nuvarandeTrantillf.narvarolistaID.ToString();
