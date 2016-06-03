@@ -41,7 +41,7 @@ namespace Uppgift08
 
 
         /// <summary>
-        /// Meto som ändrar en deltagas närvaro.
+        /// Metod som ändrar en deltagas närvaro.
         /// </summary>
         private void andraNarvaro()
         {          
@@ -53,7 +53,7 @@ namespace Uppgift08
             sokning.pnr = personnummer;
             sokning.deltagit = deltagit;
             sokning.enkelGrupp = grupp;
-            string narvaroSvar = sokning.sqlNonQuery(sokning.vilkenSokning(false, false, false), "andraNarvaro");     // hämtar sökning efter träningsgrupper
+            string narvaroSvar = sokning.sqlNonQuery(sokning.vilkenSokning(false, false, false), "andraNarvaro");     // sqlNonquery som ändrar närvaron.
             tbSvar.Text = narvaroSvar;
          }
 
@@ -99,7 +99,7 @@ namespace Uppgift08
         }
 
         /// <summary>
-        /// Metod som kallar på sökmetoden från postgres-klassen. Söker efter närvarande.
+        /// Metod som kallar på sökmetoden från postgres-klassen. Söker efter närvarande och lägger till checkboxar i nya kolumner.
         /// </summary>
         private void sokNarvaro()
         {
@@ -118,7 +118,7 @@ namespace Uppgift08
             sokning.startDatum = dtpFran.Value;
             sokning.slutDatum = dtpSlutDatum.Value;
 
-            svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "narvaro");     // hämtar sökning efter träningsgrupper
+            svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "narvaro");     // hämtar sökning efter närvaro.
 
             if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
             {
@@ -126,7 +126,6 @@ namespace Uppgift08
             }
             else
             {
-                // här får man lägga in kod för att reda ut vilken typ av objekt o lista man vill lägga resultatet i och var datan sedan spottas ut
                 List<narvarolista> nyNarvarolista = new List<narvarolista>();
                 for (int i = 0; i < svarNarvaro.Rows.Count; i++)
                 {
@@ -145,7 +144,7 @@ namespace Uppgift08
                     nyNarvarolista.Add(narvarolistaRatt);
                     tbSvar.Text = sokOk;
                 }
-                dgvRegistreraNarvaro.DataSource = nyNarvarolista;    // ska ersättas med ett objekt av narvarolista-klassen, kod ej klart för att hacka upp tabell =(
+                dgvRegistreraNarvaro.DataSource = nyNarvarolista;   
 
 
 
@@ -155,7 +154,7 @@ namespace Uppgift08
                 }
 
 
-                svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "jamfor");
+                svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "jamfor"); //Sökning som hämtar en lista att jämföra med.
 
                 if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
                 {
@@ -184,7 +183,7 @@ namespace Uppgift08
 
                 }
                               
-                svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "unikagrupper");
+                svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(sokDatInterv, sokGrupp, false), "unikagrupper"); //Sökning som hämtar unika grupper.
 
                 if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
                 {
@@ -212,21 +211,22 @@ namespace Uppgift08
                     int kolumn = 10;
 
                     List<narvarolista> _narvarolistan;
-
+                    //Här under läggs nya rutor till för varje tillfälle.
                     foreach (narvarolista item in unikaGrupperLista)
                     {                       
                         kolNamn = item.gruppnamn + "\n" + "Datum: " + Convert.ToDateTime(item.datum).ToShortDateString() + "\nTid: " + Convert.ToDateTime(item.start).ToShortTimeString() + "-" + Convert.ToDateTime(item.slut).ToShortTimeString();
                         DataGridViewCheckBoxColumn checkboxColumn = new DataGridViewCheckBoxColumn();
                         checkboxColumn.Name = kolNamn;
                         checkboxColumn.DataPropertyName = "nyaKol";
-                        dgvRegistreraNarvaro.Columns.Add(checkboxColumn);
+                        dgvRegistreraNarvaro.Columns.Add(checkboxColumn); //lägger till checkboxar i de nya kolumnerna.
 
                         _narvarolistan = new List<narvarolista>();
                         
                         int index = 0;
                         _narvarolistan.Clear();
 
-                        foreach (narvarolista narvarande in nyNarvarolista) //
+                        //Här börjar jämförelsen mellan de olika listorna.
+                        foreach (narvarolista narvarande in nyNarvarolista) 
                         {
                             
                             foreach (narvarolista jamfor in jamforLista)
@@ -238,7 +238,7 @@ namespace Uppgift08
 
 
                                     bool test2 = _narvarolistan.Contains(narvarande);
-                                    if (!test2)
+                                    if (!test2) //Om testet går igenom får aktuell kolumn en checkbox som är true.
                                     {
 
                                         dgvRegistreraNarvaro.Rows[index].Cells[kolumn].Value = true;
@@ -247,12 +247,13 @@ namespace Uppgift08
                                     }
 
                                 }
+                                    //om inte får den ett värde som är false.
                                 else if (narvarande.medlemId == jamfor.medlemId && item.narvaro == jamfor.narvaro && jamfor.deltagit == false && item.gruppnamn == jamfor.gruppnamn)
                                 {
                                     dgvRegistreraNarvaro.Rows[index].Cells[kolumn].Value = false;
                                 }
                                 }
-                                else
+                                else // om testet inte gick igenom får cellen även en ny sorts checkbox.
                                 {
                                     // checkboxarna simuleras som disablade för att illustrera att medlemmar ej tillhör en viss grupp.
                                     DataGridViewCell cell = dgvRegistreraNarvaro.Rows[index].Cells[kolumn];
@@ -260,8 +261,7 @@ namespace Uppgift08
                                     chkCell.Value = false;
                                     chkCell.FlatStyle = FlatStyle.Flat;
                                     chkCell.Style.ForeColor = Color.White;
-                                    cell.ReadOnly = true;
-                                    
+                                    cell.ReadOnly = true;                                   
                                 }
                                 
                             }
@@ -308,31 +308,14 @@ namespace Uppgift08
             }
         }
 
-        //Kanske inte behövs. Måste testas.
-        private void dgvRegistreraNarvaro_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-        {
-            if (dgvRegistreraNarvaro.IsCurrentCellDirty)
-            {
-                dgvRegistreraNarvaro.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            }
-        }
-
         /// <summary>
-        /// När en cell ändras kontrolleras om deltagit är 1 eller 0 och sedan om den ändrade kolumnen är av datapropertyn nyaKol så körs metoden 
-        /// andraNarvaro, som ändrar en medlems närvaro.
+        /// När en cell ändras kallar programmet på metoden andraNarvaro som ändrar en medlems närvaro.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dgvRegistreraNarvaro_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void dgvRegistreraNarvaro_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            if (deltagit == "1" || deltagit == "0")
-            {
-                if (dgvRegistreraNarvaro.Columns[e.ColumnIndex].DataPropertyName == "nyaKol")
-                {
-                    andraNarvaro(); //Metod som närvaro på en medlem.
-                }
-
-            }
+            andraNarvaro();
         }
 
         /// <summary>
@@ -371,15 +354,11 @@ namespace Uppgift08
         {
             if (dgvRegistreraNarvaro.SelectedCells.Count > 0)
             {
-
-                int selectedrowindex = dgvRegistreraNarvaro.SelectedCells[0].RowIndex;
-                DataGridViewRow selectedRow = dgvRegistreraNarvaro.Rows[selectedrowindex];
-
-                personnummer = Convert.ToString(selectedRow.Cells["personnummer"].Value.ToString());
-                narvaro = Convert.ToString(selectedRow.Cells["narvaro"].Value.ToString());
-                grupp = Convert.ToString(selectedRow.Cells["gruppnamn"].Value.ToString());
-                deltagit = dgvRegistreraNarvaro.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-
+                narvarolista currentObject = (narvarolista)dgvRegistreraNarvaro.CurrentRow.DataBoundItem;
+                narvaro = currentObject.narvaro;
+                personnummer = currentObject.Personnummer;
+                grupp = currentObject.gruppnamn;
+                deltagit = currentObject.deltagit.ToString();
             }
             if (deltagit == "False")
             {
@@ -430,9 +409,6 @@ namespace Uppgift08
         {
             this.Close();
         }
-
-
-
         }
         #endregion
     }

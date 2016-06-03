@@ -20,12 +20,10 @@ namespace Uppgift08
         string nyMedlem;
         string nyGrupp;
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lankaGruppOchMedklem()
+        /// <summary>
+        /// Metod som länker ihop medlem med en vald grupp.
+        /// </summary>
+        private void lankaGruppOchMedlem()
         {
 
             foreach (gruppmedlemmar selectedItem in lbxMedlemmar.SelectedItems)
@@ -44,6 +42,9 @@ namespace Uppgift08
                 tbSvar.Text = narvaroSvar;
         }
 
+        /// <summary>
+        /// Metod som hämtar grupper.
+        /// </summary>
         private void hamtaGrupper()
         {
             DataTable svarGrp;
@@ -77,6 +78,9 @@ namespace Uppgift08
             }
         }
 
+        /// <summary>
+        /// Metod som hämtar medlemmar som ej finns i aktuell grupp..
+        /// </summary>
         private void hamtaEjGruppmedlemmar()
         {
             List<string> gruppLista = new List<string>();
@@ -92,15 +96,13 @@ namespace Uppgift08
             sokning.grupp = gruppLista;
 
 
-            svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(false, false, false), "hamtaEjGruppmedlemmar");     // hämtar sökning efter träningsgrupper
-
+            svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(false, false, false), "hamtaEjGruppmedlemmar");   
             if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
             {
                 tbSvar.Text = svarNarvaro.Rows[0][1].ToString();
             }
             else
             {
-                // här får man lägga in kod för att reda ut vilken typ av objekt o lista man vill lägga resultatet i och var datan sedan spottas ut
                 List<gruppmedlemmar> nyNarvarolista = new List<gruppmedlemmar>();
                 for (int i = 0; i < svarNarvaro.Rows.Count; i++)
                 {
@@ -122,6 +124,9 @@ namespace Uppgift08
             }
         }
 
+        /// <summary>
+        /// Metod som hämtar medlemmar som finns i aktuell grupp..
+        /// </summary>
         public void hamtaGruppmedlemmar()
         {
             List<string> gruppLista = new List<string>();
@@ -137,7 +142,7 @@ namespace Uppgift08
             sokning.grupp = gruppLista;
 
 
-            svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(false, false, false), "hamtaGruppmedlemmar");     // hämtar sökning efter träningsgrupper
+            svarNarvaro = sokning.sqlFråga(sokning.vilkenSokning(false, false, false), "hamtaGruppmedlemmar");
 
             if (svarNarvaro.Columns[0].ColumnName.Equals("error"))
             {
@@ -145,7 +150,6 @@ namespace Uppgift08
             }
             else
             {
-                // här får man lägga in kod för att reda ut vilken typ av objekt o lista man vill lägga resultatet i och var datan sedan spottas ut
                 List<gruppmedlemmar> nyNarvarolista = new List<gruppmedlemmar>();
                 for (int i = 0; i < svarNarvaro.Rows.Count; i++)
                 {
@@ -168,27 +172,52 @@ namespace Uppgift08
             }
     }
 
+        #region EVENTHANDLERS
+
+        /// <summary>
+        /// Kallar på metoden hamtaGrupper när formen laddas.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void laggTillMedlem_Load(object sender, EventArgs e)
         {
             hamtaGrupper();
         }
 
+        /// <summary>
+        /// Kallar på metoden hamtaGruppmedlemmar och hamtaEjGruppmedlemmar när man klickar i lbxTraningsgrupper.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lbxTraningsgrupper_Click(object sender, EventArgs e)
         {
             hamtaGruppmedlemmar();
             hamtaEjGruppmedlemmar();
         }
 
+        /// <summary>
+        /// Stänger fönstret.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnKlar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Kallar på metoderna lankaGruppOchMedlem, hamtaEjGruppmedlemmar och hamtaGruppmedlemmar
+        /// Det som händer är att en medlem registreras som medlem i en vald grupp.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnTill_Click(object sender, EventArgs e)
         {
-            lankaGruppOchMedklem();
+            lankaGruppOchMedlem();
             hamtaEjGruppmedlemmar();
             hamtaGruppmedlemmar();
         }
-        }
+
+        # endregion
     }
+}
