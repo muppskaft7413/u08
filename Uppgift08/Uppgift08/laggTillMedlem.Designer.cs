@@ -39,6 +39,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbSvar = new System.Windows.Forms.TextBox();
             this.btnKlar = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblForening = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.gbMedlemmar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,7 +64,7 @@
             // lbxTraningsgrupper
             // 
             this.lbxTraningsgrupper.FormattingEnabled = true;
-            this.lbxTraningsgrupper.Location = new System.Drawing.Point(77, 46);
+            this.lbxTraningsgrupper.Location = new System.Drawing.Point(77, 59);
             this.lbxTraningsgrupper.Name = "lbxTraningsgrupper";
             this.lbxTraningsgrupper.Size = new System.Drawing.Size(250, 95);
             this.lbxTraningsgrupper.TabIndex = 2;
@@ -124,7 +127,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(74, 30);
+            this.label3.Location = new System.Drawing.Point(74, 43);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(84, 13);
             this.label3.TabIndex = 6;
@@ -147,11 +150,42 @@
             this.btnKlar.UseVisualStyleBackColor = true;
             this.btnKlar.Click += new System.EventHandler(this.btnKlar_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(658, 20);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(96, 13);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "Cirkus Kul och Bus";
+            // 
+            // lblForening
+            // 
+            this.lblForening.AutoSize = true;
+            this.lblForening.Location = new System.Drawing.Point(658, 7);
+            this.lblForening.Name = "lblForening";
+            this.lblForening.Size = new System.Drawing.Size(51, 13);
+            this.lblForening.TabIndex = 25;
+            this.lblForening.Text = "Förening:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(12, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(163, 24);
+            this.label5.TabIndex = 32;
+            this.label5.Text = "Lägg till medlem";
+            // 
             // laggTillMedlem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(766, 431);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblForening);
             this.Controls.Add(this.btnKlar);
             this.Controls.Add(this.tbSvar);
             this.Controls.Add(this.label3);
@@ -180,5 +214,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbSvar;
         private System.Windows.Forms.Button btnKlar;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblForening;
+        private System.Windows.Forms.Label label5;
     }
 }

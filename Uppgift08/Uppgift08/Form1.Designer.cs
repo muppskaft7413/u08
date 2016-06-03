@@ -32,6 +32,7 @@
             this.btn_narvaro = new System.Windows.Forms.Button();
             this.btnLaggTillmdlm = new System.Windows.Forms.Button();
             this.btnHantGrp = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn_rapport
@@ -74,11 +75,22 @@
             this.btnHantGrp.UseVisualStyleBackColor = true;
             this.btnHantGrp.Click += new System.EventHandler(this.btnHantGrp_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(48, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(186, 24);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Cirkus Kul och Bus";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 305);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnHantGrp);
             this.Controls.Add(this.btnLaggTillmdlm);
             this.Controls.Add(this.btn_narvaro);
@@ -86,6 +98,7 @@
             this.Name = "Form1";
             this.Text = "Uppgift08";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -95,6 +108,7 @@
         private System.Windows.Forms.Button btn_narvaro;
         private System.Windows.Forms.Button btnLaggTillmdlm;
         private System.Windows.Forms.Button btnHantGrp;
+        private System.Windows.Forms.Label label2;
     }
 }
 

@@ -36,8 +36,6 @@
             this.dtpSlutDatum = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dtpFran = new System.Windows.Forms.DateTimePicker();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblForening = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,6 +43,7 @@
             this.gbInfo = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btn_klar = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRegistreraNarvaro)).BeginInit();
             this.gbSokSlutdatum.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -56,7 +55,7 @@
             // 
             this.dgvRegistreraNarvaro.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRegistreraNarvaro.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRegistreraNarvaro.Location = new System.Drawing.Point(39, 248);
+            this.dgvRegistreraNarvaro.Location = new System.Drawing.Point(40, 284);
             this.dgvRegistreraNarvaro.Name = "dgvRegistreraNarvaro";
             this.dgvRegistreraNarvaro.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvRegistreraNarvaro.Size = new System.Drawing.Size(859, 315);
@@ -77,7 +76,7 @@
             // 
             // tbSvar
             // 
-            this.tbSvar.Location = new System.Drawing.Point(39, 569);
+            this.tbSvar.Location = new System.Drawing.Point(40, 605);
             this.tbSvar.Name = "tbSvar";
             this.tbSvar.Size = new System.Drawing.Size(368, 20);
             this.tbSvar.TabIndex = 20;
@@ -116,7 +115,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dtpFran);
-            this.groupBox1.Location = new System.Drawing.Point(39, 66);
+            this.groupBox1.Location = new System.Drawing.Point(40, 102);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(289, 135);
             this.groupBox1.TabIndex = 21;
@@ -131,28 +130,10 @@
             this.dtpFran.TabIndex = 10;
             this.dtpFran.ValueChanged += new System.EventHandler(this.dtpFran_ValueChanged);
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(204, 16);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 13);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "Akrobatik/cirkushallen";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(164, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
-            this.label3.TabIndex = 25;
-            this.label3.Text = "Idrott:";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(36, 29);
+            this.label2.Location = new System.Drawing.Point(832, 20);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(96, 13);
             this.label2.TabIndex = 24;
@@ -161,7 +142,7 @@
             // lblForening
             // 
             this.lblForening.AutoSize = true;
-            this.lblForening.Location = new System.Drawing.Point(36, 16);
+            this.lblForening.Location = new System.Drawing.Point(832, 7);
             this.lblForening.Name = "lblForening";
             this.lblForening.Size = new System.Drawing.Size(51, 13);
             this.lblForening.TabIndex = 23;
@@ -178,7 +159,7 @@
             // gpGrupp
             // 
             this.gpGrupp.Controls.Add(this.lbxGrupper);
-            this.gpGrupp.Location = new System.Drawing.Point(334, 66);
+            this.gpGrupp.Location = new System.Drawing.Point(335, 102);
             this.gpGrupp.Name = "gpGrupp";
             this.gpGrupp.Size = new System.Drawing.Size(306, 135);
             this.gpGrupp.TabIndex = 28;
@@ -188,7 +169,7 @@
             // gbInfo
             // 
             this.gbInfo.Controls.Add(this.textBox1);
-            this.gbInfo.Location = new System.Drawing.Point(729, 16);
+            this.gbInfo.Location = new System.Drawing.Point(730, 52);
             this.gbInfo.Name = "gbInfo";
             this.gbInfo.Size = new System.Drawing.Size(169, 100);
             this.gbInfo.TabIndex = 29;
@@ -208,7 +189,7 @@
             // 
             // btn_klar
             // 
-            this.btn_klar.Location = new System.Drawing.Point(823, 569);
+            this.btn_klar.Location = new System.Drawing.Point(824, 605);
             this.btn_klar.Name = "btn_klar";
             this.btn_klar.Size = new System.Drawing.Size(75, 23);
             this.btn_klar.TabIndex = 30;
@@ -216,17 +197,26 @@
             this.btn_klar.UseVisualStyleBackColor = true;
             this.btn_klar.Click += new System.EventHandler(this.btn_klar_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(12, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(181, 24);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "Registrera närvaro";
+            // 
             // registreranarvaro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(940, 598);
+            this.ClientSize = new System.Drawing.Size(940, 640);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.btn_klar);
             this.Controls.Add(this.gbInfo);
             this.Controls.Add(this.gpGrupp);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblForening);
             this.Controls.Add(this.gbSokSlutdatum);
@@ -262,8 +252,6 @@
         private System.Windows.Forms.DateTimePicker dtpSlutDatum;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DateTimePicker dtpFran;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblForening;
         private System.Windows.Forms.Label label1;
@@ -271,5 +259,6 @@
         private System.Windows.Forms.GroupBox gbInfo;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btn_klar;
+        private System.Windows.Forms.Label label5;
     }
 }
