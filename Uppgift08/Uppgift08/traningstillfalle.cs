@@ -46,7 +46,7 @@ namespace Uppgift08
             _lbxTrantillfalle = lbxTrantillfalle;
             _lbxGruppmedlemmar = lbxGruppmedlemmar;
             _lbxTraningsgrupper = lbxTraningsgrupper;
-            _gruppaktiviter = gruppaktiviter;
+            _gruppaktiviter = lbxGruppaktiviter;
             _tbSvar = tbSvar;
             
             _gruppBox = lbxTraningsgrupper;                                                      // grupplistboxen knyts till variabel
@@ -260,45 +260,10 @@ namespace Uppgift08
         }
 
         /// <summary>
-        /// läser av vilka poster som är markerade 
-        /// i samtliga listboxar och hämtar ut objektet till variablarna.
+        /// Kopplar en grupp till en träningsaktivitet
+        /// och fyller automatiskt i tabellen deltagare med de medlemmar som tillhör 
+        /// den aktuella gruppen
         /// </summary>
-        private void lasAvListboxarna()
-        {
-            nuvarandeGruppMdlm = (gruppmedlemmar)_lbxGruppmedlemmar.SelectedItem;
-            nuvarandeTrantillf = (trantillfInfo)_lbxTrantillfalle.SelectedItem;
-            nuvarandeTranGrp = (traningsgrupp)_lbxTraningsgrupper.SelectedItem;
-            //nuvarandeGruppAktivitet = (gruppaktiviter)_gruppaktiviter.SelectedItem;
-        }
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            lasAvListboxarna();
-            flyMedlemTillTrantillf();
-        }
-
-        // ############ EVENT HANDLERS
-        #region
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-
-        private void lbxGrupper_Click(object sender, EventArgs e)
-        {
-            hamtaGruppmedlemmar();
-        }
-
-        private void lbxTrantillfalle_Click(object sender, EventArgs e)
-        {
-            koppladeGrupper();
-        }
-
-
-        #endregion
-
-
-
         private void flyMedlemTillTrantillf()
         {
 
@@ -339,12 +304,12 @@ namespace Uppgift08
             }
             else
             {
-               
+
                 trnGrpLst_kopplad.Clear();
 
                 for (int i = 0; i < sokning.Rows.Count; i++)
                 {
-                    
+
                     traningsgrupp tillfalle = new traningsgrupp()
                     {
 
@@ -353,7 +318,7 @@ namespace Uppgift08
                         namn = sokning.Rows[i]["namn"].ToString(),
 
                     };
-                    
+
                     trnGrpLst_kopplad.Add(tillfalle);
                     _tbSvar.Text = sokOk;
                 }
@@ -362,7 +327,94 @@ namespace Uppgift08
                 _gruppaktiviter.DataSource = trnGrpLst_kopplad;
                 _gruppaktiviter.DisplayMember = "namn";
             }
-       
+
+        }
+
+        /// <summary>
+        /// tar bort grupp från träningsaktivitet
+        /// </summary>
+        private void taBortUrAktivitet()
+        {
+            lasAvListboxarna();
+            DataTable sokning;
+            postgres s = new postgres();
+
+            // kollar vilken grupp och träningstillfälle som är berörd, skickar till postgres
+            traningsgrupp aktivitetsGrupp = (traningsgrupp)_gruppaktiviter.SelectedItem;
+            s.enkelGrupp = aktivitetsGrupp.grupp_id.ToString();
+            s.narvaro = nuvarandeTrantillf.narvaro.ToString();
+            s.sqlNonQuery("taBortGruppUrAktivitet", "tranTillfalle");
+
+            s.narvaro = nuvarandeTrantillf.narvarolistaID.ToString();
+            sokning = s.sqlFråga("kopplade", "tranTillfalle");
+
+            if (sokning.Columns[0].ColumnName.Equals("error"))
+            {
+                _tbSvar.Text = sokning.Rows[0][1].ToString();
+            }
+            else
+            {
+
+                trnGrpLst_kopplad.Clear();
+
+                for (int i = 0; i < sokning.Rows.Count; i++)
+                {
+
+                    traningsgrupp tillfalle = new traningsgrupp()
+                    {
+
+                        narvarolista = (int)sokning.Rows[i]["narvarolista_id"],
+                        del_grupp_id = (int)sokning.Rows[i]["del_grupp_id"],
+                        namn = sokning.Rows[i]["namn"].ToString(),
+
+                    };
+
+                    trnGrpLst_kopplad.Add(tillfalle);
+                    _tbSvar.Text = sokOk;
+                }
+
+                _gruppaktiviter.DataSource = null;
+                _gruppaktiviter.DataSource = trnGrpLst_kopplad;
+                _gruppaktiviter.DisplayMember = "namn";
+            }
+        }
+
+
+        /// <summary>
+        /// läser av vilka poster som är markerade 
+        /// i samtliga listboxar och hämtar ut objektet till variablarna.
+        /// </summary>
+        private void lasAvListboxarna()
+        {
+            nuvarandeGruppMdlm = (gruppmedlemmar)_lbxGruppmedlemmar.SelectedItem;
+            nuvarandeTrantillf = (trantillfInfo)_lbxTrantillfalle.SelectedItem;
+            nuvarandeTranGrp = (traningsgrupp)_lbxTraningsgrupper.SelectedItem;
+        }
+
+
+        //  ############ ############ EVENT HANDLERS ############  ############ 
+        #region
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            lasAvListboxarna();
+            flyMedlemTillTrantillf();
+        }
+        
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+
+        private void lbxGrupper_Click(object sender, EventArgs e)
+        {
+            hamtaGruppmedlemmar();
+        }
+
+        private void lbxTrantillfalle_Click(object sender, EventArgs e)
+        {
+            koppladeGrupper();
         }
 
         private void btnSkapa_Click(object sender, EventArgs e)
@@ -389,13 +441,16 @@ namespace Uppgift08
         {
             taBortTraningstillf();
             hamtaTranTillf();
-            gruppaktiviter.DataSource = null;
+            lbxGruppaktiviter.DataSource = null;
         }
 
 
 
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            taBortUrAktivitet();
+        }
 
-
-
+        #endregion
     }
 }

@@ -409,6 +409,9 @@ namespace Uppgift08
                     case "taBortTrantillfDel":
                         sql = "delete from deltagare where narvarolista_id = "+narvaro+"";
                         break;
+                    case "taBortGruppUrAktivitet":
+                        sql = "delete from deltagare where narvarolista_id = '" + narvaro + "' AND grupp_id = '" + enkelGrupp + "';";
+                        break;
 
 
                         

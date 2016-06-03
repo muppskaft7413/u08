@@ -31,12 +31,11 @@
             this.lbxGruppmedlemmar = new System.Windows.Forms.ListBox();
             this.lbxTraningsgrupper = new System.Windows.Forms.ListBox();
             this.lbxTrantillfalle = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.tbSvar = new System.Windows.Forms.TextBox();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.gruppaktiviter = new System.Windows.Forms.ListBox();
+            this.lbxGruppaktiviter = new System.Windows.Forms.ListBox();
             this.dtpNar = new System.Windows.Forms.DateTimePicker();
             this.btnSkapa = new System.Windows.Forms.Button();
             this.dtpTidFran = new System.Windows.Forms.DateTimePicker();
@@ -44,13 +43,16 @@
             this.gpNyttTillfalle = new System.Windows.Forms.GroupBox();
             this.dtpTidTill = new System.Windows.Forms.DateTimePicker();
             this.btnTabort = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblForening = new System.Windows.Forms.Label();
             this.gpNyttTillfalle.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbxGruppmedlemmar
             // 
             this.lbxGruppmedlemmar.FormattingEnabled = true;
-            this.lbxGruppmedlemmar.Location = new System.Drawing.Point(724, 98);
+            this.lbxGruppmedlemmar.Location = new System.Drawing.Point(585, 152);
             this.lbxGruppmedlemmar.Name = "lbxGruppmedlemmar";
             this.lbxGruppmedlemmar.Size = new System.Drawing.Size(292, 160);
             this.lbxGruppmedlemmar.TabIndex = 0;
@@ -58,7 +60,7 @@
             // lbxTraningsgrupper
             // 
             this.lbxTraningsgrupper.FormattingEnabled = true;
-            this.lbxTraningsgrupper.Location = new System.Drawing.Point(578, 98);
+            this.lbxTraningsgrupper.Location = new System.Drawing.Point(439, 152);
             this.lbxTraningsgrupper.Name = "lbxTraningsgrupper";
             this.lbxTraningsgrupper.Size = new System.Drawing.Size(140, 160);
             this.lbxTraningsgrupper.TabIndex = 1;
@@ -67,24 +69,15 @@
             // lbxTrantillfalle
             // 
             this.lbxTrantillfalle.FormattingEnabled = true;
-            this.lbxTrantillfalle.Location = new System.Drawing.Point(151, 98);
+            this.lbxTrantillfalle.Location = new System.Drawing.Point(12, 152);
             this.lbxTrantillfalle.Name = "lbxTrantillfalle";
             this.lbxTrantillfalle.Size = new System.Drawing.Size(170, 160);
             this.lbxTrantillfalle.TabIndex = 2;
             this.lbxTrantillfalle.Click += new System.EventHandler(this.lbxTrantillfalle_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(50, 338);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(925, 405);
+            this.button2.Location = new System.Drawing.Point(802, 335);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 4;
@@ -94,23 +87,24 @@
             // 
             // tbSvar
             // 
-            this.tbSvar.Location = new System.Drawing.Point(598, 338);
+            this.tbSvar.Location = new System.Drawing.Point(439, 335);
             this.tbSvar.Name = "tbSvar";
-            this.tbSvar.Size = new System.Drawing.Size(100, 20);
+            this.tbSvar.Size = new System.Drawing.Size(140, 20);
             this.tbSvar.TabIndex = 5;
             // 
             // btnRemove
             // 
-            this.btnRemove.Location = new System.Drawing.Point(497, 146);
+            this.btnRemove.Location = new System.Drawing.Point(358, 200);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(52, 23);
             this.btnRemove.TabIndex = 6;
             this.btnRemove.Text = ">>";
             this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(497, 187);
+            this.btnAdd.Location = new System.Drawing.Point(358, 241);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(52, 23);
             this.btnAdd.TabIndex = 7;
@@ -118,13 +112,13 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // gruppaktiviter
+            // lbxGruppaktiviter
             // 
-            this.gruppaktiviter.FormattingEnabled = true;
-            this.gruppaktiviter.Location = new System.Drawing.Point(327, 98);
-            this.gruppaktiviter.Name = "gruppaktiviter";
-            this.gruppaktiviter.Size = new System.Drawing.Size(140, 160);
-            this.gruppaktiviter.TabIndex = 8;
+            this.lbxGruppaktiviter.FormattingEnabled = true;
+            this.lbxGruppaktiviter.Location = new System.Drawing.Point(188, 152);
+            this.lbxGruppaktiviter.Name = "lbxGruppaktiviter";
+            this.lbxGruppaktiviter.Size = new System.Drawing.Size(140, 160);
+            this.lbxGruppaktiviter.TabIndex = 8;
             // 
             // dtpNar
             // 
@@ -168,7 +162,7 @@
             this.gpNyttTillfalle.Controls.Add(this.label1);
             this.gpNyttTillfalle.Controls.Add(this.btnSkapa);
             this.gpNyttTillfalle.Controls.Add(this.dtpTidFran);
-            this.gpNyttTillfalle.Location = new System.Drawing.Point(151, 12);
+            this.gpNyttTillfalle.Location = new System.Drawing.Point(12, 66);
             this.gpNyttTillfalle.Name = "gpNyttTillfalle";
             this.gpNyttTillfalle.Size = new System.Drawing.Size(261, 78);
             this.gpNyttTillfalle.TabIndex = 14;
@@ -186,7 +180,7 @@
             // 
             // btnTabort
             // 
-            this.btnTabort.Location = new System.Drawing.Point(247, 264);
+            this.btnTabort.Location = new System.Drawing.Point(108, 318);
             this.btnTabort.Name = "btnTabort";
             this.btnTabort.Size = new System.Drawing.Size(75, 37);
             this.btnTabort.TabIndex = 15;
@@ -194,19 +188,49 @@
             this.btnTabort.UseVisualStyleBackColor = true;
             this.btnTabort.Click += new System.EventHandler(this.btnTabort_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(8, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(233, 24);
+            this.label2.TabIndex = 25;
+            this.label2.Text = "Hantera träningstillfällen";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(920, 20);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(96, 13);
+            this.label6.TabIndex = 28;
+            this.label6.Text = "Cirkus Kul och Bus";
+            // 
+            // lblForening
+            // 
+            this.lblForening.AutoSize = true;
+            this.lblForening.Location = new System.Drawing.Point(920, 7);
+            this.lblForening.Name = "lblForening";
+            this.lblForening.Size = new System.Drawing.Size(51, 13);
+            this.lblForening.TabIndex = 27;
+            this.lblForening.Text = "Förening:";
+            // 
             // traningstillfalle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 440);
+            this.ClientSize = new System.Drawing.Size(1028, 380);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.lblForening);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnTabort);
             this.Controls.Add(this.gpNyttTillfalle);
-            this.Controls.Add(this.gruppaktiviter);
+            this.Controls.Add(this.lbxGruppaktiviter);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.tbSvar);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.lbxTrantillfalle);
             this.Controls.Add(this.lbxTraningsgrupper);
             this.Controls.Add(this.lbxGruppmedlemmar);
@@ -224,12 +248,11 @@
         private System.Windows.Forms.ListBox lbxGruppmedlemmar;
         private System.Windows.Forms.ListBox lbxTraningsgrupper;
         private System.Windows.Forms.ListBox lbxTrantillfalle;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox tbSvar;
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.ListBox gruppaktiviter;
+        private System.Windows.Forms.ListBox lbxGruppaktiviter;
         private System.Windows.Forms.DateTimePicker dtpNar;
         private System.Windows.Forms.Button btnSkapa;
         private System.Windows.Forms.Label label1;
@@ -237,5 +260,8 @@
         private System.Windows.Forms.DateTimePicker dtpTidTill;
         private System.Windows.Forms.DateTimePicker dtpTidFran;
         private System.Windows.Forms.Button btnTabort;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblForening;
     }
 }
