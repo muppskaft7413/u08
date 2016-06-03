@@ -386,6 +386,9 @@ namespace Uppgift08
                     case "hamtaTillf":
                         sql = "select * from trantillf";
                         break;
+                    case "kopplade":
+                        sql = "select distinct narvarolista_id, deltagare.grupp_id as del_grupp_id, traningsgrupp.grupp_id as trn_grupp_id, traningsgrupp.namn, medlem_id, deltagit  from deltagare, traningsgrupp where traningsgrupp.grupp_id = deltagare.grupp_id order by narvarolista_id, namn, del_grupp_id, medlem_id;";
+                        break;
                 }
             }
 

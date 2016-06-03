@@ -16,6 +16,12 @@ namespace Uppgift08
         public string beskrivning { get; set; }
         public int plats { get; set; }
 
+        public int narvarolista { get; set; }
+        public int del_grupp_id { get; set; }
+        public int trn_grp_id { get; set; }
+        public int medlem_id { get; set; }
+        public bool deltagit { get; set; }
+
         public string traningsgrupps
         {
             get
@@ -29,7 +35,6 @@ namespace Uppgift08
         {
             get
             {
-
                 return namn;
             }
         }

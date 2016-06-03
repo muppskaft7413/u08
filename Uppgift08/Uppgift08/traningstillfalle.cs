@@ -22,9 +22,14 @@ namespace Uppgift08
         ListBox _lbxGruppmedlemmar;
         ListBox _lbxTraningsgrupper;
         ListBox _gruppaktiviter;
-        
+
+
+
+        List<trantillfInfo> trantillfLista;         // lista för alla traningstillfalle
+
         private traningsgrupp traningsgrupp;
         private List<traningsgrupp> trnGrpLst = new List<traningsgrupp>();              // lista som användas för att populera gruppboxen
+        private List<traningsgrupp> trnGrpLst_kopplad = new List<traningsgrupp>();      // lista som används för att populera listboxen för de grupper som är kopplade till träning
         private ListBox _gruppBox;
         string sokOk = "";
 
@@ -98,7 +103,7 @@ namespace Uppgift08
             }
             else
             {
-                List<trantillfInfo> trantillfLista = new List<trantillfInfo>();
+                trantillfLista = new List<trantillfInfo>();
                 for (int i = 0; i < sokning.Rows.Count; i++)
                 {
 
@@ -108,7 +113,8 @@ namespace Uppgift08
                         narvarolistaID = (int)sokning.Rows[i]["narvarolista_id"],
                         datum = sokning.Rows[i]["datum"].ToString(),
                         sluttid = (DateTime)sokning.Rows[i]["sluttid"],
-                        starttid = (DateTime)sokning.Rows[i]["starttid"]
+                        starttid = (DateTime)sokning.Rows[i]["starttid"],
+                        
                     };
 
 
@@ -173,7 +179,51 @@ namespace Uppgift08
 
         private void koppladeGrupper()
         {
-            
+            DataTable sokning;
+            postgres s = startaPostgres();
+            sokning = s.sqlFråga("kopplade", "tranTillfalle");
+
+            if (sokning.Columns[0].ColumnName.Equals("error"))
+            {
+                tbSvar.Text = sokning.Rows[0][1].ToString();
+            }
+            else
+            {
+                lasAvListboxarna();
+                trnGrpLst_kopplad.Clear();
+                int jamfor;
+                for (int i = 0; i < sokning.Rows.Count; i++)
+                {
+                    
+
+                    
+                    traningsgrupp tillfalle = new traningsgrupp()
+                    {
+
+                        narvarolista = (int)sokning.Rows[i]["narvarolista_id"],
+                        del_grupp_id = (int)sokning.Rows[i]["del_grupp_id"],
+                        trn_grp_id = (int)sokning.Rows[i]["trn_grupp_id"],
+                        namn = sokning.Rows[i]["namn"].ToString(),
+                        medlem_id = (int)sokning.Rows[i]["medlem_id"],
+                        deltagit = (bool)sokning.Rows[i]["deltagit"]
+                    };
+                    
+                    jamfor = nuvarandeTrantillf.narvarolistaID;
+                    if (jamfor == tillfalle.narvarolista)
+                    {
+                        trnGrpLst_kopplad.Add(tillfalle);
+                    }
+                   
+                    tbSvar.Text = sokOk;
+                }
+
+
+                
+                _gruppaktiviter.DataSource = null;
+                _gruppaktiviter.DataSource = trnGrpLst_kopplad;
+                _gruppaktiviter.DisplayMember = "namn";
+            }
+
         }
 
         /// <summary>
@@ -185,7 +235,7 @@ namespace Uppgift08
             nuvarandeGruppMdlm = (gruppmedlemmar)_lbxGruppmedlemmar.SelectedItem;
             nuvarandeTrantillf = (trantillfInfo)_lbxTrantillfalle.SelectedItem;
             nuvarandeTranGrp = (traningsgrupp)_lbxTraningsgrupper.SelectedItem;
-            nuvarandeGruppAktivitet = (gruppaktiviter)_gruppaktiviter.SelectedItem;
+            //nuvarandeGruppAktivitet = (gruppaktiviter)_gruppaktiviter.SelectedItem;
         }
 
 
