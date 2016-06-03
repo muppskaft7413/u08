@@ -398,7 +398,7 @@ namespace Uppgift08
                         sql = "insert into deltagare(narvarolista_id, grupp_id, medlem_id, deltagit) values('" + narvaro + "', '" + enkelGrupp + "', '" + nyMedlem + "', '0');";
                         break;
                     case "lasUtMedlemmar":
-                        sql = "select * from deltagare JOIN medlem on deltagare.medlem_id = medlem.medlem_id Where grupp_id = '" + enkelGrupp + "';";
+                        sql = "select * from deltagare JOIN medlem on deltagare.medlem_id = medlem.medlem_id JOIN gruppmedlemmar on gruppmedlemmar.medlem_id = medlem.medlem_id Where gruppmedlemmar.grupp_id = '" + enkelGrupp + "';";
                         break;
                     case "skapaTillf":
                         sql = "insert into trantillf (datum, starttid, sluttid) values ('"+ startDatum.ToShortDateString()+"', '"+startTid.ToLongTimeString()+"', '"+slutTid.ToLongTimeString()+"')";

@@ -307,8 +307,8 @@ namespace Uppgift08
             List<string> lstMedlemmar = new List<string>();            // lista för att hålla medlemmar som skall speglas över ifrån tabellen gruppmedlemmar till deltagare
 
 
-            s.enkelGrupp = Convert.ToString(nuvarandeTranGrp.trn_grp_id);         // läser in och för över den markerade gruppens ID till postgres
-            sokning = sokning = s.sqlFråga("lasUtMedlemmar", "tranTillfalle");
+            s.enkelGrupp = Convert.ToString(nuvarandeTranGrp.grupp_id);         // läser in och för över den markerade gruppens ID till postgres
+            sokning = s.sqlFråga("lasUtMedlemmar", "tranTillfalle");
 
             if (sokning.Columns[0].ColumnName.Equals("error"))
             {
@@ -319,25 +319,16 @@ namespace Uppgift08
                 s.narvaro = Convert.ToString(nuvarandeTrantillf.narvarolistaID);      // läser in och för över det markerade träningstillfällets ID till postgres
                 for (int i = 0; i < sokning.Rows.Count; i++)
                 {
-                    string utlasning= Convert.ToString(sokning.Rows[i]["medlem_id"]);
+                    string utlasning = Convert.ToString(sokning.Rows[i]["medlem_id"]);
                     lstMedlemmar.Add(utlasning);
                 }
-                for (int i = 0; i < lstMedlemmar.Count; i++)
+                foreach (string item in lstMedlemmar)
                 {
                     //skriva medlemmar till deltagare-tabellen
-                    _tbSvar.Text = s.sqlNonQuery("flyttaTillAktivitet", "tranTillfalle");  //skriver till databasen
+                    s.nyMedlem = item.ToString();
+                    s.sqlNonQuery("flyttaTillAktivitet", "tranTillfalle");  //skriver till databasen
                 }
             }
-
-            
-                
-
-
-
-
-
-            
-            trnGrpLst_kopplad.Clear();
 
             s.narvaro = nuvarandeTrantillf.narvarolistaID.ToString();
             sokning = s.sqlFråga("kopplade", "tranTillfalle");
@@ -371,8 +362,7 @@ namespace Uppgift08
                 _gruppaktiviter.DataSource = trnGrpLst_kopplad;
                 _gruppaktiviter.DisplayMember = "namn";
             }
-            
-            //nuvarandeTrantillf.narvarolistaID
+       
         }
 
         private void btnSkapa_Click(object sender, EventArgs e)
