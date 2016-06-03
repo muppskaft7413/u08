@@ -213,13 +213,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(940, 640);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.gbSokSlutdatum);
             this.Controls.Add(this.btn_klar);
             this.Controls.Add(this.gbInfo);
             this.Controls.Add(this.gpGrupp);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblForening);
-            this.Controls.Add(this.gbSokSlutdatum);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tbSvar);
             this.Controls.Add(this.dgvRegistreraNarvaro);
