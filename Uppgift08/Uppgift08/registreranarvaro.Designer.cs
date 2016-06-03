@@ -85,7 +85,7 @@
             // 
             this.gbSokSlutdatum.Controls.Add(this.cbAktivSlutDatum);
             this.gbSokSlutdatum.Controls.Add(this.dtpSlutDatum);
-            this.gbSokSlutdatum.Location = new System.Drawing.Point(39, 137);
+            this.gbSokSlutdatum.Location = new System.Drawing.Point(40, 173);
             this.gbSokSlutdatum.Name = "gbSokSlutdatum";
             this.gbSokSlutdatum.Size = new System.Drawing.Size(289, 64);
             this.gbSokSlutdatum.TabIndex = 22;
@@ -213,13 +213,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(940, 640);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.gbSokSlutdatum);
             this.Controls.Add(this.btn_klar);
             this.Controls.Add(this.gbInfo);
             this.Controls.Add(this.gpGrupp);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblForening);
-            this.Controls.Add(this.gbSokSlutdatum);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tbSvar);
             this.Controls.Add(this.dgvRegistreraNarvaro);
